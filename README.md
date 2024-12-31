@@ -45,4 +45,6 @@ brew install --cask aerospace
 brew tap felixkratz/formulae
 brew install sketchybar
 ```
+## Some animation examples
 
+https://github.com/user-attachments/assets/b7f14052-8419-4aa0-96b3-68bbfcc6d08b
