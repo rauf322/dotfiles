@@ -1,0 +1,76 @@
+ITEM_DIR="$HOME/.config/sketchybar/items"       # Directory where the items are configured
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"   # Directory where all the plugin scripts are stored
+source "$HOME/.config/sketchybar/icons.sh"
+source "$HOME/.config/sketchybar/colors.sh" # Loads all defined colors
+### Define defult font ###
+FONT="Monocraft" # Needs to have Regular, Bold, Semibold, Heavy and Black variants
+
+### Padding ###
+PADDINGS=3  # All elements use this padidng
+###
+
+# aerospace setting
+AEROSPACE_FOCUSED_MONITOR_NO=$(aerospace list-workspaces --focused)
+AEROSPACE_LIST_OF_WINDOWS_IN_FOCUSED_MONITOR=$(aerospace list-windows --workspace $AEROSPACE_FOCUSED_MONITOR_NO | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
+
+
+# Setting up and starting the helper process
+HELPER=git.felix.helper
+killall helper
+cd $HOME/.config/sketchybar/helper && make
+$HOME/.config/sketchybar/helper/helper $HELPER > /dev/null 2>&1 &
+
+# Unload the macOS on screen indicator overlay for volume change
+launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist > /dev/null 2>&1 &
+
+### Setting up the general bar appearance and default values ###
+sketchybar --bar     height=50                                                     \
+                     corner_radius=14                                              \
+                     border_width=0                                                \
+                     margin=95                                                     \
+                     blur_radius=0                                                 \
+                     position=top                                                  \
+                     padding_left=4                                                \
+                     padding_right=4                                               \
+                     color=0xff1a1c26                                              \
+                     topmost=off                                                   \
+                     sticky=on                                                     \
+                     font_smoothing=off                                            \
+                     y_offset=-100                                                    \
+                     notch_width=0                                                 \
+                                                                                   \
+           --default drawing=on                                                    \
+                     updates=when_shown                                            \
+                     icon.padding_left=$PADDINGS                                   \
+                     icon.padding_right=$PADDINGS                                  \
+                     label.padding_left=$PADDINGS                                  \
+                     label.padding_right=$PADDINGS                                 \
+                     background.padding_right=$PADDINGS                            \
+                     background.padding_left=$PADDINGS                             \
+                     popup.background.border_width=2\
+                     popup.background.corner_radius=9\
+                     popup.background.border_color=0xff252731\
+                     popup.background.color=0xff252731\
+                     popup.blur_radius=20\
+                     popup.background.shadow.drawing=on\
+
+sketchybar --animate sin 30 --bar y_offset=-100 y_offset=9
+
+sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
+
+### Left ###
+. "$ITEM_DIR/arch_menu.sh"  # arch logo
+. "$ITEM_DIR/system.sh"     # resources monitor
+. "$ITEM_DIR/nordvpn.sh"
+
+### Center ###
+. "$ITEM_DIR/aerospace.sh"    # workspaces
+
+### Right ###
+. "$ITEM_DIR/time.sh"      # time
+. "$ITEM_DIR/battery.sh"   # battery
+. "$ITEM_DIR/sound.sh"
+. "$ITEM_DIR/weather.sh"
+
+
+echo "sketchybar configuation loaded.."
