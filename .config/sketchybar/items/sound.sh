@@ -1,7 +1,7 @@
 sketchybar --add item sound right                                                \
            --set sound update_freq=1                                             \
                        icon.font="Font Awesome 6 Free:Solid:15.4"                  \
-                       icon.padding_right=4                                        \
+                       icon.padding_right=0                                        \
                        icon.color=0xff6c77bb                                       \
                        icon.y_offset=1                                              \
                        label.font="$FONT:Black:12.0"                                \

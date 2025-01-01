@@ -21,3 +21,5 @@ for sid in "${sids[@]}"; do
         click_script="aerospace workspace $sid" \
         script="$CONFIG_DIR/plugins/aerospace.sh $sid"
 done
+
+

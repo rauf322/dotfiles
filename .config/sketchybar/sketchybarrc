@@ -54,6 +54,10 @@ sketchybar --bar     height=50                                                  
                      popup.blur_radius=20\
                      popup.background.shadow.drawing=on\
 
+
+
+
+
 sketchybar --animate sin 30 --bar y_offset=-100 y_offset=9
 
 sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
@@ -65,6 +69,7 @@ sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace li
 
 ### Center ###
 . "$ITEM_DIR/aerospace.sh"    # workspaces
+
 
 ### Right ###
 . "$ITEM_DIR/time.sh"      # time

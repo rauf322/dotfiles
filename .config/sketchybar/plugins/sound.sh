@@ -23,7 +23,6 @@ esac
 fi
 
 sketchybar -m \
-    --set $NAME icon=$ICON \
-    --set $NAME label="$VOLUME" \
+    --set $NAME icon= \
     label.y_offset=2
 

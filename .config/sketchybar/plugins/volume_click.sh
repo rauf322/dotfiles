@@ -11,12 +11,7 @@ detail_off() {
 }
 
 toggle_detail() {
-  INITIAL_WIDTH=$(sketchybar --query volume | jq -r ".slider.width")
-  if [ "$INITIAL_WIDTH" -eq "0" ]; then
-    detail_on
-  else
-    detail_off
-  fi
+     open -a 'SoundSource'
 }
 
 toggle_devices() {
