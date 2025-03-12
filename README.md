@@ -1,4 +1,4 @@
-# dotfiles
+ƒ# dotfiles
 
 My small collection of dotfiles, where I aim to implement unique features that weren't available before.
 

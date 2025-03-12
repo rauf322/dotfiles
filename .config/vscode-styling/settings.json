@@ -1,0 +1,90 @@
+{
+    "editor.fontSize": 19,
+    "debug.console.fontSize": 20,
+    "custom-ui-style.stylesheet": {
+        "*": "font-family:JetBrainsMono Nerd Font",
+        ".anysphere-markdown-container-root": "font-size: 16px; line-height: 2;",
+        ".markdown-block-code *": "font-size: 16px !important; line-height: 2!important; white-space: pre-wrap !important;",
+        // Adjust Chat Font
+        ".aislash-editor-input": "font-size: 16px !important; line-height: 2 !important;"
+    },
+    "catppuccin-icons.hidesExplorerArrows": true,
+    "workbench.activityBar.location": "hidden",
+    "workbench.editor.empty.hint": "hidden",
+    "editor.cursorBlinking": "expand",
+    "editor.cursorStyle": "line-thin",
+    "editor.cursorSmoothCaretAnimation": "explicit",
+    "editor.gotoLocation.multipleDefinitions": "goto",
+    "editor.minimap.renderCharacters": false,
+    "window.openFilesInNewWindow": "off",
+    "window.density.editorTabHeight": "compact",
+    "editor.minimap.enabled": false,
+    "files.dialog.defaultPath": "/Users/rauffaizov/Work/programming/vscode",
+    "workbench.editor.showTabs": "none",
+    "editor.snippetSuggestions": "top",
+    "workbench.statusBar.visible": false,
+    "files.hotExit": "onExitAndWindowClose",
+    "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+    "code-runner.runInTerminal": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.padding.top": 25,
+    "vsicons.dontShowNewVersionMessage": true,
+    "editor.accessibilitySupport": "off",
+    "workbench.editorAssociations": {
+        "*.plist": "default"
+    },
+    "terminal.integrated.cwd": "/Users/rauffaizov/Work/programming/vscode",
+    "vsicons.associations.folderDefault.folder": null,
+    "json.schemas": [],
+    "[python]": {
+        "diffEditor.ignoreTrimWhitespace": false
+    },
+    "python.defaultInterpreterPath": "/Users/rauffaizov/.pyenv/versions/3.13.1/bin/python",
+    "editor.fontFamily": "JetBrains Mono",
+    "editor.fontLigatures": true,
+    "editor.linkedEditing": true,
+    "files.exclude": {
+        "**/.git": false
+    },
+    "editor.wordWrap": "on",
+    "solidity.telemetry": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[solidity]": {
+        "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
+    },
+    "debug.console.closeOnEnd": false,
+    "editor.codeActionsOnSave": {},
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 100,
+    "task.quickOpen.showAll": true,
+    "editor.lineHeight": 0,
+    "cSpell.enabled": false,
+    "terminal.integrated.scrollback": 500, // Set scrollback buffer size
+    "terminal.integrated.fontSize": 17,
+    "editor.inlayHints.fontFamily": "JetBrains Mono",
+    "notebook.output.fontFamily": "JetBrains Mono",
+    "chat.editor.fontFamily": "JetBrains Mono",
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "catppuccin-mocha",
+    "workbench.sideBar.location": "right",
+    "workbench.editor.editorActionsLocation": "hidden",
+    // HERE COMPLEX CSS STYLING
+    "vscode_custom_css.imports": [
+        "file:///Users/rauffaizov/.config/vscode-styling/style.css",
+        "file:///Users/rauffaizov/.config/vscode-styling/script.js"
+    ],
+
+    //Prettier format
+    "prettier.semi": false,
+    "editor.formatOnSave": true,
+    "prettier.singleQuote": true,
+    "prettier.arrowParens": "avoid",
+    "editor.inlineSuggest.enabled": true,
+    "prettier.tabWidth": 4,
+    "editor.tabSize": 4,
+    //Stylelint
+    "stylelint.validate": ["css", "scss"],
+    "workbench.layoutControl.enabled": false
+}
