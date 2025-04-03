@@ -75,3 +75,4 @@ alias push="git push"
 alias python="python3"
 
 
+alias ls="ls -a"
