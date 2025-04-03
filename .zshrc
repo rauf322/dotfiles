@@ -44,7 +44,7 @@ alias x="exit"
 
 
 #Cursor
-alias c="open $1 -a \"Cursor\""
+alias c=cursor
 
 
 # Reset PATH to prevent duplication issues
