@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+
+dry="0"
+choice=""
+
+# Correcting the while loop and condition checks
+while [[ $# > 0 ]]; do
+    if [[ "$1" == "--dry" ]]; then
+        dry="1"
+    elif [[ "$1" == "--copy:root:config" ]]; then
+        choice="copy:root:config"
+    elif [[ "$1" == "--copy:dir:config" ]]; then
+        choice="copy:dir:config"
+    elif [[ "$1" == "--info" ]]; then
+        choice="info"
+    elif [[ "$1" == "--copy:root:local" ]]; then
+        choice="copy:root:local"
+    elif [[ "$1" == "--copy:dir:local" ]]; then
+        choice="copy:dir:local"
+    fi
+    shift
+done
+
+log() {
+    if [[ $dry == "1" ]]; then
+        echo "[DRY_RUN]: $@"
+    else 
+        echo "$@"
+    fi
+}
+
+execute() {
+    log "execute $@"
+    if [[ $dry == "1" ]]; then
+        return
+    fi
+    "$@"
+}
+
+log "--------------- dev-env ---------------"
+
+copy_dir(){
+    from=$1 # .config
+    to=$2   # XDG_CONFIG_HOME
+
+    # Iterate over directories in 'from'
+    for dir in $(find "$from" -mindepth 1 -maxdepth 1 -type d); do
+        execute rm -rf "$to/$(basename $dir)"
+        execute cp -r "$dir" "$to/$(basename $dir)"
+    done
+}
+
+copy_root(){
+    from=$1 # XDG_CONFIG_HOME
+    to=$2   # .config
+
+    # Iterate over directories in 'from'
+    for dir in $(find "$from" -mindepth 1 -maxdepth 1 -type d); do
+        execute rm -rf "$to/$(basename $dir)"
+        execute cp -r "$from/$(basename $dir)" "$to/$(basename $dir)"
+    done
+}
+
+copy_file(){
+    from=$1
+    to=$2
+    name=$(basename $from)
+    echo "$to/$name"
+
+    execute rm "$to/$name"
+    execute cp "$from" "$to/$name"
+}
+
+copy_file $HOME/.zshrc .config
+
+if [[ $choice == "copy:root:config" ]]; then
+    log "Running copy-root"
+    copy_root "$XDG_CONFIG_HOME" ".config"
+elif [[ $choice == "copy:dir:config" ]]; then
+    log "Running copy-dir"
+    copy_dir ".config" "$XDG_CONFIG_HOME"
+elif [[ $choice == "copy:dir:local" ]]; then 
+    log "Running copy-local"
+    copy_dir .local $HOME/.local
+elif [[ $choice == "copy:root:local" ]]; then 
+    log "Running copy-local"
+    copy_dir $HOME/.local .local 
+elif [[ $choice == "info" ]]; then 
+    log "You have multiple options:"
+    log "--dry run"
+    log "--copy:root:config copy from XDG_CONFIG_HOME to .config"
+    log "--copy:dir:config copy from .config to XDG_CONFIG_HOME"
+    log "--copy:root:local copy from $HOME/.local to .local"
+    log "--copy:dir:local copy from .local to $HOME/.local"
+    log "--info show this message"
+fi
+

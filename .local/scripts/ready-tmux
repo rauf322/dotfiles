@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#open "$1" -a "Cursor"
+yazi
+#nvim . 

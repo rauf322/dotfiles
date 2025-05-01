@@ -1,0 +1,256 @@
+{
+    "debug.console.fontSize": 20,
+    "custom-ui-style.stylesheet": {
+        "*": "font-family: 'MesloLGS Nerd Font Mono'",
+        ".anysphere-markdown-container-root": "font-size: 16px; line-height: 2;",
+        ".markdown-block-code *": "font-size: 16px !important; line-height: 2!important; white-space: pre-wrap !important;",
+        // Adjust Chat Font
+        ".aislash-editor-input": "font-size: 16px !important; line-height: 2 !important;"
+    },
+    "breadcrumbs.enabled": false,
+    "window.titleBarStyle": "custom",
+    "editor.fontWeight": "100",
+    "terminal.integrated.fontWeight": "100",
+    "workbench.colorCustomizations": {
+        // Editor area
+        "editor.background": "#000000",
+        "editor.foreground": "#FFFFFF",
+        "editorLineNumber.foreground": "#7a7a7a",
+        "editorGutter.background": "#000000",
+        "editorLineNumber.activeForeground": "#FFFFFF",
+        // Sidebar (Explorer, Extensions, etc.)
+        "sideBar.background": "#000000",
+        "sideBar.foreground": "#FFFFFF",
+        "sideBarSectionHeader.background": "#000000",
+        "sideBarSectionHeader.foreground": "#FFFFFF",
+
+        // Activity bar (vertical icons on the far left)
+        "activityBar.background": "#000000",
+        "activityBar.foreground": "#FFFFFF",
+        "activityBar.inactiveForeground": "#888888",
+        "activityBar.activeBorder": "#FFFFFF",
+
+        // Title bar (top bar with tabs and file name)
+        "titleBar.activeBackground": "#000000",
+        "titleBar.activeForeground": "#FFFFFF",
+        "titleBar.inactiveBackground": "#000000",
+        "titleBar.inactiveForeground": "#888888",
+
+        // Status bar (bottom)
+        "statusBar.background": "#000000",
+        "statusBar.foreground": "#FFFFFF",
+        "statusBar.debuggingBackground": "#000000",
+        "statusBar.noFolderBackground": "#000000",
+
+        // Terminal
+        "terminal.background": "#000000",
+        "terminal.foreground": "#FFFFFF",
+
+        // Panel (output/debug/terminal lower area)
+        "panel.background": "#000000",
+        "panel.border": "#000000"
+    },
+    "catppuccin-icons.hidesExplorerArrows": true,
+    "workbench.activityBar.location": "hidden",
+    "workbench.editor.empty.hint": "hidden",
+    "editor.cursorBlinking": "solid",
+    "editor.cursorStyle": "line-thin",
+    "editor.cursorSmoothCaretAnimation": "explicit",
+    "editor.gotoLocation.multipleDefinitions": "goto",
+    "editor.minimap.renderCharacters": false,
+    "window.openFilesInNewWindow": "off",
+    "window.density.editorTabHeight": "compact",
+    "editor.minimap.enabled": false,
+    "files.dialog.defaultPath": "/Users/rauffaizov/",
+    "workbench.editor.showTabs": "none",
+    "editor.snippetSuggestions": "top",
+    "files.hotExit": "onExitAndWindowClose",
+    "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
+    "code-runner.runInTerminal": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.padding.top": 25,
+    "vsicons.dontShowNewVersionMessage": true,
+    "editor.accessibilitySupport": "off",
+    "workbench.editorAssociations": {
+        "*.plist": "default"
+    },
+    "terminal.integrated.cwd": "/Users/rauffaizov/",
+    "vsicons.associations.folderDefault.folder": null,
+    "json.schemas": [],
+    "[python]": {
+        "diffEditor.ignoreTrimWhitespace": false
+    },
+    "python.defaultInterpreterPath": "/Users/rauffaizov/.pyenv/versions/3.13.1/bin/python",
+    "editor.fontFamily": "MesloLGS Nerd Font Mono",
+    "editor.fontLigatures": true,
+    "editor.linkedEditing": true,
+    "files.exclude": {
+        "**/.git": false
+    },
+    "editor.wordWrap": "on",
+    "solidity.telemetry": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[solidity]": {
+        "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
+    },
+    "debug.console.closeOnEnd": false,
+    "editor.codeActionsOnSave": {},
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 100,
+    "task.quickOpen.showAll": true,
+    "cSpell.enabled": false,
+    "terminal.integrated.scrollback": 500, // Set scrollback buffer size
+    "terminal.integrated.fontSize": 19,
+    "editor.inlayHints.fontFamily": "MesloLGS Nerd Font Mono",
+    "notebook.output.fontFamily": "MesloLGS Nerd Font Mono",
+    "chat.editor.fontFamily": "MesloLGS Nerd Font Mono",
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "workbench.iconTheme": "catppuccin-mocha",
+    "workbench.sideBar.location": "right",
+    "workbench.editor.editorActionsLocation": "hidden",
+
+    // HERE COMPLEX CSS STYLING
+    "vscode_custom_css.imports": [
+        "file:///Users/rauffaizov/.config/vscode-styling/style.css",
+        "file:///Users/rauffaizov/.config/vscode-styling/script.js"
+    ],
+
+    //Prettier format
+    "prettier.semi": false,
+    "editor.formatOnSave": true,
+    "prettier.singleQuote": true,
+    "prettier.arrowParens": "avoid",
+    "editor.inlineSuggest.enabled": true,
+    "prettier.tabWidth": 4,
+    "editor.tabSize": 4,
+
+    //Stylelint
+    "stylelint.validate": ["css", "scss"],
+    "workbench.layoutControl.enabled": false,
+    "window.confirmSaveUntitledWorkspace": false,
+    "workbench.colorTheme": "Rosé Pine",
+    "git.openRepositoryInParentFolders": "always",
+    "terminal.integrated.smoothScrolling": true,
+    "application.shellEnvironmentResolutionTimeout": 120,
+    "terminal.integrated.enablePersistentSessions": false,
+    "explorer.compactFolders": false,
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.profiles.osx": {
+        "zsh": {
+            "path": "zsh",
+            "args": ["-l", "-c", "tmux new-session -A -s Cursor-session"]
+        }
+    },
+    "launch": {
+        "configurations": [],
+        "compounds": []
+    },
+
+    //Vim Keybindings
+    "vim.leader": "<space>",
+    "vim.useSystemClipboard": true,
+
+    // ===== Line Numbers =====
+    "editor.lineNumbers": "relative", // Enables both absolute & relative numbers
+
+    // ===== Splits =====
+    "workbench.editor.openSideBySideDirection": "right", // like splitright
+    // There's no direct "splitbelow", but opening splits below is default in some contexts.
+
+    // ===== Search =====
+    "search.smartCase": true,
+    "editor.find.ignoreCase": true,
+
+    // ===== UI/UX =====
+    "editor.cursorSurroundingLines": 10,
+    "editor.cursorSurroundingLinesStyle": "default",
+    "editor.renderWhitespace": "all", // optional
+
+    "editor.insertSpaces": true, // equivalent to expandtab
+    "editor.detectIndentation": false,
+    "editor.autoIndent": "full",
+
+    // ===== File Behavior =====
+    "files.trimTrailingWhitespace": true, // similar vibe
+    "files.insertFinalNewline": true,
+
+    // ===== Timing =====
+    "vim.timeout": 500,
+    "vim.timeoutlen": 500,
+
+    // ===== Performance =====
+    "editor.quickSuggestionsDelay": 50, // like `updatetime`
+
+    // ===== Colors / UI =====
+    "editor.renderLineHighlight": "all",
+    "editor.columnSelection": false,
+    "editor.rulers": [130], // like colorcolumn
+
+    // ===== Signs / Gutter =====
+    "editor.glyphMargin": true, // Similar to signcolumn = "yes"
+    "vim.insertModeKeyBindings": [
+        { "before": ["j", "j"], "after": ["<Esc>"] },
+        { "before": ["k", "k"], "after": ["<Esc>"] },
+        { "before": ["h", "h"], "after": ["<Esc>"] },
+        { "before": ["l", "l"], "after": ["<Esc>"] }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        { "before": ["J"], "after": ["m", "z", "J", "`", "z"] },
+        { "before": ["n"], "after": ["n", "z", "z", "z", "v"] },
+        { "before": ["N"], "after": ["N", "z", "z", "z", "v"] },
+        { "before": ["<leader>", "y"], "after": ["\"", "+", "y"] },
+        { "before": ["<leader>", "d"], "after": ["\"", "_", "d"] },
+        {
+            "before": ["<leader>", "|"],
+            "commands": ["workbench.action.splitEditorRight"]
+        },
+        {
+            "before": ["<leader>", "-"],
+            "commands": ["workbench.action.splitEditorDown"]
+        },
+        {
+            "before": ["<leader>", "x"],
+            "commands": ["workbench.action.closeActiveEditor"]
+        },
+        {
+            "before": ["<leader>", "f"],
+            "commands": ["maximisable.toggleMaximise"]
+        },
+        {
+            "before": ["<leader>", "h"],
+            "commands": ["workbench.action.focusLeftGroup"]
+        },
+        {
+            "before": ["<leader>", "l"],
+            "commands": ["workbench.action.focusRightGroup"]
+        },
+        {
+            "before": ["<leader>", "j"],
+            "commands": ["workbench.action.focusBelowGroup"]
+        },
+        {
+            "before": ["<leader>", "k"],
+            "commands": ["workbench.action.focusAboveGroup"]
+        },
+        {
+            "before": ["<leader>", "q"],
+            "commands": ["workbench.actions.view.problems"]
+        },
+        {
+            "before": ["<leader>", "f", "f"],
+            "commands": ["workbench.explorer.fileView.focus"]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
+        { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
+        { "before": ["<leader>", "y"], "after": ["\"", "+", "y"] },
+        { "before": ["<leader>", "d"], "after": ["\"", "_", "d"] }
+    ],
+    "editor.stickyScroll.enabled": false,
+    "workbench.statusBar.visible": false,
+    "editor.lineHeight": 0,
+    "editor.fontSize": 15
+}
+
