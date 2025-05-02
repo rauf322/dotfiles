@@ -36,3 +36,25 @@ vim.keymap.set("n", "<leader>o", ":put =''<CR>", { desc = "Blank line below (nor
 
 -- Blank line above, stay in normal mode
 vim.keymap.set("n", "<leader>O", ":put! =''<CR>", { desc = "Blank line above (normal mode)" })
+
+vim.api.nvim_create_autocmd('TermOpen', {
+    group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
+    callback = function()
+        vim.opt.number = false
+        vim.opt.relativenumber = false
+    end,
+})
+vim.keymap.set("n", "<leader>`", function()
+    vim.cmd.vnew()
+    vim.cmd.term()
+    vim.cmd.wincmd("J")
+    vim.api.nvim_win_set_height(0, 7)
+end)
+-- Resize window left with >
+vim.keymap.set("n", ">", ":vertical resize +5<CR>", { noremap = true, silent = true })
+
+-- Resize window right with <
+vim.keymap.set("n", "<", ":vertical resize -5<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-w>q", ":tabclose<CR>", { noremap = true, silent = true })
+-- Map Esc to exit terminal mode and return to normal mode
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
