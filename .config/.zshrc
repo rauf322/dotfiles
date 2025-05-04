@@ -78,6 +78,10 @@ alias v.="nvim ."
 #yazi-cwd
 export FZF_DEFAULT_COMMAND='find "$PWD" -mindepth 1 -maxdepth 4 \( -type f -o -type d \)'
 export EDITOR="nvim"
+fcur() {
+    file=$(fd --type f --max-depth 1 --hidden --exclude .git | fzf) || return
+    cursor --reuse-window "$file"
+}
 EDITOR="nvim"
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd

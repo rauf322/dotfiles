@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-#open "$1" -a "Cursor"
-yazi
-#nvim . 
+#!/usr/bin/env bash
+
+
+cursor --reuse-window "$1"
