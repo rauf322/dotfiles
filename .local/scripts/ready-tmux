@@ -2,4 +2,5 @@
 #!/usr/bin/env bash
 
 nvim .
+
 # cursor --reuse-window "$1"
