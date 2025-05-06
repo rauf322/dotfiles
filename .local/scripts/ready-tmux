@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 #!/usr/bin/env bash
 
-
-cursor --reuse-window "$1"
+nvim .
+# cursor --reuse-window "$1"
