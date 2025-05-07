@@ -19,18 +19,24 @@ return {
             telescope.load_extension("ui-select")
 
             local keymap = vim.keymap.set
-            keymap('n', '<leader><Tab>', builtin.find_files, {})
-            keymap('n', '<C-p>', builtin.git_files, {})
+
+            keymap('n', '<leader>?', ":Telescope keymaps<CR>", { desc = "Telescope: Show Keymaps" })
+            keymap('n', '<leader><Tab>', builtin.find_files, { desc = "Telescope: Find Files" })
+            keymap('n', '<C-p>', builtin.git_files, { desc = "Telescope: Git Files" })
+
             keymap('n', '<leader>pws', function()
                 builtin.grep_string({ search = vim.fn.expand("<cword>") })
-            end)
+            end, { desc = "Telescope: Grep Current Word" })
+
             keymap('n', '<leader>pWs', function()
                 builtin.grep_string({ search = vim.fn.expand("<cWORD>") })
-            end)
+            end, { desc = "Telescope: Grep Current WORD" })
+
             keymap('n', '<leader>ps', function()
-                builtin.grep_string({ search = vim.fn.input("Grep > ") })
-            end)
-            keymap('n', '<leader>vh', builtin.help_tags, {})
+                require('telescope.builtin').live_grep()
+            end, { desc = "Telescope: Live Grep" })
+
+            keymap('n', '<leader>vh', builtin.help_tags, { desc = "Telescope: Help Tags" })
         end,
     },
 }

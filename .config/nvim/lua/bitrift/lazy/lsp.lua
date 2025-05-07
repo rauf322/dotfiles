@@ -68,8 +68,11 @@ return {
                     require("lspconfig")[server_name].setup({
                         capabilities = capabilities,
                     })
-                    vim.keymap.set("n", "Z", vim.lsp.buf.hover, {})
-                    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+                    vim.keymap.set("n", "Z", vim.lsp.buf.hover,
+                        { desc = "Show hover information for symbol under cursor" })
+
+                    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action,
+                        { desc = "Show available code actions (e.g., quick fixes, refactoring)" })
                 end,
 
                 zls = function()
@@ -113,10 +116,13 @@ return {
         require("mason-tool-installer").setup({
             ensure_installed = {
                 "prettier",
+                "eslint_d",
                 "black",
                 "eslint-lsp",
                 "js-debug-adapter",
                 "typescript-language-server",
+                "pylint",
+                "htmlhint"
             },
         })
         vim.diagnostic.config({

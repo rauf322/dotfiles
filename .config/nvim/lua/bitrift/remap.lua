@@ -17,7 +17,8 @@ vim.keymap.set("n", "<leader>|", ":vsplit<CR>", { desc = "Vertical Split" })
 vim.keymap.set("n", "<leader>-", ":split<CR>", { desc = "Horizontal Split" })
 
 -- close current window
-vim.keymap.set("n", "<leader>x", ":bdelete<CR>", { desc = "Close Split" })
+vim.keymap.set("n", "<leader>x", ":close<CR>", { desc = "Close Window" })
+vim.keymap.set("n", "<leader>qb", ":bdelete!<CR>", { desc = "Close Buffer" })
 
 -- toggle maximize window (requires 'szw/vim-maximizer')
 vim.keymap.set("n", "<Leader>f", "<C-w>_<C-w>|", { desc = "full si[z]e" })
