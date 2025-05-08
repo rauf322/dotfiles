@@ -116,10 +116,16 @@ return {
         require("mason-tool-installer").setup({
             ensure_installed = {
                 "prettier",
+                "stylelint",
+                "yamllint",
+                "markdownlint",
                 "eslint_d",
                 "black",
                 "eslint-lsp",
                 "js-debug-adapter",
+                "lua_ls",
+                "ts_ls",
+                "eslint",
                 "typescript-language-server",
                 "pylint",
                 "htmlhint"

@@ -37,6 +37,7 @@ return {
             end, { desc = "Telescope: Live Grep" })
 
             keymap('n', '<leader>vh', builtin.help_tags, { desc = "Telescope: Help Tags" })
+            keymap('n', '<leader>gt', ":Telescope git_branches <CR>", { desc = "Telescope: Git branches" })
         end,
     },
 }
