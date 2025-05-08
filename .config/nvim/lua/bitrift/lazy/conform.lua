@@ -36,7 +36,7 @@ return {
                 async = false,
                 timeout_ms = 500,
             })
-            vim.cmd("write")
+            vim.cmd("wa") -- no <CR> needed
         end, { desc = "Format file and save it" })
     end,
 }

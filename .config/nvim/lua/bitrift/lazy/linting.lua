@@ -30,6 +30,13 @@ return {
                 "--stdin-filename",
                 "%filepath",
             },
+            stdin = true,
+            ignore_exitcode = true,
+            stream = "stdout",
+            parser = require("lint.parser").from_errorformat("%f:%l:%c: %m", {
+                source = "eslint_d",
+                severity = vim.diagnostic.severity.WARN,
+            }),
         }
 
         local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
