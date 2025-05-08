@@ -63,5 +63,8 @@ return {
                 paths = "~/.config/nvim/lua/bitrift/lazy/snippets",
             })
         end,
+    },
+    {
+        "github/copilot.vim"
     }
 }

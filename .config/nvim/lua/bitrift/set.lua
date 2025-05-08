@@ -40,3 +40,34 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "130"
 
 vim.g.mapleader = " "
+vim.opt.laststatus = 3
+vim.opt.fillchars = {
+    vert = ' ',
+    fold = '┈',
+    diff = '┈',
+    horiz = ' ',
+    horizup = ' ',
+    horizdown = ' ',
+    vertleft = ' ',
+    vertright = ' ',
+    verthoriz = ' ',
+}
+--execute the following command when entering a buffer in terminal mode
+local function run_file()
+    local ext = vim.fn.expand('%:e')
+    local runners = {
+        js = 'w !node',
+        py = 'w !python3',
+        sh = 'w !bash',
+        go = 'w !go run',
+        c = '!gcc % -o %:r && ./%:r',
+        cpp = '!g++ % -o %:r && ./%:r',
+    }
+    if runners[ext] then
+        vim.cmd(runners[ext])
+    else
+        print('No runner defined for .' .. ext)
+    end
+end
+
+vim.keymap.set('n', '<C-r>', run_file, { noremap = true, silent = false })
