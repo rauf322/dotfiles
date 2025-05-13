@@ -11,11 +11,11 @@ vim.keymap.set("i", "kk", "<Esc>")
 vim.keymap.set("i", "hh", "<Esc>")
 vim.keymap.set('n', '<leader>Q', ':wqa<CR>', { desc = 'Force quit all' })
 vim.keymap.set('n', '<leader>r', function()
-    -- Reload all plugins
-    require('lazy').sync()
-    -- Optionally, reload all configurations (like mappings, settings, etc.)
-    vim.cmd('source $MYVIMRC')
-    vim.notify("Lazy.nvim and config reloaded!", vim.log.levels.INFO)
+  -- Reload all plugins
+  require('lazy').sync()
+  -- Optionally, reload all configurations (like mappings, settings, etc.)
+  vim.cmd('source $MYVIMRC')
+  vim.notify("Lazy.nvim and config reloaded!", vim.log.levels.INFO)
 end, { desc = "Reload lazy.nvim and Neovim config" })
 
 -- split right (vertical)
@@ -25,7 +25,7 @@ vim.keymap.set("n", "<leader>|", ":vsplit<CR>", { desc = "Vertical Split" })
 vim.keymap.set("n", "<leader>-", ":split<CR>", { desc = "Horizontal Split" })
 
 -- close current window
-vim.keymap.set("n", "<leader>x", ":close<CR>", { desc = "Close Window" })
+vim.keymap.set("n", "<leader>X", ":close<CR>", { desc = "Close Window" })
 vim.keymap.set("n", "<leader>qb", ":bdelete!<CR>", { desc = "Close Buffer" })
 
 -- toggle maximize window (requires 'szw/vim-maximizer')
@@ -45,17 +45,17 @@ vim.keymap.set("n", "<leader>o", ":put =''<CR>", { desc = "Blank line below (nor
 vim.keymap.set("n", "<leader>O", ":put! =''<CR>", { desc = "Blank line above (normal mode)" })
 
 vim.api.nvim_create_autocmd('TermOpen', {
-    group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
-    callback = function()
-        vim.opt.number = false
-        vim.opt.relativenumber = false
-    end,
+  group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
+  callback = function()
+    vim.opt.number = false
+    vim.opt.relativenumber = false
+  end,
 })
 vim.keymap.set("n", "<leader>`", function()
-    vim.cmd.vnew()
-    vim.cmd.term()
-    vim.cmd.wincmd("J")
-    vim.api.nvim_win_set_height(0, 7)
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd("J")
+  vim.api.nvim_win_set_height(0, 7)
 end)
 -- Resize window left with >
 vim.keymap.set("n", ">", ":vertical resize +5<CR>", { noremap = true, silent = true })
