@@ -27,7 +27,66 @@ inner.vertical = [{ monitor.'LC32G7xT' = 0}, { monitor.main = 0 }, 0]
 outer.left = [{ monitor.'LC32G7xT' = 0 }, { monitor.main = 0 }, 0]
 outer.right = [{ monitor.'LC32G7xT' = 0 }, { monitor.main = 0 }, 0]
 outer.bottom = [{ monitor.'LC32G7xT' = 0 }, { monitor.main = 0 }, 0]
-outer.top = [{ monitor.'LC32G7xT' = 0 }, { monitor.'Built-in Retina Display' = 0 }, 0]
+outer.top = [{ monitor.'LC32G7xT' = 45 }, { monitor.'Built-in Retina Display' = 15 }, 0]
+
+
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Arc'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Google Chrome'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Brave'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'zen'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'ghostty'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'cursor'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'iina'
+run = ['layout floating','move-node-to-workspace 4']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'excalidraw'
+run = 'move-node-to-workspace 3'
+
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'goodnotes'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'obsidian'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'discord'
+run = 'move-node-to-workspace 7'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Telegram'
+run = 'move-node-to-workspace 7'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'finder'
+run = 'move-node-to-workspace 8'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'spotify'
+run = 'move-node-to-workspace 9'
 
 [mode.main.binding]
 alt-slash = 'layout tiles horizontal vertical'
