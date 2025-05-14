@@ -57,7 +57,7 @@ return {
 					require("lspconfig")[server_name].setup({
 						capabilities = capabilities,
 					})
-					vim.keymap.set("n", "Z", vim.lsp.buf.hover, { desc = "Show hover information" })
+					vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show hover information" })
 					vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Show code actions" })
 				end,
 

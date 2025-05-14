@@ -24,11 +24,11 @@ return {
 				async = false,
 				timeout_ms = 500,
 			},
-			formatters = {
-				prettier = {
-					prepend_args = { "--single-quote", "--semi", "false", "--tab-width", "2" }, -- Align with ESLint rules
-				},
-			},
+			-- formatters = {
+			-- 	prettier = {
+			-- 		prepend_args = { "--single-quote", "--semi", "false", "--tab-width", "2" }, -- Align with ESLint rules
+			-- 	},
+			-- },
 		})
 		vim.keymap.set({ "n", "v" }, "<leader>s", function()
 			conform.format({
