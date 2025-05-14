@@ -3,40 +3,14 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local lint = require("lint")
+
 		lint.linters_by_ft = {
 			javascript = { "eslint_d" },
 			typescript = { "eslint_d" },
 			javascriptreact = { "eslint_d" },
 			typescriptreact = { "eslint_d" },
-			svelte = { "eslint_d" }, -- Requires eslint-plugin-svelte3
-			css = { "stylelint" }, -- Use stylelint instead of eslint_d
-			html = { "htmlhint" }, -- Use htmlhint instead of eslint_d
-			json = {}, -- No linter needed (Prettier handles formatting)
-			yaml = { "yamllint" }, -- Optional: Add yamllint
-			markdown = { "markdownlint" }, -- Optional: Add markdownlint
-			graphql = {}, -- ESLint can lint GraphQL with plugins
-			liquid = {}, -- Requires specific linter if needed
+			svelte = { "eslint_d" },
 			python = { "pylint" },
-		}
-
-		-- Configure eslint_d with --fix for autofixing
-		lint.linters.eslint_d = {
-			cmd = "eslint_d",
-			args = {
-				"--fix",
-				"--format",
-				"json",
-				"--stdin",
-				"--stdin-filename",
-				"%filepath",
-			},
-			stdin = true,
-			ignore_exitcode = true,
-			stream = "stdout",
-			parser = require("lint.parser").from_errorformat("%f:%l:%c: %m", {
-				source = "eslint_d",
-				severity = vim.diagnostic.severity.WARN,
-			}),
 		}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -48,8 +22,8 @@ return {
 			end,
 		})
 
-		-- vim.keymap.set("n", "<leader>s", function()
-		--   lint.try_lint()
-		-- end, { desc = "Trigger linting for current file" })
+		vim.keymap.set("n", "<leader>tl", function()
+			lint.try_lint()
+		end, { desc = "Trigger linting for current file" })
 	end,
 }
