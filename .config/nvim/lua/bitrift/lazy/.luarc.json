@@ -1,6 +1,7 @@
 {
     "diagnostics.globals": [
-        "vim"
+        "vim",
+        "map"
     ],
     "diagnostics.disable": [
         "undefined-doc-name"

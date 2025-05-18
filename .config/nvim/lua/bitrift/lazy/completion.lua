@@ -2,15 +2,8 @@ return {
 	{
 		"saghen/blink.cmp",
 		dependencies = { "rafamadriz/friendly-snippets" },
-
-		-- use a release tag to download pre-built binaries
-		version = "1.*",
-
-		---@module 'blink.cmp'
-		---@type blink.cmp.Config
 		opts = {
 			keymap = {
-
 				preset = "default",
 				["<Tab>"] = {
 					function(cmp)
@@ -31,10 +24,23 @@ return {
 			appearance = {
 				nerd_font_variant = "mono",
 			},
-
 			completion = {
-				documentation = { auto_show = false },
+				menu = {
+					border = "rounded",
+					draw = {
+						columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+					},
+				},
+				ghost_text = {
+					enabled = true,
+				},
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 500,
+				},
 			},
+
+			signature = { enabled = true },
 
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
@@ -51,20 +57,20 @@ return {
 			})
 		end,
 	},
-	{
-		"github/copilot.vim",
-		config = function()
-			vim.g.copilot_no_tab_map = true
-			function map(mode, lhs, rhs, opts)
-				local options = { noremap = true }
-
-				if opts then
-					options = vim.tbl_extend("force", options, opts)
-				end
-
-				vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-			end
-			map("i", "<Right>", "copilot#Accept('<CR>')", { silent = true, expr = true })
-		end,
-	},
+	-- {
+	-- 	"github/copilot.vim",
+	-- 	config = function()
+	-- 		vim.g.copilot_no_tab_map = true
+	-- 		function map(mode, lhs, rhs, opts)
+	-- 			local options = { noremap = true }
+	--
+	-- 			if opts then
+	-- 				options = vim.tbl_extend("force", options, opts)
+	-- 			end
+	--
+	-- 			vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+	-- 		end
+	-- 		map("i", "<C-g>", "copilot#Accept('<CR>')", { silent = true, expr = true })
+	-- 	end,
+	-- },
 }

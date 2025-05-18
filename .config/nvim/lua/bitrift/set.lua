@@ -42,56 +42,65 @@ vim.opt.colorcolumn = "130"
 vim.g.mapleader = " "
 vim.opt.laststatus = 3
 vim.opt.fillchars = {
-  vert = ' ',
-  fold = '┈',
-  diff = '┈',
-  horiz = ' ',
-  horizup = ' ',
-  horizdown = ' ',
-  vertleft = ' ',
-  vertright = ' ',
-  verthoriz = ' ',
+	vert = " ",
+	fold = "┈",
+	diff = "┈",
+	horiz = " ",
+	horizup = " ",
+	horizdown = " ",
+	vertleft = " ",
+	vertright = " ",
+	verthoriz = " ",
 }
 --execute the following command when entering a buffer in terminal mode
 local function run_file()
-  local ext = vim.fn.expand('%:e')
-  local runners = {
-    js = 'w !node',
-    py = 'w !python3',
-    sh = 'w !bash',
-    go = 'w !go run',
-    c = '!gcc % -o %:r && ./%:r',
-    cpp = '!g++ % -o %:r && ./%:r',
-  }
-  if runners[ext] then
-    vim.cmd(runners[ext])
-  else
-    print('No runner defined for .' .. ext)
-  end
+	local ext = vim.fn.expand("%:e")
+	local runners = {
+		js = "w !node",
+		py = "w !python3",
+		sh = "w !bash",
+		go = "w !go run",
+		c = "!gcc % -o %:r && ./%:r",
+		cpp = "!g++ % -o %:r && ./%:r",
+	}
+	if runners[ext] then
+		vim.cmd(runners[ext])
+	else
+		print("No runner defined for ." .. ext)
+	end
 end
 
 local function run_selection()
-  local ext = vim.fn.expand('%:e')
-  local tmpfile = '/tmp/vim_exec_tmp.' .. ext
-  vim.cmd('silent! normal! "vy') -- yank visual selection into register v
-  local content = vim.fn.getreg('v')
-  local f = io.open(tmpfile, 'w')
-  f:write(content)
-  f:close()
+	local ext = vim.fn.expand("%:e")
+	local tmpfile = "/tmp/vim_exec_tmp." .. ext
+	vim.cmd('silent! normal! "vy') -- yank visual selection into register v
+	local content = vim.fn.getreg("v")
+	local f = io.open(tmpfile, "w")
+	f:write(content)
+	f:close()
 
-  local runners = {
-    js = '!node ' .. tmpfile,
-    py = '!python3 ' .. tmpfile,
-    sh = '!bash ' .. tmpfile,
-    go = '!go run ' .. tmpfile,
-  }
+	local runners = {
+		js = "!node " .. tmpfile,
+		py = "!python3 " .. tmpfile,
+		sh = "!bash " .. tmpfile,
+		go = "!go run " .. tmpfile,
+	}
 
-  if runners[ext] then
-    vim.cmd(runners[ext])
-  else
-    print('No runner defined for .' .. ext)
-  end
+	if runners[ext] then
+		vim.cmd(runners[ext])
+	else
+		print("No runner defined for ." .. ext)
+	end
 end
 
-vim.keymap.set('n', '<leader><leader>x', run_file, { noremap = true, silent = false })
-vim.keymap.set('v', '<leader>x', run_selection, { noremap = true, silent = false })
+vim.keymap.set("n", "<leader><leader>x", run_file, { noremap = true, silent = false })
+vim.keymap.set("v", "<leader>x", run_selection, { noremap = true, silent = false })
+vim.opt.conceallevel = 2
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
+		vim.opt_local.breakindent = true
+	end,
+})
