@@ -17,6 +17,9 @@ return {
 		)
 
 		require("fidget").setup({})
+		require("render-markdown").setup({
+			completions = { coq = { enabled = true } },
+		})
 
 		-- Mason setup
 		require("mason").setup({
@@ -36,6 +39,11 @@ return {
 			map_cr = true,
 			map_complete = true,
 		})
+
+		-- LSP key mappings
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show hover information" })
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Show code actions" })
 
 		-- Mason-lspconfig setup
 		require("mason-lspconfig").setup({
@@ -57,8 +65,6 @@ return {
 					require("lspconfig")[server_name].setup({
 						capabilities = capabilities,
 					})
-					vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show hover information" })
-					vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Show code actions" })
 				end,
 
 				zls = function()
@@ -77,6 +83,31 @@ return {
 					vim.g.zig_fmt_autosave = 0
 				end,
 
+				["ts_ls"] = function()
+					-- configure typescript language server
+					local lspconfig = require("lspconfig")
+					lspconfig["tsserver"].setup({
+						capabilities = capabilities,
+						filetypes = {
+							"javascript",
+							"javascriptreact",
+							"javascript.jsx",
+							"typescript",
+							"typescriptreact",
+							"typescript.tsx",
+						},
+						init_options = {
+							preferences = {
+								disableSuggestions = false,
+							},
+						},
+						-- Optional: Add on_attach for additional setup if needed
+						-- on_attach = function(client, bufnr)
+						--     -- Custom setup for TypeScript files
+						-- end,
+					})
+				end,
+
 				["lua_ls"] = function()
 					local lspconfig = require("lspconfig")
 					lspconfig.lua_ls.setup({
@@ -84,7 +115,7 @@ return {
 						settings = {
 							Lua = {
 								diagnostics = {
-									globals = { "vim" }, -- Note: 'global' should be 'globals'
+									globals = { "vim" },
 								},
 								format = {
 									enable = true,
@@ -103,6 +134,7 @@ return {
 					local lspconfig = require("lspconfig")
 					lspconfig["svelte"].setup({
 						capabilities = capabilities,
+						---@diagnostic disable-next-line: unused-local
 						on_attach = function(client, bufnr)
 							vim.api.nvim_create_autocmd("BufWritePost", {
 								pattern = { "*.js", "*.ts" },
@@ -153,6 +185,7 @@ return {
 				"black", -- python formatter
 				"pylint",
 				"eslint_d",
+				"js-debug-adapter",
 				"htmlhint",
 			},
 		})
