@@ -9,7 +9,6 @@ return {
 		config = function()
 			local telescope = require("telescope")
 			local builtin = require("telescope.builtin")
-
 			-- Configure file and directory exclusions
 			telescope.setup({
 				defaults = {
@@ -45,13 +44,20 @@ return {
 						"--glob=!node_modules/", -- Exclude node_modules directory
 					},
 				},
+				pickers = {
+					find_files = {
+						hidden = true, -- This will include hidden files like .config
+					},
+					git_files = {
+						hidden = true, -- Also include hidden files in git_files
+						show_untracked = true,
+					},
+				},
 				extensions = {
 					["ui-select"] = require("telescope.themes").get_dropdown({}),
 				},
 			})
-
 			telescope.load_extension("ui-select")
-
 			local keymap = vim.keymap.set
 			keymap("n", "<leader>?", ":Telescope keymaps<CR>", { desc = "Telescope: Show Keymaps" })
 			keymap("n", "<leader><Tab>", builtin.find_files, { desc = "Telescope: Find Files" })

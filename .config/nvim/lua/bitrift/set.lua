@@ -92,7 +92,7 @@ local function run_selection()
 		print("No runner defined for ." .. ext)
 	end
 end
-
+vim.opt.showtabline = 0
 vim.keymap.set("n", "<leader><leader>x", run_file, { noremap = true, silent = false })
 vim.keymap.set("v", "<leader>x", run_selection, { noremap = true, silent = false })
 vim.opt.conceallevel = 2
@@ -104,3 +104,11 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.breakindent = true
 	end,
 })
+-- put this in your main init.lua file ( before lazy setup )
+vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
+
+-- put this after lazy setup
+-- (method 2, for non lazyloaders) to load all highlights at once
+for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+	dofile(vim.g.base46_cache .. v)
+end
