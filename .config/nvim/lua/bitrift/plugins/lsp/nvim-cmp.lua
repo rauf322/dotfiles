@@ -1,13 +1,5 @@
 return {
 	{
-		"L3MON4D3/LuaSnip",
-		config = function()
-			require("luasnip.loaders.from_lua").load({
-				paths = "~/.config/nvim/lua/bitrift/lazy/snippets/",
-			})
-		end,
-	},
-	{
 		"hrsh7th/nvim-cmp",
 		-- event = "InsertEnter",
 		branch = "main", -- fix for deprecated functions coming in nvim 0.13
@@ -27,42 +19,36 @@ return {
 			local lspkind = require("lspkind")
 
 			-- Load custom snippets from the specified path
-			if has_luasnip then
-				require("luasnip.loaders.from_lua").load({
-					paths = "~/.config/nvim/lua/bitrift/lazy/snippets/",
-				})
-			end
 
 			local rhs = function(keys)
 				return vim.api.nvim_replace_termcodes(keys, true, true, true)
 			end
-
 			local lsp_kinds = {
-				Class = " ",
-				Color = " ",
-				Constant = " ",
-				Constructor = " ",
-				Enum = " ",
-				EnumMember = " ",
-				Event = " ",
-				Field = " ",
-				File = " ",
-				Folder = " ",
-				Function = " ",
-				Interface = " ",
-				Keyword = " ",
-				Method = " ",
-				Module = " ",
-				Operator = " ",
-				Property = " ",
-				Reference = " ",
-				Snippet = " ",
-				Struct = " ",
-				Text = " ",
-				TypeParameter = " ",
-				Unit = " ",
-				Value = " ",
-				Variable = " ",
+				Class = " ",
+				Color = " ",
+				Constant = " ",
+				Constructor = " ",
+				Enum = " ",
+				EnumMember = " ",
+				Event = " ",
+				Field = " ",
+				File = " ",
+				Folder = " ",
+				Function = " ",
+				Interface = " ",
+				Keyword = " ",
+				Method = " ",
+				Module = " ",
+				Operator = " ",
+				Property = " ",
+				Reference = " ",
+				Snippet = " ",
+				Struct = " ",
+				Text = " ",
+				TypeParameter = " ",
+				Unit = " ",
+				Value = " ",
+				Variable = " ",
 			}
 			-- Returns the current column number.
 			local column = function()
@@ -212,7 +198,7 @@ return {
 				experimental = {
 					-- HACK: experimenting with ghost text
 					-- look at `toggle_ghost_text()` function below.
-					ghost_text = false,
+					ghost_text = true,
 				},
 				completion = {
 					completeopt = "menu,menuone,noinsert",
@@ -382,6 +368,14 @@ return {
 				callback = toggle_ghost_text,
 			})
 			-- ! Ghost text stuff ! --
+		end,
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		config = function()
+			require("luasnip.loaders.from_lua").load({
+				paths = "~/.config/nvim/lua/bitrift/plugins/snippets/",
+			})
 		end,
 	},
 	-- {
