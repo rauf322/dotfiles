@@ -219,11 +219,11 @@ return {
 				},
 				-- autocompletion sources
 				sources = cmp.config.sources({
-					{ name = "luasnip" }, -- snippets
 					{ name = "lazydev" },
 					{ name = "nvim_lsp" },
 					{ name = "buffer" }, -- text within current buffer
 					{ name = "path" }, -- file system paths
+					{ name = "luasnip" }, -- snippets
 				}),
 				-- mapping = cmp.mapping.preset.insert({
 				--     ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
