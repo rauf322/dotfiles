@@ -1,3 +1,4 @@
+local clipboardHelper = require("bitrift.utils.clipboardHelper")
 return {
 	"nvim-tree/nvim-tree.lua",
 	dependencies = "nvim-tree/nvim-web-devicons",
@@ -58,6 +59,12 @@ return {
 
 				-- Load default keybindings
 				api.config.mappings.default_on_attach(bufnr)
+				vim.keymap.set(
+					"n",
+					"C",
+					clipboardHelper.copy_file_to_clipboard,
+					{ buffer = bufnr, desc = "Copy file to system clipboard" }
+				)
 
 				-- Custom override for <CR>
 				vim.keymap.set("n", "<CR>", function()
