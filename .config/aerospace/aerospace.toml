@@ -56,6 +56,11 @@ if.app-name-regex-substring = 'cursor'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
+if.app-name-regex-substring = 'code'
+run = 'move-node-to-workspace 2'
+
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'iina'
 run = ['layout floating','move-node-to-workspace 4']
 
