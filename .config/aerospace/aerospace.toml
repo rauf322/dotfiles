@@ -51,14 +51,14 @@ run = 'move-node-to-workspace 1'
 if.app-name-regex-substring = 'ghostty'
 run = 'move-node-to-workspace 2'
 
+
 [[on-window-detected]]
 if.app-name-regex-substring = 'cursor'
-run = 'move-node-to-workspace 2'
+run = ['layout tiling','move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'code'
-run = 'move-node-to-workspace 2'
-
+run = ['layout tiling','move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'iina'

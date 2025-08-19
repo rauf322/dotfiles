@@ -4,15 +4,15 @@ ZSH_THEME="robbyrussell"
 source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
 echo -ne '\e[2 q'
-# Reset PATH to prevent duplication issues
+#Reset PATH to prevent duplication issues
 export PATH=""
 export XDG_CONFIG_HOME="$HOME/.config"
 
 #PATH TO NODE JS
-# System-wide binaries (Keeps default macOS paths intact)
+#System-wide binaries (Keeps default macOS paths intact)
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
-# Homebrew paths (Ensures Homebrew binaries take precedence)
+#Homebrew paths (Ensures Homebrew binaries take precedence)
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 
 # Apple-specific system paths (Keeps system integrity)
@@ -22,6 +22,7 @@ export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin
 export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:$PATH"
 export PATH="/Library/Apple/usr/bin:$PATH"
 export PATH="$HOME/.local/scripts:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf"
 
