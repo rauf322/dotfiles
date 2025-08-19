@@ -3,7 +3,7 @@ local M = {}
 M.base46 = {
 	theme = "",
 	theme_toggle = { "", "" },
-	transparency = false,
+	transparency = true,
 }
 
 M.ui = {

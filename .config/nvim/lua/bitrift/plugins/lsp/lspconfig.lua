@@ -73,9 +73,12 @@ return {
 			signs = {
 				text = signs, -- Enable signs in the gutter
 			},
-			virtual_text = true, -- Specify Enable virtual text for diagnostics
+			virtual_text = {
+				severity = { min = vim.diagnostic.severity.ERROR },
+				prefix = "✘",
+			},
 			underline = true, -- Specify Underline diagnostics
-			update_in_insert = false, -- Keep diagnostics active in insert mode
+			update_in_insert = true, -- Keep diagnostics active in insert mode
 		})
 		require("render-markdown").setup({
 			completions = { coq = { enabled = true } },

@@ -11,10 +11,7 @@ return {
 		vim.g.loaded_netrwPlugin = 1
 
 		nvimtree.setup({
-			live_filter = {
-				prefix = "[FILTER]: ", -- Prefix when filtering
-				always_show_folders = false, -- 🔥 THIS hides folders that don’t match the filter
-			},
+			filters = { dotfiles = false, custom = { "^.git$" } },
 
 			auto_reload_on_write = true,
 			update_focused_file = {
@@ -47,12 +44,6 @@ return {
 						enable = false,
 					},
 				},
-			},
-			filters = {
-				custom = { ".DS_Store", ".git", "node_module" },
-			},
-			git = {
-				ignore = false,
 			},
 			on_attach = function(bufnr)
 				local api = require("nvim-tree.api")
