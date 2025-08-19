@@ -56,7 +56,7 @@ vim.keymap.set("n", "<leader>`", function()
 end)
 
 -- Close the current window (like :close)
-vim.keymap.set("n", "qq", ":close<CR>", { desc = "Close window" })
+vim.keymap.set("n", "qq", ":bdelete!<CR>:close<CR>", { desc = "Delete buffer (kill content)" })
 
 -- Resize window left with >
 vim.keymap.set("n", ">", ":vertical resize +5<CR>", { noremap = true, silent = true })

@@ -1,4 +1,3 @@
--- runner.lua
 local M = {}
 
 function M.run_file()
@@ -10,7 +9,7 @@ function M.run_file()
 		go = "w !go run",
 		c = "!gcc % -o %:r && ./%:r",
 		cpp = "!g++ % -o %:r && ./%:r",
-		ts = "w !ts-node", -- Fixed: added the missing !
+		ts = 'w !ts-node --compiler-options \'{"module":"commonjs"}\'',
 	}
 	if runners[ext] then
 		vim.cmd(runners[ext])
@@ -27,15 +26,13 @@ function M.run_selection()
 	local f = io.open(tmpfile, "w")
 	f:write(content)
 	f:close()
-
 	local runners = {
 		js = "!node " .. tmpfile,
 		py = "!python3 " .. tmpfile,
 		sh = "!bash " .. tmpfile,
 		go = "!go run " .. tmpfile,
-		ts = "!ts-node " .. tmpfile, -- Fixed: added space after ts-node
+		ts = '!ts-node --compiler-options \'{"module":"commonjs"}\' ' .. tmpfile,
 	}
-
 	if runners[ext] then
 		vim.cmd(runners[ext])
 	else
