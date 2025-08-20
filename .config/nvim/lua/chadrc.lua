@@ -1,7 +1,7 @@
 local M = {}
 
 M.base46 = {
-	theme = "",
+	theme = "none",
 	theme_toggle = { "", "" },
 	transparency = true,
 }
