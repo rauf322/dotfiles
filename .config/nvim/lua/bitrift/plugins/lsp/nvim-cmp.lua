@@ -225,22 +225,8 @@ return {
 					{ name = "path" }, -- file system paths
 					{ name = "luasnip" }, -- snippets
 				}),
-				-- mapping = cmp.mapping.preset.insert({
-				--     ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-				--     ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-				--     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				--     ["<C-f>"] = cmp.mapping.scroll_docs(4),
-				--     ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-				--     ["<C-e>"] = cmp.mapping.abort(), -- close completion window
-				--     ["<CR>"] = cmp.mapping.confirm({ select = false }),
-				-- }),
 
-				-- NOTE: ! Experimenting with Customized Mappings ! --
 				mapping = cmp.mapping.preset.insert({
-					-- ['<BS>'] = cmp.mapping(function(_fallback)
-					--     smart_bs()
-					-- end, { 'i', 's' }),
-
 					["<C-e>"] = cmp.mapping.abort(), -- close completion window
 					["<C-d>"] = cmp.mapping(function()
 						cmp.close_docs()
@@ -307,40 +293,9 @@ return {
 				}),
 				-- setup lspkind for vscode pictograms in autocompletion dropdown menu
 				formatting = {
-					format = function(entry, vim_item)
-						-- Add custom lsp_kinds icons
-						vim_item.kind = string.format("%s %s", lsp_kinds[vim_item.kind] or "", vim_item.kind)
-
-						-- add menu tags (e.g., [Buffer], [LSP])
-						vim_item.menu = ({
-							buffer = "[Buffer]",
-							nvim_lsp = "[LSP]",
-							luasnip = "[LuaSnip]",
-							nvim_lua = "[Lua]",
-							latex_symbols = "[LaTeX]",
-						})[entry.source.name]
-
-						-- use lspkind and tailwindcss-colorizer-cmp for additional formatting
-						vim_item = lspkind.cmp_format({
-							maxwidth = 25,
-							ellipsis_char = "...",
-						})(entry, vim_item)
-
-						return vim_item
-					end,
-					-- format = lspkind.cmp_format({
-					--         maxwidth = 30,
-					--         ellipsis_char = "...",
-					--         before = require("tailwindcss-colorizer-cmp").formatter
-					-- }),
-					-- format = require("tailwindcss-colorizer-cmp").formatter
+					format = lspkind.cmp_format({ with_text = false, maxwidth = 50 }),
 				},
 			})
-
-			-- NOTE: Added Ghost text stuff
-			-- Only show ghost text at word boundaries, not inside keywords. Based on idea
-			-- from: https://github.com/hrsh7th/nvim-cmp/issues/2035#issuecomment-2347186210
-
 			local config = require("cmp.config")
 			local toggle_ghost_text = function()
 				if vim.api.nvim_get_mode().mode ~= "i" then
