@@ -29,6 +29,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "130"
+vim.lsp.inlay_hint.enable(true)
 vim.g.mapleader = " "
 vim.opt.laststatus = 3
 vim.opt.fillchars = {

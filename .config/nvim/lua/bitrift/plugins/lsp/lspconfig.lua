@@ -4,10 +4,10 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
-		-- "saghen/blink.cmp",
-		"windwp/nvim-autopairs",
-		"rafamadriz/friendly-snippets", -- Keep for blink.cmp snippets
+		{ "antosha417/nvim-lsp-file-operations", config = true },
+		{ "folke/neodev.nvim", opts = {} },
 	},
+
 	config = function()
 		local lspconfig = require("lspconfig")
 
@@ -85,14 +85,6 @@ return {
 			completions = { coq = { enabled = true } },
 		})
 
-		-- Autopairs setup
-		local npairs = require("nvim-autopairs")
-		npairs.setup({
-			check_ts = true,
-			map_cr = true,
-			map_complete = true,
-		})
-
 		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
 			settings = {
@@ -131,9 +123,42 @@ return {
 			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
 		})
 
-		-- emmet_ls
-		lspconfig.emmet_ls.setup({
+		lspconfig.ts_ls.setup({
 			capabilities = capabilities,
+			settings = {
+				typescript = {
+					suggest = { autoImports = true },
+					preferences = {
+						includePackageJsonAutoImports = "on",
+						includeCompletionsForModuleExports = true,
+						importModuleSpecifierPreference = "non-relative", -- tweak to taste
+					},
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+				},
+				javascript = {
+					suggest = { autoImports = true },
+					preferences = { includePackageJsonAutoImports = "on" },
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+				},
+			},
 			filetypes = {
 				"html",
 				"typescriptreact",
@@ -143,6 +168,8 @@ return {
 				"scss",
 				"less",
 				"svelte",
+				"javascript",
+				"typescript",
 			},
 		})
 	end,
