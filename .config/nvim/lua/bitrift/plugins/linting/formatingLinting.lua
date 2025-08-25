@@ -4,7 +4,7 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local lint = require("lint")
-			lint.linters.eslint_d = vim.tbl_deep_extend("force", lint.linters.eslint_d, {
+			lint.linters.eslint_d = vim.tbl_deep_extend("force", lint.linters.eslint_d or {}, {
 				args = {
 					"--format",
 					"json",
@@ -13,10 +13,8 @@ return {
 					function()
 						return vim.api.nvim_buf_get_name(0)
 					end,
-					-- add safe flags here if you need any
 				},
 			})
-
 			lint.linters_by_ft = {
 				javascript = { "eslint_d" },
 				typescript = { "eslint_d" },
@@ -25,26 +23,22 @@ return {
 				svelte = { "eslint_d" },
 				python = { "pylint" },
 			}
-
-			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-
+			local grp = vim.api.nvim_create_augroup("lint", { clear = true })
 			vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-				group = lint_augroup,
+				group = grp,
 				callback = function()
 					lint.try_lint()
 				end,
 			})
-
 			vim.keymap.set("n", "<leader>tl", function()
 				lint.try_lint()
-			end, { desc = "Trigger linting for current file" })
+			end, { desc = "Trigger linting" })
 		end,
 	},
+
 	{
 		"stevearc/conform.nvim",
-
 		event = { "BufReadPre", "BufNewFile" },
-
 		config = function()
 			local conform = require("conform")
 			conform.setup({
@@ -64,25 +58,12 @@ return {
 					lua = { "stylua" },
 					python = { "isort", "black" },
 				},
-				format_on_save = {
-					lsp_fallback = true,
-					async = false,
-					timeout_ms = 500,
-				},
-				-- formatters = {
-				-- 	prettier = {
-				-- 		prepend_args = { "--single-quote", "--semi", "false", "--tab-width", "2" }, -- Align with ESLint rules
-				-- 	},
-				-- },
+				format_on_save = { lsp_fallback = true, async = false, timeout_ms = 500 },
 			})
 			vim.keymap.set({ "n", "v" }, "<leader>s", function()
-				conform.format({
-					lsp_fallback = true,
-					async = false,
-					timeout_ms = 500,
-				})
-				vim.cmd("wa") -- no <CR> needed
-			end, { desc = "Format file and save it" })
+				conform.format({ lsp_fallback = true, async = false, timeout_ms = 500 })
+				vim.cmd("wa")
+			end, { desc = "Format file(s) and save" })
 		end,
 	},
 }

@@ -1,7 +1,7 @@
 return {
 	{
 		"hrsh7th/nvim-cmp",
-		-- event = "InsertEnter",
+		event = "InsertEnter",
 		branch = "main", -- fix for deprecated functions coming in nvim 0.13
 		dependencies = {
 			"hrsh7th/cmp-buffer", -- source for text in buffer
@@ -19,6 +19,7 @@ return {
 			local lspkind = require("lspkind")
 
 			-- Load custom snippets from the specified path
+			require("luasnip.loaders.from_vscode").lazy_load()
 
 			local rhs = function(keys)
 				return vim.api.nvim_replace_termcodes(keys, true, true, true)
@@ -192,16 +193,13 @@ return {
 			end
 
 			-- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-			require("luasnip.loaders.from_vscode").lazy_load()
 
 			cmp.setup({
 				experimental = {
-					-- HACK: experimenting with ghost text
-					-- look at `toggle_ghost_text()` function below.
 					ghost_text = true,
 				},
 				completion = {
-					completeopt = "menu,menuone,noinsert",
+					completeopt = "menu,menuone,preview,noselect",
 				},
 				window = {
 					documentation = {
@@ -218,22 +216,22 @@ return {
 					end,
 				},
 				-- autocompletion sources
-				sources = cmp.config.sources({
-					{ name = "lazydev" },
-					{ name = "nvim_lsp" },
-					{ name = "buffer" }, -- text within current buffer
-					{ name = "path" }, -- file system paths
-					{ name = "luasnip" }, -- snippets
-				}),
 				-- mapping = cmp.mapping.preset.insert({
-				--     ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-				--     ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-				--     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				--     ["<C-f>"] = cmp.mapping.scroll_docs(4),
-				--     ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-				--     ["<C-e>"] = cmp.mapping.abort(), -- close completion window
-				--     ["<CR>"] = cmp.mapping.confirm({ select = false }),
+				-- 	["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+				-- 	["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+				-- 	["<C-b>"] = cmp.mapping.scroll_docs(-4),
+				-- 	["<C-f>"] = cmp.mapping.scroll_docs(4),
+				-- 	["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
+				-- 	["<C-e>"] = cmp.mapping.abort(), -- close completion window
+				-- 	["<CR>"] = cmp.mapping.confirm({ select = false }),
 				-- }),
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp" },
+					{ name = "luasnip" }, -- snippets
+					{ name = "buffer" }, -- text within current buffer
+					{ name = "lazydev" },
+					{ name = "path" }, -- file system paths
+				}),
 
 				-- NOTE: ! Experimenting with Customized Mappings ! --
 				mapping = cmp.mapping.preset.insert({
@@ -337,10 +335,6 @@ return {
 				},
 			})
 
-			-- NOTE: Added Ghost text stuff
-			-- Only show ghost text at word boundaries, not inside keywords. Based on idea
-			-- from: https://github.com/hrsh7th/nvim-cmp/issues/2035#issuecomment-2347186210
-
 			local config = require("cmp.config")
 			local toggle_ghost_text = function()
 				if vim.api.nvim_get_mode().mode ~= "i" then
@@ -378,20 +372,20 @@ return {
 			})
 		end,
 	},
-	-- {
-	-- 	"github/copilot.vim",
-	-- 	config = function()
-	-- 		vim.g.copilot_no_tab_map = true
-	-- 		function map(mode, lhs, rhs, opts)
-	-- 			local options = { noremap = true }
-	--
-	-- 			if opts then
-	-- 				options = vim.tbl_extend("force", options, opts)
-	-- 			end
-	--
-	-- 			vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-	-- 		end
-	-- 		map("i", "<C-g>", "copilot#Accept('<CR>')", { silent = true, expr = true })
-	-- 	end,
-	-- },
+	{
+		"github/copilot.vim",
+		config = function()
+			vim.g.copilot_no_tab_map = true
+			function map(mode, lhs, rhs, opts)
+				local options = { noremap = true }
+
+				if opts then
+					options = vim.tbl_extend("force", options, opts)
+				end
+
+				vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+			end
+			map("i", "<C-g>", "copilot#Accept('<CR>')", { silent = true, expr = true })
+		end,
+	},
 }

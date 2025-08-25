@@ -4,12 +4,15 @@ return {
 		tag = "0.1.5",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			"nvim-telescope/telescope-ui-select.nvim",
 		},
 		config = function()
 			local telescope = require("telescope")
+			local action = require("telescope.actions")
 			local builtin = require("telescope.builtin")
 			-- Configure file and directory exclusions
+			telescope.load_extension("fzf")
 			telescope.setup({
 				defaults = {
 					file_ignore_patterns = {
