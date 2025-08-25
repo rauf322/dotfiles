@@ -61,6 +61,7 @@ alias c="open $1 -a \"Cursor\""
 # Git Aliases
 alias add="git add"
 alias commit="git commit"
+alias switch="git switch"
 alias rebase="git rebase"
 alias merge="git merge"
 alias pull="git pull"
