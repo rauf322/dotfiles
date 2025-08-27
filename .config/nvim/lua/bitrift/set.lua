@@ -1,14 +1,13 @@
+vim.opt.clipboard = "unnamedplus"
 vim.opt.number = true
 vim.opt.relativenumber = true
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-vim.opt.wrap = true
+
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.signcolumn = "yes"
 -- Decrease update time
-vim.opt.updatetime = 250
 -- Decrease mapped sequence wait time
 vim.opt.timeoutlen = 500
 -- Save undo history
@@ -30,7 +29,6 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "130"
 vim.lsp.inlay_hint.enable(true)
-vim.g.mapleader = " "
 vim.opt.laststatus = 3
 vim.opt.fillchars = {
 	vert = " ",

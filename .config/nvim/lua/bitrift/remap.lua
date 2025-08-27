@@ -27,13 +27,13 @@ vim.keymap.set("n", "<leader>|", ":vsplit<CR>", { desc = "Vertical Split" })
 vim.keymap.set("n", "<leader>-", ":split<CR>", { desc = "Horizontal Split" })
 
 -- Buffers / windows
-vim.keymap.set("n", "<leader>qb", ":bdelete!<CR>", { desc = "Close Buffer" })
-vim.keymap.set("n", "qq", function()
+vim.keymap.set("n", "<leader>qq", ":bdelete!<CR>", { desc = "Close Buffer" })
+vim.keymap.set("n", "qb", function()
 	local bufnr = vim.api.nvim_get_current_buf()
 
 	-- close only the current window
-	vim.cmd("close")
 
+	vim.cmd("close")
 	-- if the buffer is not displayed in any window, delete it
 	if vim.fn.bufwinnr(bufnr) == -1 then
 		vim.cmd("bdelete! " .. bufnr)
