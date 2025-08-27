@@ -1,5 +1,6 @@
-export ZSH="$HOME/.oh-my-zsh"
+ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
+export EDITOR=nvim
 
 source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
@@ -72,11 +73,11 @@ alias python="python3"
 # ls for . file alias
 alias ls.="ls -a"
 
-#Vim to Nvim alias
+ # Vim to Nvim alias
 alias v="nvim ."
 alias vim="nvim"
 alias v.="nvim ."
-
+#
 #yazi-cwd
 export FZF_DEFAULT_COMMAND='find "$PWD" -mindepth 1 -maxdepth 4 \( -type f -o -type d \)'
 export EDITOR="nvim"
@@ -94,3 +95,5 @@ function y() {
 	rm -f -- "$tmp"
 }
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+set -o vi
+

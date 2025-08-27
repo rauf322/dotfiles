@@ -1,5 +1,4 @@
 return {
-
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
@@ -57,7 +56,6 @@ return {
 
 				opts.desc = "Restart LSP"
 				vim.keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-
 				vim.keymap.set("i", "<C-h>", function()
 					vim.lsp.buf.signature_help()
 				end, opts)
@@ -84,7 +82,10 @@ return {
 		require("render-markdown").setup({
 			completions = { coq = { enabled = true } },
 		})
-
+		lspconfig.cssls.setup({
+			capabilities = capabilities,
+			filetypes = { "css" },
+		})
 		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
 			settings = {
@@ -134,19 +135,16 @@ return {
 						importModuleSpecifierPreference = "non-relative", -- tweak to taste
 					},
 					inlayHints = {
-						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHints = "literal",
 						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
 						includeInlayFunctionParameterTypeHints = true,
-						includeInlayVariableTypeHints = true,
-						includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+						includeInlayVariableTypeHints = false,
 						includeInlayPropertyDeclarationTypeHints = true,
 						includeInlayFunctionLikeReturnTypeHints = true,
 						includeInlayEnumMemberValueHints = true,
 					},
 				},
 				javascript = {
-					suggest = { autoImports = true },
-					preferences = { includePackageJsonAutoImports = "on" },
 					inlayHints = {
 						includeInlayParameterNameHints = "all",
 						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -160,12 +158,8 @@ return {
 				},
 			},
 			filetypes = {
-				"html",
 				"typescriptreact",
 				"javascriptreact",
-				"css",
-				"sass",
-				"scss",
 				"less",
 				"svelte",
 				"javascript",
