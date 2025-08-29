@@ -11,7 +11,7 @@ return {
 		vim.g.loaded_netrwPlugin = 1
 
 		nvimtree.setup({
-			filters = { dotfiles = false, custom = { "^.git$" } },
+			filters = { dotfiles = true, custom = {} },
 
 			auto_reload_on_write = true,
 			update_focused_file = {
@@ -56,6 +56,13 @@ return {
 					clipboardHelper.copy_file_to_clipboard,
 					{ buffer = bufnr, desc = "Copy file to system clipboard" }
 				)
+				vim.keymap.set(
+					"n",
+					".",
+					api.tree.toggle_hidden_filter,
+					{ buffer = bufnr, desc = "Toggle hidden files" }
+				)
+				vim.keymap.del("n", "H", { buffer = bufnr })
 
 				-- Custom override for <CR>
 				vim.keymap.set("n", "<CR>", function()

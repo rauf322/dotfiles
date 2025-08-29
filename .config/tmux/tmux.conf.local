@@ -52,23 +52,22 @@ bind -r , resize-pane -L 15     # Resize left (comma)
 bind -r . resize-pane -R 15     # Resize right (period)
 bind -r < resize-pane -U 15     # Resize up
 bind -r > resize-pane -D 15    # Resize down
+
+# Pane switcher from left to right
+bind -r H swap-pane -U  
+bind -r L swap-pane -D
+
 # Window management
-bind R command-prompt "rename-window %%"  # Rename window
-bind x kill-pane                      # Kill pane
-bind f resize-pane -Z                 # Toggle pane zoom
-
+bind -r R command-prompt "rename-window %%"  # Rename window
+bind -r x kill-pane                      # Kill pane
+bind -r f resize-pane -Z                 # Toggle pane zoom
 # Toggle opencode
-
+bind -r p run-shell "tmux-open-pane"
 # Session switcher (requires tmux-sessionizer script)
 bind -r Tab run-shell "tmux neww 'tmux-sessionizer'"
 
 # Open opencode in new window/tab (smart - reuse existing window)
 bind -r ` display-popup 'fish -c "$(fish -c history | fzf)"'
-#Open opencode in separate window
-# bind -r p run-shell "tmux-opencode-window" 
-#Split window
-bind -r p run-shell "tmux-open-pane"
-
 # bind -r p popup -d "#{pane_current_path}" -w 90% -h 90% "tmux new-session -d -s opencode-popup 'opencode' || tmux attach-session -t
 
 # -- Copy Mode (Vi-style) -----------------------------------------------------
