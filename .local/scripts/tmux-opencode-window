@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# tmux-opencode-window
+# Smart opencode window management for tmux
+# - If opencode window exists, switch to it
+# - If not, create new window and run opencode
+
+# Check if a window named "opencode" already exists
+if tmux list-windows -F '#W' | grep -q '^opencode$'; then
+    # Window exists, switch to it
+    tmux select-window -t opencode
+else
+    # Window doesn't exist, create it and run opencode
+    current_path=$(tmux display-message -p '#{pane_current_path}')
+    tmux new-window -c "$current_path" -n opencode 'opencode'
+fi

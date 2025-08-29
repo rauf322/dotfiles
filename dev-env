@@ -90,10 +90,10 @@ elif [[ $choice == "copy:root:local" ]]; then
 elif [[ $choice == "info" ]]; then 
     log "You have multiple options:"
     log "--dry run"
-    log "--copy:root:config copy from XDG_CONFIG_HOME to .config"
-    log "--copy:dir:config copy from .config to XDG_CONFIG_HOME"
-    log "--copy:root:local copy from $HOME/.local to .local"
-    log "--copy:dir:local copy from .local to $HOME/.local"
+    log "--copy:root:config copy from XDG_CONFIG_HOME to dev-env"
+    log "--copy:dir:config copy from dev-env to XDG_CONFIG_HOME"
+    log "--copy:root:local copy from $HOME/.local to dev-env"
+    log "--copy:dir:local copy from dev-env to $HOME/.local"
     log "--info show this message"
 fi
 
