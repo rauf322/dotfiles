@@ -83,4 +83,4 @@ vim.keymap.set("n", "<leader>rk", ":resize -25<CR>", { desc = "Resize shorter" }
 vim.keymap.set("n", "<C-w>q", ":tabclose<CR>", { noremap = true, silent = true })
 
 -- Terminal: Esc to Normal
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+-- vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
