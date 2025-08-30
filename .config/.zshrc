@@ -74,9 +74,9 @@ alias python="python3"
 alias ls.="ls -a"
 
  # Vim to Nvim alias
-alias v="nvim ."
+alias v="nvim"
 alias vim="nvim"
-alias v.="nvim ."
+alias v.="nvim"
 #
 #yazi-cwd
 export FZF_DEFAULT_COMMAND='find "$PWD" -mindepth 1 -maxdepth 4 \( -type f -o -type d \)'
