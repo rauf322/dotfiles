@@ -56,12 +56,10 @@ return {
 					clipboardHelper.copy_file_to_clipboard,
 					{ buffer = bufnr, desc = "Copy file to system clipboard" }
 				)
-				vim.keymap.set(
-					"n",
-					".",
-					api.tree.toggle_hidden_filter,
-					{ buffer = bufnr, desc = "Toggle hidden files" }
-				)
+				vim.keymap.set("n", ".", function()
+					api.tree.toggle_hidden_filter()
+					api.tree.toggle_gitignore_filter()
+				end, { buffer = bufnr, desc = "Toggle hidden and ignored files" })
 				vim.keymap.del("n", "H", { buffer = bufnr })
 
 				-- Custom override for <CR>
