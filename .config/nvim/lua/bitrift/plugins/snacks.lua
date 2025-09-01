@@ -66,27 +66,24 @@ return {
 		terminal = {
 			start_insert = false,
 			auto_insert = false,
-			-- keep terminal open when process exits
 			auto_close = false,
 			win = {
-				-- border = "rounded",
 				style = "minimal",
 			},
-			-- in your snacks.lua or keymaps.lua
-			vim.keymap.set("n", "<leader>`", function()
-				require("snacks.terminal").toggle()
-			end, { desc = "Toggle terminal" }),
-			vim.keymap.set("n", "<leader>tg", function()
-				require("snacks.terminal").toggle("lazygit")
-			end, { desc = "Toggle lazygit" }),
-			vim.keymap.set("n", "<leader>th", function()
-				require("snacks.terminal").toggle("btop")
-			end, { desc = "Toggle htop" }),
 		},
 	},
 
 	config = function(_, opts)
 		require("snacks").setup(opts)
+		vim.keymap.set("n", "<leader>`", function()
+			require("snacks.terminal").toggle()
+		end, { desc = "Toggle terminal" })
+		vim.keymap.set("n", "<leader>tg", function()
+			require("snacks.terminal").toggle("lazygit")
+		end, { desc = "Toggle lazygit" })
+		vim.keymap.set("n", "<leader>th", function()
+			require("snacks.terminal").toggle("btop")
+		end, { desc = "Toggle htop" })
 
 		vim.o.ttimeoutlen = 0
 	end,
