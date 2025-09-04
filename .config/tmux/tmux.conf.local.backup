@@ -1,12 +1,12 @@
 # Personal Tmux Configuration
-# Clean, minimal tmux setup with tmux-minimal-theme
+# Clean, organized tmux setup with UI and keybindings
 
 # -- Prefix and Basic Settings ----------------------------------------------------
 set -g prefix C-a
 unbind C-b
 bind-key C-a send-prefix
 
-# -- Core Settings ---------------------------------------------------------------
+# -- Display and UI Settings --------------------------------------------------
 set-option -g mouse on
 set -g base-index 1                    # start windows numbering at 1
 setw -g pane-base-index 1              # make pane numbering consistent with windows
@@ -19,20 +19,16 @@ set -g status-interval 10              # redraw status line every 10 seconds
 set -g history-limit 5000              # boost history
 set -g detach-on-destroy off           # don't exit from tmux when closing a session
 set -g set-clipboard on                # use system clipboard
-set -g status-position bottom          # status bar at bottom
+set -g status-position bottom          # macOS / darwin style
 set -g allow-passthrough on
 set -ga update-environment TERM
 set -ga update-environment TERM_PROGRAM
-
-# -- Terminal and Color Support --------------------------------------------------
-set -g default-terminal "tmux-256color"
-set-option -sa terminal-features ',xterm-256color:RGB'
 
 # UTF-8 support
 set -q -g status-utf8 on
 setw -q -g utf8 on
 
-# -- Keybindings ------------------------------------------------------------------
+# -- Keybindings --------------------------------------------------------------
 
 # Session management
 bind-key K kill-session               # Kill session
@@ -65,21 +61,18 @@ bind -r L swap-pane -D
 bind -r R command-prompt "rename-window %%"  # Rename window
 bind -r x kill-pane                      # Kill pane
 bind -r f resize-pane -Z                 # Toggle pane zoom
-
 # Toggle opencode
 bind -r p run-shell "tmux-open-pane"
-
 # Session switcher (requires tmux-sessionizer script)
 bind -r Tab run-shell "tmux neww 'tmux-sessionizer'"
 
-# Open command history with fzf
+# Open opencode in new window/tab (smart - reuse existing window)
 bind -r ` display-popup 'fish -c "$(fish -c history | fzf)"'
-
 # Lazygit popup
 bind -r t switch-client -T lazygit-table
 bind -r -T lazygit-table g display-popup -d '#{pane_current_path}' -w 90% -h 90% -E 'lazygit'
 
-# -- Copy Mode (Vi-style) ---------------------------------------------------------
+# -- Copy Mode (Vi-style) -----------------------------------------------------
 setw -g mode-keys vi
 
 # Copy mode bindings
@@ -99,41 +92,73 @@ bind -T copy-mode-vi k send -N1 -X cursor-up
 bind -Tcopy-mode WheelUpPane send -N1 -X scroll-up
 bind -Tcopy-mode WheelDownPane send -N1 -X scroll-down
 
-# -- Minimal Theme Configuration --------------------------------------------------
-# tmux-minimal-theme color scheme (Catppuccin Mocha)
-set -g @minimal_theme_bg_color "#1A1D23"
-set -g @minimal_theme_active_color "#b4befe"
-set -g @minimal_theme_inactive_color "#6c7086"
-set -g @minimal_theme_text_color "#cdd6f4"
-set -g @minimal_theme_accent_color "#b4befe"
-set -g @minimal_theme_border_color "#44475a"
+# -- Theme and Appearance -----------------------------------------------------
+# RGB 24-bit colour support
+tmux_conf_24b_colour=auto
 
-# Alternative color schemes (uncomment to use):
+# Enable theming
+tmux_conf_theme=enabled
 
-# Tokyo Night
-# set -g @minimal_theme_bg_color "#1a1b26"
-# set -g @minimal_theme_active_color "#7aa2f7"
-# set -g @minimal_theme_inactive_color "#565f89"
-# set -g @minimal_theme_text_color "#c0caf5"
-# set -g @minimal_theme_accent_color "#7aa2f7"
-# set -g @minimal_theme_border_color "#414868"
+# Color palette
+tmux_conf_theme_colour_1="#080808"    # dark gray
+tmux_conf_theme_colour_2="#303030"    # gray  
+tmux_conf_theme_colour_3="#8a8a8a"    # light gray
+tmux_conf_theme_colour_4="#00afff"    # light blue
+tmux_conf_theme_colour_5="#ffff00"    # yellow
+tmux_conf_theme_colour_6="#080808"    # dark gray
+tmux_conf_theme_colour_7="#e4e4e4"    # white
+tmux_conf_theme_colour_8="#080808"    # dark gray
+tmux_conf_theme_colour_9="#ffff00"    # yellow
+tmux_conf_theme_colour_10="#ff00af"   # pink
+tmux_conf_theme_colour_11="#5fff00"   # green
+tmux_conf_theme_colour_12="#8a8a8a"   # light gray
+tmux_conf_theme_colour_13="#e4e4e4"   # white
+tmux_conf_theme_colour_14="#080808"   # dark gray
+tmux_conf_theme_colour_15="#080808"   # dark gray
+tmux_conf_theme_colour_16="#d70000"   # red
+tmux_conf_theme_colour_17="#e4e4e4"   # white
 
-# Dracula
-# set -g @minimal_theme_bg_color "#282a36"
-# set -g @minimal_theme_active_color "#bd93f9"
-# set -g @minimal_theme_inactive_color "#6272a4"
-# set -g @minimal_theme_text_color "#f8f8f2"
-# set -g @minimal_theme_accent_color "#bd93f9"
-# set -g @minimal_theme_border_color "#44475a"
+# Pane styling
+tmux_conf_theme_window_fg="default"
+tmux_conf_theme_window_bg="default"
+tmux_conf_theme_highlight_focused_pane=false
+tmux_conf_theme_focused_pane_bg="$tmux_conf_theme_colour_2"
+tmux_conf_theme_pane_border_style=thin
+tmux_conf_theme_pane_border="$tmux_conf_theme_colour_2"
+tmux_conf_theme_pane_active_border="$tmux_conf_theme_colour_4"
+set -g pane-active-border-style 'fg=magenta,bg=default'
 
-# Gruvbox Dark
-# set -g @minimal_theme_bg_color "#1d2021"
-# set -g @minimal_theme_active_color "#83a598"
-# set -g @minimal_theme_inactive_color "#665c54"
-# set -g @minimal_theme_text_color "#ebdbb2"
-# set -g @minimal_theme_accent_color "#83a598"
-# set -g @minimal_theme_border_color "#504945"
+# Status line content
+tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
+tmux_conf_theme_status_right=" #{prefix}#{mouse}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | rauf322 "
 
-# -- Initialize Minimal Theme -----------------------------------------------------
-# Load and apply the minimal theme
-run-shell ~/.config/tmux/tmux-minimal-theme/minimal.tmux
+# Status line styling  
+tmux_conf_theme_status_fg="$tmux_conf_theme_colour_3"
+tmux_conf_theme_status_bg="$tmux_conf_theme_colour_1"
+tmux_conf_theme_status_attr="none"
+
+# Window status styling
+tmux_conf_theme_window_status_fg="$tmux_conf_theme_colour_3"
+tmux_conf_theme_window_status_bg="$tmux_conf_theme_colour_1"
+tmux_conf_theme_window_status_current_fg="$tmux_conf_theme_colour_1"
+tmux_conf_theme_window_status_current_bg="$tmux_conf_theme_colour_4"
+tmux_conf_theme_window_status_current_attr="bold"
+
+# Powerline separators
+tmux_conf_theme_left_separator_main='\uE0B0'
+tmux_conf_theme_left_separator_sub='\uE0B1' 
+tmux_conf_theme_right_separator_main='\uE0B2'
+tmux_conf_theme_right_separator_sub='\uE0B3'
+
+# Terminal title
+tmux_conf_theme_terminal_title="#h ❐ #S ● #I #W"
+
+# -- Plugin Settings (Optional) -----------------------------------------------
+# Uncomment if you want to use plugins
+# set -g @plugin 'nhdaly/tmux-better-mouse-mode'
+# set -g @scroll-speed-num-lines-per-scroll 0.25
+
+# Plugin management
+tmux_conf_update_plugins_on_launch=false
+tmux_conf_update_plugins_on_reload=false
+tmux_conf_uninstall_plugins_on_reload=true
