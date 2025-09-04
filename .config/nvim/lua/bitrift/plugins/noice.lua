@@ -7,9 +7,19 @@ return {
 			"rcarriga/nvim-notify",
 			config = function()
 				require("notify").setup({
-					timeout = 1000, -- 1 second timeout for all notifications
+					timeout = 200, -- 200ms timeout for all notifications
 					stages = "fade_in_slide_out",
-					background_colour = "FloatShadow",
+					background_colour = "Normal",
+					render = "compact",
+					top_down = false,
+					max_width = function()
+						return math.floor(vim.o.columns * 0.4)
+					end,
+					max_height = function()
+						return math.floor(vim.o.lines * 0.2)
+					end,
+					minimum_width = 30,
+					fps = 60,
 					icons = {
 						ERROR = "",
 						WARN = "",
@@ -120,11 +130,11 @@ return {
 					format = "notify",
 					replace = false,
 					merge = false,
-					timeout = 1000, -- 1 second timeout
+					timeout = 200, -- 200ms timeout
 				},
 				mini = {
 					backend = "mini",
-					timeout = 1000, -- 1 second timeout
+					timeout = 200, -- 200ms timeout
 				},
 			},
 			
@@ -140,6 +150,13 @@ return {
 							{ find = "%d fewer lines" },
 							{ find = "%d more lines" },
 						},
+					},
+					opts = { skip = true },
+				},
+				{
+					filter = {
+						event = "notify",
+						find = "ESLint output parsing failed",
 					},
 					opts = { skip = true },
 				},
