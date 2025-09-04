@@ -1,7 +1,10 @@
 local clipboardHelper = require("bitrift.utils.clipboardHelper")
 return {
 	"nvim-tree/nvim-tree.lua",
-	dependencies = "nvim-tree/nvim-web-devicons",
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
+		"antosha417/nvim-lsp-file-operations",
+	},
 	config = function()
 		local nvimtree = require("nvim-tree")
 		vim.opt.fillchars:append("vert: ") -- removes the vertical separator line
@@ -12,6 +15,11 @@ return {
 
 		nvimtree.setup({
 			filters = { dotfiles = true, custom = {} },
+			
+			-- Enable file operation notifications for LSP
+			notify = {
+				threshold = vim.log.levels.INFO,
+			},
 
 			auto_reload_on_write = true,
 			update_focused_file = {

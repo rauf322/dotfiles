@@ -3,7 +3,22 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
-		{ "antosha417/nvim-lsp-file-operations", config = true },
+		{ 
+			"antosha417/nvim-lsp-file-operations", 
+			config = function()
+				require("lsp-file-operations").setup({
+					debug = false,
+					operations = {
+						willRenameFiles = true,
+						didRenameFiles = true,
+						willCreateFiles = true,
+						didCreateFiles = true,
+						willDeleteFiles = true,
+						didDeleteFiles = true,
+					},
+				})
+			end
+		},
 		{ "folke/neodev.nvim", opts = {} },
 	},
 
@@ -13,6 +28,17 @@ return {
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
+		
+		-- Enable file operation capabilities for LSP servers
+		capabilities.workspace = capabilities.workspace or {}
+		capabilities.workspace.fileOperations = {
+			willRename = true,
+			didRename = true,
+			willCreate = true,
+			didCreate = true,
+			willDelete = true,
+			didDelete = true,
+		}
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
