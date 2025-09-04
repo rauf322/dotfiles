@@ -4,7 +4,11 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local lint = require("lint")
-			lint.linters.eslint_d = vim.tbl_deep_extend("force", lint.linters.eslint_d or {}, {
+			
+			-- Override eslint_d with more robust configuration
+			lint.linters.eslint_d = {
+				cmd = "eslint_d",
+				stdin = true,
 				args = {
 					"--format",
 					"json",
@@ -14,7 +18,40 @@ return {
 						return vim.api.nvim_buf_get_name(0)
 					end,
 				},
-			})
+				stream = "stdout",
+				ignore_exitcode = true,
+				parser = function(output, bufnr)
+					if output == "" then
+						return {}
+					end
+					
+					local ok, result = pcall(vim.json.decode, output)
+					if not ok then
+						vim.notify("ESLint output parsing failed: " .. tostring(result), vim.log.levels.WARN)
+						return {}
+					end
+					
+					if not result or not result[1] or not result[1].messages then
+						return {}
+					end
+					
+					local diagnostics = {}
+					for _, message in ipairs(result[1].messages) do
+						table.insert(diagnostics, {
+							lnum = message.line - 1,
+							col = message.column - 1,
+							end_lnum = message.endLine and (message.endLine - 1) or (message.line - 1),
+							end_col = message.endColumn and (message.endColumn - 1) or (message.column - 1),
+							severity = message.severity == 1 and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR,
+							message = message.message,
+							source = "eslint_d",
+							code = message.ruleId,
+						})
+					end
+					
+					return diagnostics
+				end,
+			}
 			lint.linters_by_ft = {
 				javascript = { "eslint_d" },
 				typescript = { "eslint_d" },
@@ -57,6 +94,16 @@ return {
 					liquid = { "prettier" },
 					lua = { "stylua" },
 					python = { "isort", "black" },
+				},
+				formatters = {
+					prettier = {
+						args = {
+							"--stdin-filepath",
+							"$FILENAME",
+							"--single-quote",
+							"--jsx-single-quote",
+						},
+					},
 				},
 				format_on_save = { lsp_fallback = true, async = false, timeout_ms = 500 },
 			})
