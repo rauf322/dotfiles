@@ -109,6 +109,11 @@ return {
 				format_on_save = { lsp_fallback = true, async = false, timeout_ms = 500 },
 			})
 			vim.keymap.set({ "n", "v" }, "<leader>s", function()
+				-- First run JSX self-closing fix if it's a JSX/TSX file
+				local jsx_autofix = require("bitrift.utils.jsx-autofix")
+				jsx_autofix.fix_jsx_self_closing()
+				
+				-- Then format with conform
 				conform.format({ lsp_fallback = true, async = false, timeout_ms = 500 })
 				vim.cmd("wa")
 			end, { desc = "Format file(s) and save" })
