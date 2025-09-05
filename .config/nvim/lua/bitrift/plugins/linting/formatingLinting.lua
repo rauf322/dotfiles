@@ -4,7 +4,7 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local lint = require("lint")
-			
+
 			-- Override eslint_d with more robust configuration
 			lint.linters.eslint_d = {
 				cmd = "eslint_d",
@@ -24,17 +24,17 @@ return {
 					if output == "" then
 						return {}
 					end
-					
+
 					local ok, result = pcall(vim.json.decode, output)
 					if not ok then
 						vim.notify("ESLint output parsing failed: " .. tostring(result), vim.log.levels.WARN)
 						return {}
 					end
-					
+
 					if not result or not result[1] or not result[1].messages then
 						return {}
 					end
-					
+
 					local diagnostics = {}
 					for _, message in ipairs(result[1].messages) do
 						table.insert(diagnostics, {
@@ -42,13 +42,14 @@ return {
 							col = message.column - 1,
 							end_lnum = message.endLine and (message.endLine - 1) or (message.line - 1),
 							end_col = message.endColumn and (message.endColumn - 1) or (message.column - 1),
-							severity = message.severity == 1 and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR,
+							severity = message.severity == 1 and vim.diagnostic.severity.WARN
+								or vim.diagnostic.severity.ERROR,
 							message = message.message,
 							source = "eslint_d",
 							code = message.ruleId,
 						})
 					end
-					
+
 					return diagnostics
 				end,
 			}
