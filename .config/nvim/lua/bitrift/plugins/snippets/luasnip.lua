@@ -35,6 +35,17 @@ ls.add_snippets("javascript", {
 	}),
 })
 ls.add_snippets("javascriptreact", {
+	-- JSX self-closing component snippets
+	s("<", {
+		t("<"),
+		i(1, "Component"),
+		t(" />"),
+	}),
+	s("comp", {
+		t("<"),
+		i(1, "Component"),
+		t(" />"),
+	}),
 	s("rsc", {
 		t("const "),
 		f(filename_no_ext, {}),
@@ -69,6 +80,17 @@ ls.add_snippets("javascriptreact", {
 })
 
 ls.add_snippets("typescriptreact", {
+	-- JSX self-closing component snippets
+	s("<", {
+		t("<"),
+		i(1, "Component"),
+		t(" />"),
+	}),
+	s("comp", {
+		t("<"),
+		i(1, "Component"),
+		t(" />"),
+	}),
 	s("rsc", {
 		t("const "),
 		f(filename_no_ext, {}),

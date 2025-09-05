@@ -3,8 +3,8 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
-		{ 
-			"antosha417/nvim-lsp-file-operations", 
+		{
+			"antosha417/nvim-lsp-file-operations",
 			config = function()
 				require("lsp-file-operations").setup({
 					debug = false,
@@ -17,7 +17,7 @@ return {
 						didDeleteFiles = true,
 					},
 				})
-			end
+			end,
 		},
 		{ "folke/neodev.nvim", opts = {} },
 	},
@@ -28,7 +28,7 @@ return {
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
-		
+
 		-- Enable file operation capabilities for LSP servers
 		capabilities.workspace = capabilities.workspace or {}
 		capabilities.workspace.fileOperations = {
@@ -153,6 +153,54 @@ return {
 		lspconfig.quick_lint_js.setup({
 			capabilities = capabilities,
 			filetypes = { "javascript" },
+		})
+
+		lspconfig.eslint.setup({
+			capabilities = capabilities,
+			on_attach = function(client, bufnr)
+				-- Enable auto-fix on save
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					buffer = bufnr,
+					command = "EslintFixAll",
+				})
+			end,
+			settings = {
+				codeAction = {
+					disableRuleComment = {
+						enable = true,
+						location = "separateLine",
+					},
+					showDocumentation = {
+						enable = true,
+					},
+				},
+				codeActionOnSave = {
+					enable = false,
+					mode = "all",
+				},
+				format = true,
+				nodePath = "",
+				onIgnoredFiles = "off",
+				packageManager = "npm",
+				problems = {
+					shortenToSingleLine = false,
+				},
+				quiet = false,
+				rulesCustomizations = {},
+				run = "onType",
+				useESLintClass = false,
+				validate = "on",
+				workingDirectory = {
+					mode = "location",
+				},
+			},
+			filetypes = {
+				"javascript",
+				"javascriptreact",
+				"typescript",
+				"typescriptreact",
+				"svelte",
+			},
 		})
 
 		lspconfig.ts_ls.setup({

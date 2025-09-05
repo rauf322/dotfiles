@@ -220,10 +220,10 @@ return {
 				-- autocompletion sources
 				sources = cmp.config.sources({
 					{ name = "lazydev" },
-					{ name = "nvim_lsp" },
-					{ name = "buffer" }, -- text within current buffer
-					{ name = "path" }, -- file system paths
-					{ name = "luasnip" }, -- snippets
+					{ name = "luasnip", priority = 1000 }, -- snippets with higher priority
+					{ name = "nvim_lsp", priority = 900 },
+					{ name = "buffer", priority = 500 }, -- text within current buffer
+					{ name = "path", priority = 250 }, -- file system paths
 				}),
 
 				mapping = cmp.mapping.preset.insert({
