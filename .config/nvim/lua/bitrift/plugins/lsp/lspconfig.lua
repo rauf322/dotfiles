@@ -150,6 +150,11 @@ return {
 			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
 		})
 
+		lspconfig.quick_lint_js.setup({
+			capabilities = capabilities,
+			filetypes = { "javascript" },
+		})
+
 		lspconfig.ts_ls.setup({
 			capabilities = capabilities,
 			settings = {

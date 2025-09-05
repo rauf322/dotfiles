@@ -25,9 +25,14 @@ return {
 					{
 						"diagnostics",
 						sources = { "nvim_diagnostic" },
-						symbols = { error = " ", warn = " ", info = " ", hint = " " },
+						symbols = { error = " ", warn = " ", info = " ", hint = " " },
 					},
-					"encoding",
+					{
+						"encoding",
+						fmt = function(str)
+							return str:upper()
+						end,
+					},
 					"filetype",
 				},
 				lualine_y = { "progress" },
