@@ -38,6 +38,7 @@ return {
 				"prismals",
 				"pyright",
 				"eslint",
+				"quick_lint_js",
 			},
 		})
 
