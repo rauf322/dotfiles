@@ -71,7 +71,6 @@ return {
 				group = "DapGroup",
 				pattern = "DapStarted",
 				callback = function()
-					vim.o.statusline = "" -- Clear global statusline
 					vim.o.laststatus = 0 -- Hide statusline globally
 				end,
 			})
@@ -80,8 +79,7 @@ return {
 				group = "DapGroup",
 				pattern = { "DapStopped", "DapTerminated", "DapExited" },
 				callback = function()
-					vim.o.statusline = "%f %y" -- Restore to a simple statusline
-					vim.o.laststatus = 2 -- Restore default statusline visibility
+					vim.o.laststatus = 3 -- Restore global statusline (for lualine)
 				end,
 			})
 			-- Disable statusline for DAP UI buffers (scopes, breakpoints, stacks)

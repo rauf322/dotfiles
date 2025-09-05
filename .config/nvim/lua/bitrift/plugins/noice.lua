@@ -9,7 +9,7 @@ return {
 				require("notify").setup({
 					timeout = 200, -- 200ms timeout for all notifications
 					stages = "fade_in_slide_out",
-					background_colour = "Normal",
+					background_colour = "#1a1a1a",
 					render = "compact",
 					top_down = false,
 					max_width = function()
