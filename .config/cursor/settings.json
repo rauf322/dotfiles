@@ -1,0 +1,329 @@
+{
+  "editor.fontFamily": "MesloLGS Nerd Font Mono, monospace",
+  "editor.fontWeight": "300",
+  "window.titleBarStyle": "native",
+  "custom-ui-style.electron": {
+    "frame": false,
+    "roundedCorners": false
+  }
+  "custom-ui-style.electron": {
+    "frame": false,
+    "roundedCorners": false
+  },
+  "workbench.colorCustomizations": {
+    "editorCursor.background": "#000000",
+    "editorOverviewRuler.wordHighlightStrongForeground": "#0000",
+    "editorOverviewRuler.selectionHighlightForeground": "#0000",
+    "editorOverviewRuler.rangeHighlightForeground": "#0000",
+    "editorOverviewRuler.wordHighlightForeground": "#0000",
+    "editorOverviewRuler.bracketMatchForeground": "#0000",
+    "editorOverviewRuler.findMatchForeground": "#0000",
+    "editorOverviewRuler.modifiedForeground": "#0000",
+    "editorOverviewRuler.deletedForeground": "#0000",
+    "editorOverviewRuler.warningForeground": "#0000",
+    "editorOverviewRuler.addedForeground": "#0000",
+    "editorOverviewRuler.errorForeground": "#0000",
+    "editorOverviewRuler.infoForeground": "#0000",
+    "editorOverviewRuler.border": "#0000"
+  },
+  "workbench.activityBar.location": "hidden",
+  "workbench.editor.empty.hint": "hidden",
+  "editor.cursorBlinking": "solid",
+  "editor.cursorStyle": "line-thin",
+  "editor.cursorSmoothCaretAnimation": "explicit",
+  "editor.gotoLocation.multipleDefinitions": "goto",
+  "editor.minimap.renderCharacters": false,
+  "window.openFilesInNewWindow": "off",
+  "window.density.editorTabHeight": "compact",
+  "editor.minimap.enabled": false,
+  "files.dialog.defaultPath": "/Users/rauffaizov/",
+  "workbench.editor.showTabs": "single",
+  "editor.snippetSuggestions": "top",
+  "files.hotExit": "onExitAndWindowClose",
+  "code-runner.runInTerminal": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "editor.padding.top": 0,
+  "vsicons.dontShowNewVersionMessage": true,
+  "editor.accessibilitySupport": "off",
+  "workbench.editorAssociations": {
+    "*.plist": "default"
+  },
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  "vsicons.associations.folderDefault.folder": null,
+  "json.schemas": [],
+  "[python]": {
+    "diffEditor.ignoreTrimWhitespace": false
+  },
+  "python.defaultInterpreterPath": "/Users/rauffaizov/.pyenv/versions/3.13.1/bin/python",
+  "editor.linkedEditing": true,
+  "files.exclude": {
+    "**/.git": false
+  },
+  "editor.wordWrap": "on",
+  "solidity.telemetry": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[solidity]": {
+    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
+  },
+  "debug.console.closeOnEnd": false,
+  "editor.codeActionsOnSave": {},
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 100,
+  "task.quickOpen.showAll": true,
+  "cSpell.enabled": false,
+  "terminal.integrated.scrollback": 500, // Set scrollback buffer size
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "workbench.iconTheme": "catppuccin-mocha",
+  "workbench.sideBar.location": "right",
+  "workbench.editor.editorActionsLocation": "hidden",
+
+  // HERE COMPLEX CSS STYLING
+  // "vscode_custom_css.imports": [
+  //     "file:///Users/rauffaizov/.config/vscode-styling/style.css",
+  //     "file:///Users/rauffaizov/.config/vscode-styling/script.js"
+  // ],
+
+  //Prettier format
+  "prettier.semi": false,
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true,
+  "prettier.arrowParens": "avoid",
+  "editor.inlineSuggest.enabled": true,
+  "prettier.tabWidth": 2,
+  "editor.tabSize": 2,
+
+  //Stylelint
+  "stylelint.validate": ["css", "scss"],
+  "window.confirmSaveUntitledWorkspace": false,
+  "git.openRepositoryInParentFolders": "always",
+  "terminal.integrated.smoothScrolling": true,
+  "application.shellEnvironmentResolutionTimeout": 120,
+  "terminal.integrated.enablePersistentSessions": false,
+  "explorer.compactFolders": false,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "zsh",
+      "args": ["-l", "-c", "tmux new-session -A -s $(basename \"$PWD\")"]
+    }
+  },
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  },
+
+  //Vim Keybindings
+  "vim.leader": "<space>",
+  "vim.useSystemClipboard": true,
+
+  // ===== Line Numbers =====
+  "editor.lineNumbers": "relative", // Enables both absolute & relative numbers
+
+  // ===== Splits =====
+  "workbench.editor.openSideBySideDirection": "right", // like splitright
+  // There's no direct "splitbelow", but opening splits below is default in some contexts.
+
+  // ===== Search =====
+  "search.smartCase": true,
+
+  // ===== UI/UX =====
+  "editor.cursorSurroundingLines": 10,
+  "editor.cursorSurroundingLinesStyle": "default",
+
+  "editor.insertSpaces": true, // equivalent to expandtab
+  "editor.detectIndentation": false,
+  "editor.autoIndent": "full",
+
+  // ===== File Behavior =====
+  "files.trimTrailingWhitespace": true, // similar vibe
+  "files.insertFinalNewline": true,
+
+  // ===== Timing =====
+  "vim.timeout": 500,
+  "editor.wordWrapColumn": 130,
+
+  // ===== Performance =====
+  "editor.quickSuggestionsDelay": 50, // like `updatetime`
+
+  // ===== Colors / UI =====
+  "editor.renderLineHighlight": "all",
+  "editor.columnSelection": false,
+  "editor.rulers": [130], // like colorcolumn
+
+  // ===== Signs / Gutter =====
+  "editor.glyphMargin": true, // Similar to signcolumn = "yes"
+  "vim.insertModeKeyBindings": [
+    { "before": ["j", "j"], "after": ["<Esc>"] },
+    { "before": ["k", "k"], "after": ["<Esc>"] },
+    { "before": ["h", "h"], "after": ["<Esc>"] }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["J"], "after": ["m", "z", "J", "`", "z"] },
+    {
+      "before": ["<leader>", "<tab>"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "p", "s"],
+      "commands": ["workbench.action.findInFiles"]
+    },
+    { "before": ["n"], "after": ["n", "z", "z", "z", "v"] },
+    { "before": ["N"], "after": ["N", "z", "z", "z", "v"] },
+    { "before": ["<leader>", "y"], "after": ["\"", "+", "y"] },
+    {
+      "before": ["<leader>", "s"],
+      "commands": ["editor.action.formatDocument"]
+    },
+    { "before": ["<leader>", "d"], "after": ["\"", "_", "d"] },
+    {
+      "before": ["<leader>", "|"],
+      "commands": ["workbench.action.splitEditorRight"]
+    },
+    {
+      "before": ["<leader>", "-"],
+      "commands": ["workbench.action.splitEditorDown"]
+    },
+    {
+      "before": ["<leader>", "x"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      "before": ["<leader>", "f"],
+      "commands": ["maximisable.toggleMaximise"]
+    },
+    {
+      "before": ["<leader>", "h"],
+      "commands": ["workbench.action.focusLeftGroup"]
+    },
+    {
+      "before": ["<leader>", "l"],
+      "commands": ["workbench.action.focusRightGroup"]
+    },
+    {
+      "before": ["<leader>", "j"],
+      "commands": ["workbench.action.focusBelowGroup"]
+    },
+    {
+      "before": ["<leader>", "k"],
+      "commands": ["workbench.action.focusAboveGroup"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": ["workbench.actions.view.problems"]
+    },
+    {
+      "before": ["<leader>", "f", "f"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
+    },
+    {
+      "before": ["<leader>", "o"],
+      "commands": ["editor.action.insertLineAfter"]
+    },
+    {
+      "before": ["<leader>", "O"],
+      "commands": ["editor.action.insertLineBefore"]
+    },
+    {
+      "before": ["<leader>", "u"],
+      "commands": ["workbench.action.openEditorAtIndex1"]
+    },
+    {
+      "before": ["<leader>", "r"],
+      "commands": ["developer.reload"]
+    },
+    {
+      "before": ["<leader>", "q", "q"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      "before": ["<C-p>"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "`"],
+      "commands": ["workbench.action.terminal.toggleTerminal"]
+    },
+    {
+      "before": ["<leader>", "<leader>", "x"],
+      "commands": ["code-runner.run"]
+    },
+    {
+      "before": ["<leader>", "b"],
+      "commands": ["editor.debug.action.toggleBreakpoint"]
+    },
+    {
+      "before": ["<leader>", "t", "r"],
+      "commands": ["test-explorer.run-test-at-cursor"]
+    },
+    {
+      "before": ["<leader>", "g", "t"],
+      "commands": ["git.checkout"]
+    },
+    {
+      "before": ["<leader>", "e", "f"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
+    { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
+    { "before": ["<leader>", "y"], "after": ["\"", "+", "y"] },
+    { "before": ["<leader>", "d"], "after": ["\"", "_", "d"] }
+  ],
+  "editor.stickyScroll.enabled": false,
+  "terminal.integrated.fontSize": 16,
+  "editor.lineHeight": 30,
+  "editor.fontSize": 17,
+  "editor.fontLigatures": true,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": [
+          "variable",
+          "variable.other",
+          "variable.parameter",
+          "entity.name.variable",
+          "comment",
+          "keyword.control",
+          "storage.type",
+          "entity.name.function",
+          "entity.other.attribute-name"
+        ],
+        "settings": {
+          "fontStyle": ""
+        }
+      }
+    ]
+  },
+  "window.zoomLevel": 3,
+  "workbench.layoutControl.enabled": false,
+  "cursor.chat.terminalShowHoverHint": false,
+  "excalidraw.theme": "dark",
+  "excalidraw.workspaceLibraryPath": ".",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "cursor.cpp.disabledLanguages": ["markdown", "plaintext"],
+  "keyboard.dispatch": "keyCode",
+  "vim.handleKeys": {
+    "<C-f>": false
+  },
+  "indentRainbow.enabled": false,
+  "indenticator.showCurrentDepthInStatusBar": false,
+  "indenticator.showHover": true,
+  "indenticator.color.dark": "#8DD1D9",
+  "indenticator.color.light": "#8DD1D9",
+  "indenticator.width": 1,
+  "indenticator.style": "inset",
+  "indenticator.showIndentGuide": true,
+  "indenticator.highlightColor": "#8DD1D9",
+  "indenticator.inner.showHighlight": true,
+  "indenticator.inner.color.dark": "rgba(141,209,217,0.3)",
+  "indenticator.inner.color.light": "rgba(141,209,217,0.3)",
+  "editor.renderWhitespace": "none",
+  "workbench.colorTheme": "Catppuccin Mocha"
+}

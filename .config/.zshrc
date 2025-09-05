@@ -1,6 +1,7 @@
  export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 export EDITOR=nvim
+export VISUAL=nvim
 
 source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
@@ -72,6 +73,31 @@ alias python="python3"
 
 # ls for . file alias
 alias ls.="ls -a"
+
+# File type specific nvim aliases
+alias js="nvim"
+alias ts="nvim"
+alias toml="nvim"
+alias nvo="nvopen-file"
+
+# Function to open files with nvim based on extension
+nvopen() {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: nvopen <file>"
+        return 1
+    fi
+    
+    local file="$1"
+    case "${file##*.}" in
+        js|ts|tsx|jsx|json|toml|yaml|yml|md|txt|py|sh|zsh|bash|conf|config)
+            nvim "$file"
+            ;;
+        *)
+            echo "Opening with nvim anyway..."
+            nvim "$file"
+            ;;
+    esac
+}
 
  # Vim to Nvim alias
 alias v="nvim"
