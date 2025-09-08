@@ -105,6 +105,29 @@ return {
 			underline = true, -- Specify Underline diagnostics
 			update_in_insert = true, -- Keep diagnostics active in insert mode
 		})
+
+		-- Disable visual diagnostics in insert mode
+		vim.api.nvim_create_autocmd("InsertEnter", {
+			callback = function()
+				vim.diagnostic.config({
+					virtual_text = false,
+					underline = false,
+				})
+			end,
+		})
+
+		-- Re-enable visual diagnostics when leaving insert mode
+		vim.api.nvim_create_autocmd("InsertLeave", {
+			callback = function()
+				vim.diagnostic.config({
+					virtual_text = {
+						severity = { min = vim.diagnostic.severity.ERROR },
+						prefix = "✘",
+					},
+					underline = true,
+				})
+			end,
+		})
 		require("render-markdown").setup({
 			completions = { coq = { enabled = true } },
 		})
