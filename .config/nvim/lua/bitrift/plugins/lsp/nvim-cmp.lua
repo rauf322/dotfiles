@@ -205,10 +205,10 @@ return {
 				},
 				window = {
 					documentation = {
-						border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+						border = "none",
 					},
 					completion = {
-						border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+						border = "none",
 					},
 				},
 				-- config nvim cmp to work with snippet engine
@@ -220,6 +220,7 @@ return {
 				-- autocompletion sources
 				sources = cmp.config.sources({
 					{ name = "lazydev" },
+					{ name = "copilot", priority = 1100 }, -- GitHub Copilot with highest priority
 					{ name = "luasnip", priority = 1000 }, -- snippets with higher priority
 					{ name = "nvim_lsp", priority = 900 },
 					{ name = "buffer", priority = 500 }, -- text within current buffer
@@ -275,7 +276,7 @@ return {
 
 					["<Tab>"] = cmp.mapping(function(_fallback)
 						if cmp.visible() then
-							-- if there is only one completion candidate then use it.
+							-- if there is only one completion candidate then use it.copilot
 							local entries = cmp.get_entries()
 							if #entries == 1 then
 								confirm(entries[1])
@@ -333,20 +334,4 @@ return {
 			})
 		end,
 	},
-	-- {
-	-- 	"github/copilot.vim",
-	-- 	config = function()
-	-- 		vim.g.copilot_no_tab_map = true
-	-- 		function map(mode, lhs, rhs, opts)
-	-- 			local options = { noremap = true }
-	--
-	-- 			if opts then
-	-- 				options = vim.tbl_extend("force", options, opts)
-	-- 			end
-	--
-	-- 			vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-	-- 		end
-	-- 		map("i", "<C-g>", "copilot#Accept('<CR>')", { silent = true, expr = true })
-	-- 	end,
-	-- },
 }
