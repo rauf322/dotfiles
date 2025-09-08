@@ -1,175 +1,65 @@
 return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
+	opts = {
+		routes = {
+			-- Filter out save/edit noise messages
+			{
+				filter = {
+					event = "msg_show",
+					any = {
+						{ find = "%d+L, %d+B" },
+						{ find = "; after #%d+" },
+						{ find = "; before #%d+" },
+						{ find = "%d fewer lines" },
+						{ find = "%d more lines" },
+					},
+				},
+				opts = { skip = true },
+			},
+			-- Filter out ESLint parsing errors
+			{
+				filter = {
+					event = "notify",
+					find = "ESLint output parsing failed",
+				},
+				opts = { skip = true },
+			},
+		},
+		presets = {
+			lsp_doc_border = true,
+		},
+	},
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 		{
 			"rcarriga/nvim-notify",
 			config = function()
+				-- Ensure the background highlight group exists
+				vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#1a1a1a" })
 				require("notify").setup({
-					timeout = 200, -- 200ms timeout for all notifications
+					timeout = 200,
 					stages = "fade_in_slide_out",
-					background_colour = "#1a1a1a",
+					background_colour = "NotifyBackground",
 					render = "compact",
 					top_down = false,
-					max_width = function()
-						return math.floor(vim.o.columns * 0.4)
-					end,
-					max_height = function()
-						return math.floor(vim.o.lines * 0.2)
-					end,
-					minimum_width = 30,
+					-- max_width = function()
+					-- 	return math.floor(vim.o.columns * 0.4)
+					-- end,
+					-- max_height = function()
+					-- 	return math.floor(vim.o.lines * 0.2)
+					-- end,
+					-- minimum_width = 30,
 					fps = 60,
 					icons = {
-						ERROR = "",
-						WARN = "",
-						INFO = "",
-						DEBUG = "",
-						TRACE = "✎",
+						ERROR = "✗",
+						WARN = "⚠",
+						INFO = "ℹ",
+						DEBUG = "🐛",
+						TRACE = "➤",
 					},
 				})
 			end,
 		},
 	},
-	config = function()
-		require("noice").setup({
-			-- Command line popup instead of bottom cmdline
-			cmdline = {
-				enabled = true,
-				view = "cmdline_popup", -- Use popup instead of cmdline
-				opts = {
-					position = {
-						row = "50%",
-						col = "50%",
-					},
-					size = {
-						width = 60,
-						height = "auto",
-					},
-					border = {
-						style = "rounded",
-						padding = { 0, 1 },
-					},
-					win_options = {
-						winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-					},
-				},
-				format = {
-					cmdline = { pattern = "^:", icon = "", lang = "vim" },
-					search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-					search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
-					filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
-					lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
-					help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
-				},
-			},
-			
-			-- Messages popup
-			messages = {
-				enabled = true,
-				view = "notify",
-				view_error = "notify",
-				view_warn = "notify",
-				view_history = "messages",
-				view_search = "virtualtext",
-			},
-			
-			-- Popup menu for completions
-			popupmenu = {
-				enabled = true,
-				backend = "nui", -- Use nui for popup menu
-				kind_icons = {},
-			},
-			
-			-- LSP progress and hover docs
-			lsp = {
-				override = {
-					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-					["vim.lsp.util.stylize_markdown"] = true,
-					["cmp.entry.get_documentation"] = true,
-				},
-				hover = {
-					enabled = true,
-				},
-				signature = {
-					enabled = true,
-				},
-				progress = {
-					enabled = true,
-				},
-			},
-			
-			-- Notification settings
-			notify = {
-				enabled = true,
-				view = "notify",
-			},
-			
-			-- Views configuration for timeout
-			views = {
-				cmdline_popup = {
-					position = {
-						row = "50%",
-						col = "50%",
-					},
-					size = {
-						width = 60,
-						height = "auto",
-					},
-					border = {
-						style = "rounded",
-						padding = { 0, 1 },
-					},
-					win_options = {
-						winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-					},
-				},
-				notify = {
-					backend = "notify",
-					fallback = "mini",
-					format = "notify",
-					replace = false,
-					merge = false,
-					timeout = 200, -- 200ms timeout
-				},
-				mini = {
-					backend = "mini",
-					timeout = 200, -- 200ms timeout
-				},
-			},
-			
-			-- Routes for different message types
-			routes = {
-				{
-					filter = {
-						event = "msg_show",
-						any = {
-							{ find = "%d+L, %d+B" },
-							{ find = "; after #%d+" },
-							{ find = "; before #%d+" },
-							{ find = "%d fewer lines" },
-							{ find = "%d more lines" },
-						},
-					},
-					opts = { skip = true },
-				},
-				{
-					filter = {
-						event = "notify",
-						find = "ESLint output parsing failed",
-					},
-					opts = { skip = true },
-				},
-			},
-			
-			-- Presets for common configurations
-			presets = {
-				bottom_search = false, -- Use classic bottom cmdline for search
-				command_palette = true, -- Position the cmdline and popupmenu together
-				long_message_to_split = true, -- Long messages will be sent to split
-				inc_rename = false, -- Enables input dialog for inc-rename.nvim
-				lsp_doc_border = true, -- Add border to hover docs and signature help
-			},
-		})
-	end,
 }

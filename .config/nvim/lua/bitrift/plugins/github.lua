@@ -48,6 +48,7 @@ return {
 	},
 	{
 		"lewis6991/gitsigns.nvim",
+
 		config = function()
 			require("gitsigns")
 			vim.keymap.set(
@@ -57,6 +58,81 @@ return {
 				{ desc = "Gitsign current line blame" }
 			)
 			vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", { desc = "Gitsign inspect preview" })
+		end,
+	},
+
+	-- Modern GitHub Copilot
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({
+				panel = {
+					enabled = true,
+					auto_refresh = false,
+					keymap = {
+						jump_prev = "[[",
+						jump_next = "]]",
+						accept = "<CR>",
+						refresh = "gr",
+						open = "<M-CR>", -- Alt+Enter to open panel
+					},
+					layout = {
+						position = "bottom", -- | top | left | right
+						ratio = 0.4,
+					},
+				},
+				suggestion = {
+					enabled = true,
+					auto_trigger = true,
+					debounce = 75,
+					keymap = {
+						accept = "<C-y>", -- Ctrl+y to accept suggestion
+						accept_word = "<C-w>", -- Alt+w to accept word
+						dismiss = "<C-n>", -- Ctrl+] to dismiss
+					},
+				},
+				filetypes = {
+					yaml = false,
+					markdown = false,
+					help = false,
+					gitcommit = false,
+					gitrebase = false,
+					hgcommit = false,
+					svn = false,
+					cvs = false,
+					["."] = false,
+				},
+				copilot_node_command = "node", -- Node.js version must be > 18.x
+				server_opts_overrides = {},
+			})
+
+			-- Easy toggle functionality
+			vim.keymap.set("n", "<leader>ct", function()
+				local copilot = require("copilot.suggestion")
+				if copilot.is_visible() then
+					copilot.dismiss()
+					vim.cmd("Copilot disable")
+					vim.notify("Copilot disabled", vim.log.levels.INFO)
+				else
+					vim.cmd("Copilot enable")
+					vim.notify("Copilot enabled", vim.log.levels.INFO)
+				end
+			end, { desc = "Toggle Copilot" })
+
+			-- Additional helpful commands
+			vim.keymap.set("n", "<leader>cs", "<cmd>Copilot status<CR>", { desc = "Copilot status" })
+			vim.keymap.set("n", "<leader>cp", "<cmd>Copilot panel<CR>", { desc = "Copilot panel" })
+		end,
+	},
+
+	-- Copilot integration with nvim-cmp
+	{
+		"zbirenbaum/copilot-cmp",
+		dependencies = { "zbirenbaum/copilot.lua" },
+		config = function()
+			require("copilot_cmp").setup()
 		end,
 	},
 }
