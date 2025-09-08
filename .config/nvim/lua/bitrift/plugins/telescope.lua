@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.5",
+		branch = "master", -- Use latest version instead of old tag
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -11,6 +11,7 @@ return {
 			local telescope = require("telescope")
 			local action = require("telescope.actions")
 			local builtin = require("telescope.builtin")
+
 			-- Configure file and directory exclusions
 			telescope.load_extension("fzf")
 			telescope.setup({
