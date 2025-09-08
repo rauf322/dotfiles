@@ -88,9 +88,9 @@ return {
 					auto_trigger = true,
 					debounce = 75,
 					keymap = {
-						accept = "<C-y>", -- Ctrl+y to accept suggestion
-						accept_word = "<C-w>", -- Alt+w to accept word
-						dismiss = "<C-n>", -- Ctrl+] to dismiss
+						accept = "<C-w>", -- Tab to accept suggestion
+						-- accept_word = "<C-w>", -- Ctrl+w to accept word
+						dismiss = "<C-e>", -- Ctrl+e to dismiss (changed from C-n to avoid LSP conflict)
 					},
 				},
 				filetypes = {
@@ -107,23 +107,6 @@ return {
 				copilot_node_command = "node", -- Node.js version must be > 18.x
 				server_opts_overrides = {},
 			})
-
-			-- Easy toggle functionality
-			vim.keymap.set("n", "<leader>ct", function()
-				local copilot = require("copilot.suggestion")
-				if copilot.is_visible() then
-					copilot.dismiss()
-					vim.cmd("Copilot disable")
-					vim.notify("Copilot disabled", vim.log.levels.INFO)
-				else
-					vim.cmd("Copilot enable")
-					vim.notify("Copilot enabled", vim.log.levels.INFO)
-				end
-			end, { desc = "Toggle Copilot" })
-
-			-- Additional helpful commands
-			vim.keymap.set("n", "<leader>cs", "<cmd>Copilot status<CR>", { desc = "Copilot status" })
-			vim.keymap.set("n", "<leader>cp", "<cmd>Copilot panel<CR>", { desc = "Copilot panel" })
 		end,
 	},
 

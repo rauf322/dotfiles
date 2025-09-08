@@ -274,21 +274,15 @@ return {
 						end
 					end, { "i", "s" }),
 
-					["<Tab>"] = cmp.mapping(function(_fallback)
-						if cmp.visible() then
-							-- if there is only one completion candidate then use it.copilot
-							local entries = cmp.get_entries()
-							if #entries == 1 then
-								confirm(entries[1])
-							else
-								cmp.select_next_item()
-							end
-						elseif has_luasnip and luasnip.expand_or_locally_jumpable() then
+					["<Tab>"] = cmp.mapping(function(fallback)
+						-- Tab no longer cycles through LSP completions (use Ctrl+n/p instead)
+						-- Tab is reserved for Copilot acceptance
+						if has_luasnip and luasnip.expand_or_locally_jumpable() then
 							luasnip.expand_or_jump()
 						elseif in_whitespace() then
 							smart_tab()
 						else
-							cmp.complete()
+							fallback() -- Let Tab pass through to Copilot
 						end
 					end, { "i", "s" }),
 				}),

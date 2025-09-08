@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+brew install \
+  ripgrep \
+  lazygit \
+  btop \
+  tree-sitter \
+  tree-sitter-cli \
+  borders

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+brew install pyenv
+brew install pyenv-virtualenv
+brew install python@3.13
+brew install pipx

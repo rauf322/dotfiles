@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+brew install --cask \
+  font-fira-code-nerd-font \
+  font-fontawesome \
+  font-geist-mono-nerd-font \
+  font-hack-nerd-font \
+  font-iosevka \
+  font-jetbrains-mono-nerd-font \
+  font-material-icons \
+  font-meslo-lg-nerd-font \
+  font-monocraft \
+  font-open-sans \
+  font-powerline-symbols \
+  font-sf-mono \
+  font-sf-mono-nerd-font \
+  font-sf-pro \
+  font-sketchybar-app-font \
+  font-symbols-only-nerd-font \
+  font-ubuntu
