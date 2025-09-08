@@ -123,3 +123,6 @@ function y() {
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 set -o vi
 
+
+# Created by `pipx` on 2025-09-08 21:10:49
+export PATH="$PATH:/Users/rauffaizov/.local/bin"

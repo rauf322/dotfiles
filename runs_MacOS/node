@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+brew install node
+brew install pnpm
+brew install yarn

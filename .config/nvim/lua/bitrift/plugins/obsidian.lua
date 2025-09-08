@@ -14,6 +14,10 @@ return {
 					path = "~/Documents/obsidian/My-study/",
 				},
 			},
+			-- Disable UI to avoid conflict with render-markdown
+			ui = {
+				enable = false,
+			},
 		},
 	},
 	{
@@ -23,7 +27,10 @@ return {
 		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
 		---@module 'render-markdown'
 		---@type render.md.UserConfig
-		opts = {},
+		opts = {
+			-- Disable LaTeX support to remove warnings
+			latex = { enabled = false },
+		},
 	},
 
 	{
