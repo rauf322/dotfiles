@@ -13,7 +13,7 @@ get_tmux_option() {
 
 apply_custom_minimal_theme() {
     # Get theme colors (allow customization)
-    local bg_color=$(get_tmux_option "@minimal_theme_bg_color" "#1A1D23")
+    local bg_color=$(get_tmux_option "@minimal_theme_bg_color" "default")
     local active_color=$(get_tmux_option "@minimal_theme_active_color" "#b4befe")
     local inactive_color=$(get_tmux_option "@minimal_theme_inactive_color" "#6c7086")
     local text_color=$(get_tmux_option "@minimal_theme_text_color" "#cdd6f4")
