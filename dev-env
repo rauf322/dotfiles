@@ -46,7 +46,7 @@ copy_dir(){
     to=$2   # XDG_CONFIG_HOME
 
     # Iterate over directories in 'from'
-    for dir in $(find "$from" -mindepth 1 -maxdepth 1 -type d); do
+    for dir in $(find "$from" -mindepth 1 -maxdepth 1 -type d -not -path "*/share" -not -path "*/state" -not -path "*/cache"); do
         execute rm -rf "$to/$(basename $dir)"
         execute cp -r "$dir" "$to/$(basename $dir)"
     done
@@ -57,7 +57,7 @@ copy_root(){
     to=$2   # .config
 
     # Iterate over directories in 'from'
-    for dir in $(find "$from" -mindepth 1 -maxdepth 1 -type d); do
+    for dir in $(find "$from" -mindepth 1 -maxdepth 1 -type d -not -path "*/share" -not -path "*/state" -not -path "*/cache"); do
         execute rm -rf "$to/$(basename $dir)"
         execute cp -r "$from/$(basename $dir)" "$to/$(basename $dir)"
     done
