@@ -106,6 +106,23 @@ return {
 			update_in_insert = true, -- Keep diagnostics active in insert mode
 		})
 
+		-- Configure LSP hover window to be smaller
+		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+			max_width = 80,        -- Maximum width in columns
+			max_height = 20,       -- Maximum height in lines
+			wrap = true,           -- Enable word wrapping
+			wrap_at = 80,          -- Wrap at specific column
+			border = "rounded",    -- Rounded border style
+		})
+
+		-- Configure signature help window size too
+		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+			max_width = 80,
+			max_height = 15,
+			wrap = true,
+			border = "rounded",
+		})
+
 		-- Disable visual diagnostics in insert mode
 		vim.api.nvim_create_autocmd("InsertEnter", {
 			callback = function()
