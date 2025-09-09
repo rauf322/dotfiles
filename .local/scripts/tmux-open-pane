@@ -33,7 +33,7 @@ fi
 # Create new opencode pane with 40% width
 current_path="$(tmux display-message -p '#{pane_current_path}')"
 win_width="$(tmux display-message -p -t "$current_win_id" '#{window_width}')"
-target_width=$(( win_width * 40 / 100 ))
+target_width=$(( win_width * 30 / 100 ))
 
 new_pane_id="$(tmux split-window -h -c "$current_path" -P -F '#{pane_id}' "opencode")"
 tmux resize-pane -t "$new_pane_id" -x "$target_width"
