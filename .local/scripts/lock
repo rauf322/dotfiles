@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Display sleep script for sleepwatcher
+# Actions to perform when display goes to sleep (including screen lock)
+
+# Log the display sleep event
+echo "$(date): Display went to sleep" >> ~/.local/scripts/logs/sleepwatcher.log
+
+# Close apps when screen locks
+osascript -e 'quit app "Zen"'
+osascript -e 'quit app "Ghostty"'
+osascript -e 'quit app "iina"'

@@ -200,7 +200,7 @@ return {
 					-- Show hidden files by default (matches nvim-tree filters.dotfiles = true)
 					filtered_items = {
 						visible = false, -- Hidden by default
-						hide_dotfiles = false,
+						hide_dotfiles = true,
 						hide_gitignored = true,
 						hide_hidden = true,
 					},
