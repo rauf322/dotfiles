@@ -44,8 +44,8 @@ apply_custom_minimal_theme() {
     tmux set-option -g window-status-current-format "#[fg=$active_color,bg=$bg_color,bold] #I:#W "
     tmux set-option -g window-status-separator ""
 
-    # Status left (session name with icon)
-    tmux set-option -g status-left "#[fg=$accent_color,bold] 󰇘 #S #[fg=$inactive_color]│ "
+    # Status left (session name with icon and bind mode indicator)
+    tmux set-option -g status-left "#[fg=$accent_color,bold] 󰇘 #S #{?client_prefix,#[fg=$text_color]➤ ,}#[fg=$inactive_color]│ "
 
     # Status right with system info and proper emojis
     local script_path="$HOME/.config/tmux/scripts/system-info.sh"

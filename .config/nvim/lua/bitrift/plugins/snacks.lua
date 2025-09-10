@@ -1,9 +1,52 @@
 return {
 	"folke/snacks.nvim",
-	lazy = false, -- load at startup (so terminal keys are ready)
 	priority = 1000, -- before other plugins that might rely on it
+	lazy = false, -- load at startup (so terminal keys are ready)
+	init = function()
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "OilActionsPost",
+			callback = function(event)
+				if event.data.actions.type == "move" then
+					Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+				end
+			end,
+		})
+	end,
+	keys = {
+		{
+			"<leader>bd",
+			function()
+				Snacks.bufdelete()
+			end,
+			desc = "Buffer delete",
+			mode = "n",
+		},
+		{
+			"<leader>ba",
+			function()
+				Snacks.bufdelete.all()
+			end,
+			desc = "Buffer delete all",
+			mode = "n",
+		},
+		{
+			"<leader>bo",
+			function()
+				Snacks.bufdelete.other()
+			end,
+			desc = "Buffer delete other",
+			mode = "n",
+		},
+		{
+			"<leader>bz",
+			function()
+				Snacks.zen()
+			end,
+			desc = "Toggle Zen Mode",
+			mode = "n",
+		},
+	},
 	opts = {
-		-- enable Snacks' nicer input UI (same as you had inline)
 		input = { enabled = true },
 		indent = { enabled = true },
 		dashboard = {
@@ -78,12 +121,26 @@ return {
 		vim.keymap.set("n", "<leader>`", function()
 			require("snacks.terminal").toggle()
 		end, { desc = "Toggle terminal" })
-		vim.keymap.set("n", "<leader>tg", function()
-			require("snacks.terminal").toggle("lazygit")
-		end, { desc = "Toggle lazygit" })
-		vim.keymap.set("n", "<leader>th", function()
-			require("snacks.terminal").toggle("btop")
-		end, { desc = "Toggle htop" })
+		Snacks.toggle.new({
+			id = "ufo",
+			name = "Enable/Disable ufo",
+			get = function()
+				return require("ufo").inspect()
+			end,
+			set = function(state)
+				if state == nil then
+					require("noice").enable()
+					require("ufo").enable()
+					vim.o.foldenable = true
+					vim.o.foldcolumn = "1"
+				else
+					require("noice").disable()
+					require("ufo").disable()
+					vim.o.foldenable = false
+					vim.o.foldcolumn = "0"
+				end
+			end,
+		})
 
 		vim.o.ttimeoutlen = 0
 	end,
