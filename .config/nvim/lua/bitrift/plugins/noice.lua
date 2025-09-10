@@ -3,7 +3,6 @@ return {
 	event = "VeryLazy",
 	opts = {
 		routes = {
-			-- Filter out save/edit noise messages
 			{
 				filter = {
 					event = "msg_show",
@@ -32,6 +31,14 @@ return {
 				},
 				opts = { skip = true },
 			},
+			-- Filter out Neo-tree hidden files toggle messages
+			{
+				filter = {
+					event = "notify",
+					find = "Neo%-tree.*Toggling hidden files",
+				},
+				opts = { skip = true },
+			},
 		},
 		presets = {
 			bottom_search = true,
@@ -40,66 +47,55 @@ return {
 			inc_rename = false,
 			lsp_doc_border = true,
 		},
-		views = {
-			cmdline_popup = {
-				position = {
-					row = 5,
-					col = "50%",
-				},
-				size = {
-					width = 60,
-					height = "auto",
-				},
-			},
-			popupmenu = {
-				relative = "editor",
-				position = {
-					row = 8,
-					col = "50%",
-				},
-				size = {
-					width = 60,
-					height = 10,
-				},
-				border = {
-					style = "rounded",
-					padding = { 0, 1 },
-				},
-				win_options = {
-					winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-				},
-			},
-			hover = {
-				border = { style = "rounded" },
-				size = { max_width = 50, max_height = 5 },
-				position = { row = 2, col = 2 },
-			},
-			mini = {
-				size = { max_width = 80, max_height = 15 },
-			},
-		},
+		-- views = {
+		-- 	cmdline_popup = {
+		-- 		position = {
+		-- 			row = 5,
+		-- 			col = "50%",
+		-- 		},
+		-- 		size = {
+		-- 			width = 60,
+		-- 			height = "auto",
+		-- 		},
+		-- 	},
+		-- 	popupmenu = {
+		-- 		relative = "editor",
+		-- 		position = {
+		-- 			row = 8,
+		-- 			col = "50%",
+		-- 		},
+		-- 		size = {
+		-- 			width = 60,
+		-- 			height = 10,
+		-- 		},
+		-- 		border = {
+		-- 			style = "rounded",
+		-- 			padding = { 0, 1 },
+		-- 		},
+		-- 		win_options = {
+		-- 			winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+		-- 		},
+		-- 	},
+		-- 	hover = {
+		-- 		border = { style = "rounded" },
+		-- 		size = { max_width = 50, max_height = 5 },
+		-- 		position = { row = 2, col = 2 },
+		-- 	},
+		-- 	mini = {
+		-- 		size = { max_width = 80, max_height = 15 },
+		-- 	},
+		-- },
 	},
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 		{
 			"rcarriga/nvim-notify",
+
 			config = function()
-				-- Ensure the background highlight group exists
 				vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#1a1a1a" })
 				require("notify").setup({
 					timeout = 200,
-					stages = "fade_in_slide_out",
-					background_colour = "NotifyBackground",
-					render = "compact",
-					top_down = false,
-					fps = 60,
-					icons = {
-						ERROR = "✗",
-						WARN = "⚠",
-						INFO = "ℹ",
-						DEBUG = "🐛",
-						TRACE = "➤",
-					},
+					background_colour = "#0000",
 				})
 			end,
 		},
