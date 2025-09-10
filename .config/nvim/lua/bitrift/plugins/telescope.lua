@@ -62,6 +62,7 @@ return {
 				},
 			})
 			telescope.load_extension("ui-select")
+			telescope.load_extension("noice")
 			local keymap = vim.keymap.set
 			keymap("n", "<leader>?", ":Telescope keymaps<CR>", { desc = "Telescope: Show Keymaps" })
 			keymap("n", "<leader><Tab>", builtin.find_files, { desc = "Telescope: Find Files" })

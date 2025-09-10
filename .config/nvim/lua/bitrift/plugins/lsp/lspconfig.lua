@@ -79,12 +79,6 @@ return {
 
 				opts.desc = "Show definiton of word (type)"
 				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
-
-				opts.desc = "Restart LSP"
-				vim.keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-				vim.keymap.set("i", "<C-h>", function()
-					vim.lsp.buf.signature_help()
-				end, opts)
 			end,
 		})
 
@@ -105,8 +99,6 @@ return {
 			underline = true, -- Specify Underline diagnostics
 			update_in_insert = true, -- Keep diagnostics active in insert mode
 		})
-
-
 
 		-- Disable visual diagnostics in insert mode
 		vim.api.nvim_create_autocmd("InsertEnter", {
@@ -238,27 +230,6 @@ return {
 						includeCompletionsForModuleExports = true,
 						importModuleSpecifierPreference = "non-relative", -- tweak to taste
 					},
-					-- inlayHints = {
-					-- 	includeInlayParameterNameHints = "literal",
-					-- 	includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-					-- 	includeInlayFunctionParameterTypeHints = true,
-					-- 	includeInlayVariableTypeHints = false,
-					-- 	includeInlayPropertyDeclarationTypeHints = true,
-					-- 	includeInlayFunctionLikeReturnTypeHints = true,
-					-- 	includeInlayEnumMemberValueHints = true,
-					-- },
-				},
-				javascript = {
-					-- inlayHints = {
-					-- 	includeInlayParameterNameHints = "all",
-					-- 	includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-					-- 	includeInlayFunctionParameterTypeHints = true,
-					-- 	includeInlayVariableTypeHints = true,
-					-- 	includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-					-- 	includeInlayPropertyDeclarationTypeHints = true,
-					-- 	includeInlayFunctionLikeReturnTypeHints = true,
-					-- 	includeInlayEnumMemberValueHints = true,
-					-- },
 				},
 			},
 			filetypes = {
