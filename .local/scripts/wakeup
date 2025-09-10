@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "$(date): MacBook woke from sleep" >> ~/.local/scripts/logs/sleepwatcher.log
+open -a "Ghostty"
+open -a "iina"
+open -a "Zen"
+
+
