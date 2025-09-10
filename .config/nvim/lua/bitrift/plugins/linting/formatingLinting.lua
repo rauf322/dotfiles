@@ -103,6 +103,15 @@ return {
 							"$FILENAME",
 							"--single-quote",
 							"--jsx-single-quote",
+							"--print-width=140",
+						},
+					},
+					stylua = {
+						args = {
+							"--column-width=140",
+							"--stdin-filepath",
+							"$FILENAME",
+							"-",
 						},
 					},
 				},
@@ -112,7 +121,7 @@ return {
 				-- First run JSX self-closing fix if it's a JSX/TSX file
 				local jsx_autofix = require("bitrift.utils.jsx-autofix")
 				jsx_autofix.fix_jsx_self_closing()
-				
+
 				-- Then format with conform
 				conform.format({ lsp_fallback = true, async = false, timeout_ms = 500 })
 				vim.cmd("wa")
