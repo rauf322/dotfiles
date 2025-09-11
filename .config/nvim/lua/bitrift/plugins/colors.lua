@@ -12,6 +12,16 @@ function ColorMyPencils(color)
 	vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
 	vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "none" })
 
+	-- Add subtle UI borders (0.2px equivalent)
+	vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#3e4452", bg = "none" })
+	vim.api.nvim_set_hl(0, "VertSplit", { fg = "#3e4452", bg = "none" })
+	vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#3e4452", bg = "none" })
+	vim.api.nvim_set_hl(0, "NormalBorder", { fg = "#3e4452", bg = "none" })
+	
+	-- Subtle statusline underline border
+	vim.api.nvim_set_hl(0, "StatusLine", { fg = "#ffffff", bg = "none", underline = true })
+	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#6c7086", bg = "none", underline = true })
+
 	-- Globally remove all italics from any theme
 	local highlight_groups = {
 		"Comment",
