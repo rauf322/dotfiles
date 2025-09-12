@@ -1,7 +1,8 @@
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
 export EDITOR=nvim
 export VISUAL=nvim
+eval "$(starship init zsh)"
 
 source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
@@ -25,8 +26,7 @@ export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/app
 export PATH="/Library/Apple/usr/bin:$PATH"
 export PATH="$HOME/.local/scripts:$PATH"
 export PATH="$HOME/go/bin:$PATH"
-export PATH="$PATH:/Users/rauffaizov/.local/bin"
-export PATH="$HOME/.local/bin:$PATH"
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf"
 
