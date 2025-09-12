@@ -69,6 +69,7 @@ bind -r f resize-pane -Z                 # Toggle pane zoom
 # Toggle opencode
 bind -r p run-shell "tmux-open-pane"
 
+
 # Session switcher (requires tmux-sessionizer script)
 bind -r Tab run-shell "tmux neww 'tmux-sessionizer'"
 

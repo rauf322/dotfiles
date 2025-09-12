@@ -1,13 +1,27 @@
 {
-  "version": 1,
-  "editor": {
-    "vimMode": false
-  },
-  "hasChangedDefaultModel": false,
   "permissions": {
     "allow": [
       "Shell(ls)"
     ],
     "deny": []
+  },
+  "version": 1,
+  "editor": {
+    "vimMode": false
+  },
+  "model": {
+    "modelId": "default",
+    "displayModelId": "auto",
+    "displayName": "Auto",
+    "displayNameShort": "Auto",
+    "aliases": [
+      "auto"
+    ]
+  },
+  "hasChangedDefaultModel": false,
+  "privacyCache": {
+    "ghostMode": true,
+    "privacyMode": 1,
+    "updatedAt": 1757637254515
   }
 }
