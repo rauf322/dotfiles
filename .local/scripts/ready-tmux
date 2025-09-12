@@ -1,5 +1,45 @@
 #!/usr/bin/env bash
-#!/usr/bin/env bash
+# decide what to do on new tmux session startup
+# delegates to tmux-open-nvim / tmux-open-vscode / tmux-open-cursor
 
-nvim
-# cursor --reuse-window "$1"
+set -euo pipefail
+DIR="${1:-$PWD}"
+
+detect_client_app() {
+  pid="$(tmux display -p '#{client_pid}' | tr -d '\n' || true)"
+  [[ -z "$pid" ]] && { echo other; return; }
+
+  for _ in $(seq 1 30); do
+    cmd="$(ps -o command= -p "$pid" 2>/dev/null || true)"
+    if [[ "$cmd" == *".app/Contents/MacOS/"* ]]; then
+      case "$cmd" in
+        *"/Ghostty.app/"*)                 echo ghostty; return ;;
+        *"/Visual Studio Code.app/"*|*"/Code.app/"*) echo vscode; return ;;
+        *"/Cursor.app/"*)                  echo cursor; return ;;
+      esac
+      echo other; return
+    fi
+    ppid="$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ')"
+    [[ -z "$ppid" || "$ppid" == "1" ]] && { echo other; return; }
+    pid="$ppid"
+  done
+  echo other
+}
+
+app="$(detect_client_app)"
+
+case "$app" in
+  ghostty)
+    nvim 
+    ;;
+  vscode)
+    tmux-open-vscode "$DIR"
+    ;;
+  cursor)
+    tmux-open-cursor "$DIR"
+    ;;
+  *)
+    tmux-open-nvim "$DIR"
+    ;;
+esac
+

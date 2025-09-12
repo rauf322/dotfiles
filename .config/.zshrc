@@ -1,4 +1,4 @@
- export ZSH="$HOME/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 export EDITOR=nvim
 export VISUAL=nvim
@@ -25,6 +25,8 @@ export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/app
 export PATH="/Library/Apple/usr/bin:$PATH"
 export PATH="$HOME/.local/scripts:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+export PATH="$PATH:/Users/rauffaizov/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
 
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf"
 
@@ -101,9 +103,7 @@ nvopen() {
 
  # Vim to Nvim alias
 alias v="nvim"
-alias vim="nvim"
-alias v.="nvim"
-#
+
 #yazi-cwd
 export FZF_DEFAULT_COMMAND='find "$PWD" -mindepth 1 -maxdepth 4 \( -type f -o -type d \)'
 export EDITOR="nvim"
@@ -123,6 +123,3 @@ function y() {
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 set -o vi
 
-
-# Created by `pipx` on 2025-09-08 21:10:49
-export PATH="$PATH:/Users/rauffaizov/.local/bin"
