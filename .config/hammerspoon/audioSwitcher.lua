@@ -1,34 +1,27 @@
 -- audioSwitcher.lua
--- Auto-switch audio output based on preferred device order.
--- Usage (in init.lua):
---   require("audioSwitcher").start({
---     preferredSpeaker = "LC32G7xT",
---     builtinSpeaker   = "Динамики MacBook Pro",
---     eqMacSpeaker     = "Динамики MacBook Pro (eqMac)",
---   })
+-- Equal priority between Preferred External and AirPods, fallback to Built-in.
+-- Remembers last choice via hs.settings so it persists across reloads.
 
 local M = {}
 
--- Defaults (can be overridden from init.lua)
+-- Defaults
 local CFG = {
 	preferredSpeaker = "LC32G7xT",
 	builtinSpeaker = "Динамики MacBook Pro",
-	eqMacSpeaker = "Динамики MacBook Pro (eqMac)",
+	airPodsName = "Rauf’s AirPods #4",
+
+	includeAirPodsInAuto = true, -- considered in auto decisions
+
 	notify = true,
-	logDevices = true, -- print device list on checks
-	delays = {
-		onAudioEvent = 0.5, -- after audio event
-		onWake = 2.0, -- after system wake
-		onUsbEvent = 1.0, -- after USB change
-		onStart = 0.2, -- after config load
-	},
+	logDevices = true,
+	delays = { onAudioEvent = 0.5, onWake = 2.0, onUsbEvent = 1.0, onStart = 0.2 },
+
 }
 
--- Keep watcher refs so they don't get garbage-collected
-local sleepWatcher
-local usbWatcher
+local sleepWatcher, usbWatcher, menu
+local SETTINGS_KEY = "audioSwitcher.lastChoice" -- "external" | "airpods"
 
--- Utility: shallow-merge tables
+-- utils
 local function merge(dst, src)
 	if not src then
 		return dst
@@ -50,109 +43,212 @@ local function notify(msg)
 	print("[audioSwitcher] " .. msg)
 end
 
-local function switchToPreferredAudio()
-	local currentDevice = hs.audiodevice.defaultOutputDevice()
-	local devices = hs.audiodevice.allOutputDevices()
-
-	if CFG.logDevices then
-		print("[audioSwitcher] Available audio devices:")
-		for _, device in pairs(devices) do
-			print("  - " .. device:name())
-		end
-		if currentDevice then
-			print("[audioSwitcher] Current device: " .. currentDevice:name())
-		end
-	end
-
-	-- Helper to set both output & effects
-	local function setAsDefault(device)
-		device:setDefaultOutputDevice()
-		device:setDefaultEffectDevice()
-		notify("Switched to " .. device:name())
-	end
-
-	-- 1) Preferred external (substring match, plain=true)
-	for _, device in pairs(devices) do
-		if string.find(device:name(), CFG.preferredSpeaker, 1, true) then
-			if not currentDevice or currentDevice:name() ~= device:name() then
-				setAsDefault(device)
-			else
-				print("[audioSwitcher] Already using: " .. device:name())
-			end
-			return
-		end
-	end
-
-	-- 2) eqMac virtual device (exact match)
-	for _, device in pairs(devices) do
-		if device:name() == CFG.eqMacSpeaker then
-			if not currentDevice or currentDevice:name() ~= device:name() then
-				setAsDefault(device)
-			else
-				print("[audioSwitcher] Already using: " .. device:name())
-			end
-			return
-		end
-	end
-
-	-- 3) Built-in speakers (exact match)
-	for _, device in pairs(devices) do
-		if device:name() == CFG.builtinSpeaker then
-			if not currentDevice or currentDevice:name() ~= device:name() then
-				setAsDefault(device)
-			else
-				print("[audioSwitcher] Already using: " .. device:name())
-			end
-			return
-		end
-	end
-
-	print("[audioSwitcher] No matching audio devices found!")
+local function allOutputs()
+	return hs.audiodevice.allOutputDevices()
+end
+local function allInputs()
+	return hs.audiodevice.allInputDevices()
+end
+local function currentOutput()
+	return hs.audiodevice.defaultOutputDevice()
 end
 
--- Expose a manual trigger if you want it
+local function setAsDefault(dev)
+	dev:setDefaultOutputDevice()
+	dev:setDefaultEffectDevice()
+	notify("Switched to " .. dev:name())
+end
+
+local function setMicToBuiltin()
+	for _, d in pairs(allInputs()) do
+		if d:name() == "MacBook Pro Microphone" then
+			d:setDefaultInputDevice()
+			notify("Microphone → " .. d:name())
+			return
+		end
+	end
+end
+
+local function findByExact(name)
+	for _, d in pairs(allOutputs()) do
+		if d:name() == name then
+			return d
+		end
+	end
+end
+
+local function findByContains(substr)
+	for _, d in pairs(allOutputs()) do
+		if string.find(d:name(), substr, 1, true) then
+			return d
+		end
+	end
+end
+
+-- presence helpers
+local function getExternal()
+	return findByContains(CFG.preferredSpeaker)
+end
+local function getAirPods()
+	return CFG.airPodsName and (findByExact(CFG.airPodsName) or findByContains(CFG.airPodsName)) or nil
+end
+local function getBuiltin()
+	return findByExact(CFG.builtinSpeaker)
+end
+
+-- Remember last choice
+local function setLastChoice(choice)
+	hs.settings.set(SETTINGS_KEY, choice)
+end
+local function getLastChoice()
+	return hs.settings.get(SETTINGS_KEY)
+end
+
+-- Manual switchers (also record last choice)
+function M.switchToAirPods()
+	local dev = getAirPods()
+	if dev then
+		if not currentOutput() or currentOutput():name() ~= dev:name() then
+			setAsDefault(dev)
+		else
+			notify("Already on " .. dev:name())
+		end
+		setLastChoice("airpods")
+	else
+		notify("AirPods not found")
+	end
+	setMicToBuiltin()
+end
+
+function M.switchToExternal()
+	local dev = getExternal()
+	if dev then
+		if not currentOutput() or currentOutput():name() ~= dev:name() then
+			setAsDefault(dev)
+		else
+			notify("Already on " .. dev:name())
+		end
+		setLastChoice("external")
+	else
+		notify("Preferred external not found")
+	end
+	setMicToBuiltin()
+end
+
+function M.switchToBuiltin()
+	local dev = getBuiltin()
+	if dev then
+		if not currentOutput() or currentOutput():name() ~= dev:name() then
+			setAsDefault(dev)
+		else
+			notify("Already on " .. dev:name())
+		end
+	else
+		notify("Built-in speakers not found")
+	end
+	setMicToBuiltin()
+end
+
+-- Toggle between AirPods and External (equal priority)
+function M.toggleAirPodsExternal()
+	local cur = currentOutput()
+	if cur and CFG.airPodsName and string.find(cur:name(), CFG.airPodsName, 1, true) then
+		M.switchToExternal()
+	else
+		M.switchToAirPods()
+	end
+end
+
+-- Auto logic with equal priority:
+-- 1) If current is AirPods or External → respect it (do nothing).
+-- 2) If neither, and both available → pick lastChoice (default to external if none).
+-- 3) If only one of {AirPods, External} available → pick that.
+-- 4) Else → Built-in.
+local function switchToPreferredAudio_Auto()
+	local curName = currentOutput() and currentOutput():name() or ""
+	local ext = getExternal()
+	local pods = CFG.includeAirPodsInAuto and getAirPods() or nil
+	local built = getBuiltin()
+
+	local onExternal = ext and curName == ext:name()
+	local onAirPods = pods and curName == pods:name()
+
+	if onExternal or onAirPods then
+		print("[audioSwitcher] Respecting current choice:", curName)
+		setMicToBuiltin()
+		return
+	end
+
+	if ext and pods then
+		local last = getLastChoice() or "external"
+		if last == "airpods" then
+			M.switchToAirPods()
+		else
+			M.switchToExternal()
+		end
+		return
+	end
+
+	if ext then
+		M.switchToExternal()
+		return
+	end
+	if pods then
+		M.switchToAirPods()
+		return
+	end
+
+	if built then
+		M.switchToBuiltin()
+		return
+	end
+
+	print("[audioSwitcher] No matching devices to switch to")
+end
+
+-- Expose manual trigger
 function M.switchNow()
-	switchToPreferredAudio()
+	switchToPreferredAudio_Auto()
 end
 
 function M.start(userCfg)
 	merge(CFG, userCfg or {})
-
-	-- 🔔 Startup message
 	notify("Auto audio switching is active")
 
-	-- ✅ Audio device watcher (singleton)
 	hs.audiodevice.watcher.setCallback(function(event)
 		print("[audioSwitcher] Audio event:", event)
-		hs.timer.doAfter(CFG.delays.onAudioEvent, switchToPreferredAudio)
+		hs.timer.doAfter(CFG.delays.onAudioEvent, function()
+			switchToPreferredAudio_Auto()
+		end)
 	end)
 	hs.audiodevice.watcher.start()
 
-	-- 🌙 Wake watcher
-	sleepWatcher = hs.caffeinate.watcher.new(function(eventType)
-		if eventType == hs.caffeinate.watcher.systemDidWake then
-			print("[audioSwitcher] System woke—checking audio")
-			hs.timer.doAfter(CFG.delays.onWake, switchToPreferredAudio)
+	sleepWatcher = hs.caffeinate.watcher.new(function(e)
+		if e == hs.caffeinate.watcher.systemDidWake then
+			print("[audioSwitcher] Wake → check audio")
+			hs.timer.doAfter(CFG.delays.onWake, function()
+				switchToPreferredAudio_Auto()
+			end)
 		end
 	end)
 	sleepWatcher:start()
 
-	-- 🔌 USB watcher (helps with USB DACs)
-	usbWatcher = hs.usb.watcher.new(function(_data)
-		print("[audioSwitcher] USB change—checking audio")
-		hs.timer.doAfter(CFG.delays.onUsbEvent, switchToPreferredAudio)
+	usbWatcher = hs.usb.watcher.new(function(_)
+		print("[audioSwitcher] USB change → check audio")
+		hs.timer.doAfter(CFG.delays.onUsbEvent, function()
+			switchToPreferredAudio_Auto()
+		end)
 	end)
 	usbWatcher:start()
 
-	-- ▶️ Initial pass
-	print("[audioSwitcher] Started")
-	hs.timer.doAfter(CFG.delays.onStart, switchToPreferredAudio)
+	hs.timer.doAfter(CFG.delays.onStart, function()
+		switchToPreferredAudio_Auto()
+	end)
 
 	return M
 end
 
 function M.stop()
-	-- Stop the pieces we control; audio watcher is a singleton
 	if sleepWatcher then
 		sleepWatcher:stop()
 	end
@@ -161,6 +257,10 @@ function M.stop()
 	end
 	hs.audiodevice.watcher.setCallback(nil)
 	hs.audiodevice.watcher.stop()
+	if menu then
+		menu:delete()
+		menu = nil
+	end
 	notify("Audio switching stopped")
 end
 
