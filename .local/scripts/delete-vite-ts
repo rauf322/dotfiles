@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Clean Vite React Project Script
+
+echo "🧹 Cleaning up Vite default files..."
+
+# Remove default assets
+rm -rf src/assets/
+rm -f public/vite.svg
+
+# Clear and create minimal App.tsx
+cat > src/App.tsx << 'EOF'
+     function App() {
+       return (
+         <div>
+           <h1>Timer App</h1>
+         </div>
+       )
+     }
+
+export default App
+EOF
+
+# Clear CSS files
+echo "/* Add your styles here */" > src/App.css
+echo "/* Global styles */" > src/index.css
+
+echo "✅ Done! Vite default files cleaned and replaced with minimal versions."
+echo "📁 Removed: src/assets/, public/vite.svg"
+echo "📝 Reset: App.tsx, App.css, index.css"
+

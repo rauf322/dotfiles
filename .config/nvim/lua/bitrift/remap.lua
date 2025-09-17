@@ -1,52 +1,58 @@
 -- Leader
 vim.g.mapleader = " "
 
--- Move lines / quality-of-life
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move selection down" })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move selection up" })
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set({ "n", "v" }, "<leader>d", '"_d')
+local mappings = {
+	-- Move lines / quality-of-life
+	{ mode = "v", key = "J", command = ":m '>+1<CR>gv=gv", opts = { silent = true, desc = "Move selection down" } },
+	{ mode = "v", key = "K", command = ":m '<-2<CR>gv=gv", opts = { silent = true, desc = "Move selection up" } },
+	{ mode = "n", key = "J", command = "mzJ`z" },
+	{ mode = "n", key = "n", command = "nzzzv" },
+	{ mode = "n", key = "N", command = "Nzzzv" },
+	{ mode = { "n", "v" }, key = "<leader>y", command = [["+y]] },
+	{ mode = { "n", "v" }, key = "<leader>d", command = '"_d' },
 
--- Insert mode escape combos
-vim.keymap.set("i", "jj", "<Esc>")
-vim.keymap.set("i", "kk", "<Esc>")
-vim.keymap.set("i", "hh", "<Esc>")
+	-- Insert mode escape combos
+	{ mode = "i", key = "jj", command = "<Esc>" },
+	{ mode = "i", key = "kk", command = "<Esc>" },
+	{ mode = "i", key = "hh", command = "<Esc>" },
 
--- Reload plugins + config
-vim.keymap.set("n", "<leader>r", function()
-	require("lazy").sync()
-	vim.cmd("source $MYVIMRC")
-	vim.notify("Lazy.nvim and config reloaded!", vim.log.levels.INFO)
-end, { desc = "Reload lazy.nvim and Neovim config" })
+	-- Reload plugins + config
+	{
+		mode = "n",
+		key = "<leader>r",
+		command = function()
+			require("lazy").sync()
+			vim.cmd("source $MYVIMRC")
+			vim.notify("Lazy.nvim and config reloaded!", vim.log.levels.INFO)
+		end,
+		opts = { desc = "Reload lazy.nvim and Neovim config" },
+	},
 
--- Splits
-vim.keymap.set("n", "<leader>|", ":vsplit<CR>", { desc = "Vertical Split" })
-vim.keymap.set("n", "<leader>-", ":split<CR>", { desc = "Horizontal Split" })
+	-- Splits
+	{ mode = "n", key = "<leader>|", command = ":vsplit<CR>", opts = { desc = "Vertical Split" } },
+	{ mode = "n", key = "<leader>-", command = ":split<CR>", opts = { desc = "Horizontal Split" } },
 
--- Maximize / equalize
-vim.keymap.set("n", "<Leader>f", "<C-w>_<C-w>|", { desc = "full si[z]e" })
-vim.keymap.set("n", "<Leader>F", "<C-w>=", { desc = "even si[Z]e" })
+	-- Maximize / equalize
+	{ mode = "n", key = "<Leader>f", command = "<C-w>_<C-w>|", opts = { desc = "full si[z]e" } },
+	{ mode = "n", key = "<Leader>F", command = "<C-w>=", opts = { desc = "even si[Z]e" } },
 
--- Window navigation
-vim.keymap.set("n", "<leader>h", "<C-w>h", { desc = "Focus Left" })
-vim.keymap.set("n", "<leader>l", "<C-w>l", { desc = "Focus Right" })
-vim.keymap.set("n", "<leader>j", "<C-w>j", { desc = "Focus Down" })
-vim.keymap.set("n", "<leader>k", "<C-w>k", { desc = "Focus Up" })
+	-- Window navigation
+	{ mode = "n", key = "<leader>h", command = "<C-w>h", opts = { desc = "Focus Left" } },
+	{ mode = "n", key = "<leader>l", command = "<C-w>l", opts = { desc = "Focus Right" } },
+	{ mode = "n", key = "<leader>j", command = "<C-w>j", opts = { desc = "Focus Down" } },
+	{ mode = "n", key = "<leader>k", command = "<C-w>k", opts = { desc = "Focus Up" } },
 
--- Blank lines without leaving normal mode
-vim.keymap.set("n", "<leader>o", ":put =''<CR>", { desc = "Blank line below" })
-vim.keymap.set("n", "<leader>O", ":put! =''<CR>", { desc = "Blank line above" })
+	-- Blank lines without leaving normal mode
+	{ mode = "n", key = "<leader>o", command = ":put =''<CR>", opts = { desc = "Blank line below" } },
+	{ mode = "n", key = "<leader>O", command = ":put! =''<CR>", opts = { desc = "Blank line above" } },
 
--- Resize (arrow or hjkl flavor — pick one set you prefer)
-vim.keymap.set("n", "<leader><Left>", ":vertical resize -25<CR>", { desc = "Narrower window" })
-vim.keymap.set("n", "<leader><Right>", ":vertical resize +25<CR>", { desc = "Wider window" })
-vim.keymap.set("n", "<leader><Down>", ":resize +25<CR>", { desc = "Taller window" })
-vim.keymap.set("n", "<leader><Up>", ":resize -25<CR>", { desc = "Shorter window" })
+	-- Window resizing
+	{ mode = "n", key = "<leader>wl", command = ":vertical resize -25<CR>", opts = { desc = "Resize narrower" } },
+	{ mode = "n", key = "<leader>wh", command = ":vertical resize +25<CR>", opts = { desc = "Resize wider" } },
+	{ mode = "n", key = "<leader>wj", command = ":resize +25<CR>", opts = { desc = "Resize taller" } },
+	{ mode = "n", key = "<leader>wk", command = ":resize -25<CR>", opts = { desc = "Resize shorter" } },
+}
 
-vim.keymap.set("n", "<leader>rh", ":vertical resize -25<CR>", { desc = "Resize narrower" })
-vim.keymap.set("n", "<leader>rl", ":vertical resize +25<CR>", { desc = "Resize wider" })
-vim.keymap.set("n", "<leader>rj", ":resize +25<CR>", { desc = "Resize taller" })
-vim.keymap.set("n", "<leader>rk", ":resize -25<CR>", { desc = "Resize shorter" })
+for _, mapping in ipairs(mappings) do
+	vim.keymap.set(mapping.mode, mapping.key, mapping.command, mapping.opts or {})
+end
