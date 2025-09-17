@@ -27,7 +27,6 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
-				"ts_ls",
 				"html",
 				"cssls",
 				"tailwindcss",
@@ -41,7 +40,6 @@ return {
 				"quick_lint_js",
 			},
 		})
-
 		mason_tool_installer.setup({
 			ensure_installed = {
 				"prettier", -- prettier formatter

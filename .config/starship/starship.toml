@@ -1,3 +1,9 @@
+# Left side - only directory/file path
+format = """$directory$character"""
+
+# Right side - everything else (git, languages, etc.)
+right_format = """$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch$pijul_channel$fossil_branch$nodejs$python$lua$golang$rust$java$kotlin$swift$ruby$php$dart$elixir$elm$haskell$julia$nim$ocaml$perl$rlang$scala$zig$c$cpp$crystal$fennel$haxe$package$cmake$cobol$container$docker_context$dotnet$env_var$erlang$gcloud$helm$buf$nix_shell$conda$spack$memory_usage$aws$gcp$openstack$azure$direnv$custom$sudo$cmd_duration$jobs$battery$time$status$os$shell"""
+
 [aws]
 symbol = "  "
 

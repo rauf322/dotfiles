@@ -7,6 +7,14 @@ return {
 		end,
 	},
 	{
+		"antosha417/nvim-lsp-file-operations",
+		dependencies = { "nvim-lua/plenary.nvim", "nvim-neo-tree/neo-tree.nvim" },
+		config = function()
+			require("lsp-file-operations").setup()
+		end,
+	},
+
+	{
 		"junegunn/fzf",
 		event = "VeryLazy",
 		build = ":call fzf#install()",
@@ -154,6 +162,7 @@ return {
 
 						-- Normal delete (d key) - keep default behavior
 						-- ["d"] uses neo-tree's default delete
+						-- Keep default x (cut) and p (paste) operations
 
 						-- Smart Enter key behavior (same as nvim-tree)
 						["<CR>"] = function(state)
@@ -208,7 +217,7 @@ return {
 					use_libuv_file_watcher = true,
 				},
 
-				-- Enable file operations for LSP
+				-- Simple event handlers - let Neo-tree handle file operations natively
 				event_handlers = {
 					{
 						event = "file_opened",
@@ -372,6 +381,13 @@ return {
 			local cmp = require("cmp")
 			-- make autopairs and completion work together
 			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+			-- Create command to restart autopairs
+			vim.api.nvim_create_user_command("RestartAutopairs", function()
+				autopairs.disable()
+				autopairs.enable()
+				vim.notify("Autopairs restarted!", vim.log.levels.INFO)
+			end, { desc = "Restart nvim-autopairs plugin" })
 		end,
 	},
 	{
