@@ -11,15 +11,15 @@ local function show_output_popup(output, title)
 	for _, line in ipairs(lines) do
 		max_line_length = math.max(max_line_length, vim.fn.strdisplaywidth(line))
 	end
-	
+
 	-- Add padding for borders and some breathing room
 	local content_width = math.max(max_line_length, 20) + 4
 	local content_height = #lines + 2
-	
+
 	-- Constrain to screen size (leave some margin)
 	local max_width = math.floor(vim.o.columns * 0.9)
 	local max_height = math.floor(vim.o.lines * 0.8)
-	
+
 	local width = math.min(content_width, max_width)
 	local height = math.min(content_height, max_height)
 

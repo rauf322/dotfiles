@@ -42,8 +42,7 @@ return {
 							col = message.column - 1,
 							end_lnum = message.endLine and (message.endLine - 1) or (message.line - 1),
 							end_col = message.endColumn and (message.endColumn - 1) or (message.column - 1),
-							severity = message.severity == 1 and vim.diagnostic.severity.WARN
-								or vim.diagnostic.severity.ERROR,
+							severity = message.severity == 1 and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR,
 							message = message.message,
 							source = "eslint_d",
 							code = message.ruleId,
@@ -103,12 +102,12 @@ return {
 							"$FILENAME",
 							"--single-quote",
 							"--jsx-single-quote",
-							"--print-width=140",
+							-- "--print-width=140",
 						},
 					},
 					stylua = {
 						args = {
-							"--column-width=140",
+							-- "--column-width=140",
 							"--stdin-filepath",
 							"$FILENAME",
 							"-",
@@ -117,6 +116,7 @@ return {
 				},
 				format_on_save = { lsp_fallback = true, async = false, timeout_ms = 500 },
 			})
+
 			vim.keymap.set({ "n", "v" }, "<leader>s", function()
 				-- First run JSX self-closing fix if it's a JSX/TSX file
 				local jsx_autofix = require("bitrift.utils.jsx-autofix")
@@ -124,7 +124,17 @@ return {
 
 				-- Then format with conform
 				conform.format({ lsp_fallback = true, async = false, timeout_ms = 500 })
-				vim.cmd("wa")
+				
+				-- Use pcall to handle save errors gracefully
+				local ok, err = pcall(function()
+					vim.cmd("wa")
+				end)
+				
+				if not ok then
+					-- If normal save fails, try force save
+					vim.notify("Normal save failed, trying force save...", vim.log.levels.WARN)
+					vim.cmd("wa!")
+				end
 			end, { desc = "Format file(s) and save" })
 		end,
 	},
