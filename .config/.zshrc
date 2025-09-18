@@ -28,7 +28,7 @@ export PATH="$HOME/.local/scripts:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
-alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf"
+# alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf"
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -45,10 +45,6 @@ alias reload-zsh="source ~/.zshrc"
 # Zsh Autosuggestions & Syntax Highlighting
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Alias for ls to use eza (a better version of ls)
-alias ls="eza --icons=always"
-
 
 
 # Zoxide (better cd)
@@ -73,8 +69,6 @@ alias status="git status"
 alias push="git push"
 alias python="python3"
 
-# ls for . file alias
-alias ls.="ls -a"
 
 # File type specific nvim aliases
 alias js="nvim"
@@ -88,7 +82,7 @@ nvopen() {
         echo "Usage: nvopen <file>"
         return 1
     fi
-    
+
     local file="$1"
     case "${file##*.}" in
         js|ts|tsx|jsx|json|toml|yaml|yml|md|txt|py|sh|zsh|bash|conf|config)
@@ -123,3 +117,18 @@ function y() {
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 set -o vi
 
+# Custom fzf function with bat preview that opens in neovim
+fzf-bat-nvim() {
+    local file
+    file=$(fd --type f --hidden --exclude .git --max-depth 3 | fzf --preview 'bat --color=always --style=header,grid --line-range :50 {}' --preview-window=right:60%)
+    if [[ -n $file ]]; then
+        nvim "$file"
+    fi
+}
+
+# Bind to Ctrl+T (override default fzf binding)
+bindkey -s '^T' 'fzf-bat-nvim\n'
+
+alias ls="eza -la --icons --created --bytes --all"
+alias ll="eza -l "
+alias la="eza -la"
