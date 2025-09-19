@@ -84,14 +84,7 @@ return {
 					},
 				},
 				suggestion = {
-					enabled = true,
-					auto_trigger = true,
-					debounce = 75,
-					keymap = {
-						accept = "<C-w>", -- Tab to accept suggestion
-						-- accept_word = "<C-w>", -- Ctrl+w to accept word
-						dismiss = "<C-e>", -- Ctrl+e to dismiss (changed from C-n to avoid LSP conflict)
-					},
+					enabled = false, -- Disable standalone suggestions, use only cmp integration
 				},
 				filetypes = {
 					yaml = false,
@@ -111,11 +104,11 @@ return {
 	},
 
 	-- Copilot integration with nvim-cmp
-	{
-		"zbirenbaum/copilot-cmp",
-		dependencies = { "zbirenbaum/copilot.lua" },
-		config = function()
-			require("copilot_cmp").setup()
-		end,
-	},
+	-- {
+	-- 	"zbirenbaum/copilot-cmp",
+	-- 	dependencies = { "zbirenbaum/copilot.lua" },
+	-- 	config = function()
+	-- 		require("copilot_cmp").setup()
+	-- 	end,
+	-- },
 }
