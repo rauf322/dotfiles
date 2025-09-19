@@ -8,8 +8,6 @@ return {
 	},
 
 	config = function()
-		local lspconfig = require("lspconfig")
-
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local capabilities = vim.tbl_deep_extend(
@@ -103,11 +101,17 @@ return {
 		require("render-markdown").setup({
 			completions = { coq = { enabled = true } },
 		})
-		lspconfig.cssls.setup({
+		
+		-- CSS Language Server
+		vim.lsp.config.cssls = {
+			cmd = { "vscode-css-language-server", "--stdio" },
 			capabilities = capabilities,
 			filetypes = { "css" },
-		})
-		lspconfig.lua_ls.setup({
+		}
+
+		-- Lua Language Server
+		vim.lsp.config.lua_ls = {
+			cmd = { "lua-language-server" },
 			capabilities = capabilities,
 			settings = {
 				Lua = {
@@ -125,38 +129,52 @@ return {
 					},
 				},
 			},
-		})
+		}
 
-		lspconfig.svelte.setup({
+		-- Svelte Language Server
+		vim.lsp.config.svelte = {
+			cmd = { "svelteserver", "--stdio" },
 			capabilities = capabilities,
 			on_attach = function(client, bufnr)
 				vim.api.nvim_create_autocmd("BufWritePost", {
 					pattern = { "*.js", "*.ts" },
 					callback = function(ctx)
-						-- Here use ctx.match instead of ctx.file
 						client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
 					end,
 				})
 			end,
-		})
+		}
 
-		lspconfig.graphql.setup({
+		-- GraphQL Language Server
+		vim.lsp.config.graphql = {
+			cmd = { "graphql-lsp", "server", "-m", "stream" },
 			capabilities = capabilities,
 			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-		})
+		}
 
-		lspconfig.quick_lint_js.setup({
+		-- Quick Lint JS
+		vim.lsp.config.quick_lint_js = {
+			cmd = { "quick-lint-js", "--lsp-server" },
 			capabilities = capabilities,
 			filetypes = { "javascript" },
-		})
+		}
 
-		lspconfig.eslint.setup({
+		-- ESLint Language Server
+		vim.lsp.config.eslint = {
+			cmd = { "vscode-eslint-language-server", "--stdio" },
 			capabilities = capabilities,
 			on_attach = function(client, bufnr)
 				-- Enable auto-fix on save
 				vim.api.nvim_create_autocmd("BufWritePre", {
 					buffer = bufnr,
-					command = "EslintFixAll",
+					callback = function()
+						vim.lsp.buf.code_action({
+							filter = function(action)
+								return action.kind == "source.fixAll.eslint"
+							end,
+							apply = true,
+						})
+					end,
 				})
 			end,
 			settings = {
@@ -196,6 +214,6 @@ return {
 				"typescriptreact",
 				"svelte",
 			},
-		})
+		}
 	end,
 }
