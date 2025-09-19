@@ -133,3 +133,5 @@ bindkey -s '^T' 'fzf-bat-nvim\n'
 alias ls="eza -la --icons --created --bytes --all"
 alias ll="eza -l "
 alias la="eza -la"
+
+. "$HOME/.local/bin/env"
