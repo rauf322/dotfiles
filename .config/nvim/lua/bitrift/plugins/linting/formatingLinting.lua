@@ -118,22 +118,38 @@ return {
 			})
 
 			vim.keymap.set({ "n", "v" }, "<leader>s", function()
-				-- First run JSX self-closing fix if it's a JSX/TSX file
-				local jsx_autofix = require("bitrift.utils.jsx-autofix")
-				jsx_autofix.fix_jsx_self_closing()
+				-- Add error handling for the entire format and save operation
+				local success = pcall(function()
+					-- First run JSX self-closing fix if it's a JSX/TSX file
+					local jsx_autofix = require("bitrift.utils.jsx-autofix")
+					jsx_autofix.fix_jsx_self_closing()
 
-				-- Then format with conform
-				conform.format({ lsp_fallback = true, async = false, timeout_ms = 500 })
-				
-				-- Use pcall to handle save errors gracefully
-				local ok, err = pcall(function()
+					-- Small delay to let LSP sync after JSX changes
+					vim.wait(10)
+
+					-- Then format with conform with error handling
+					local format_success = pcall(function()
+						conform.format({ 
+							lsp_fallback = true, 
+							async = false, 
+							timeout_ms = 1000,
+							quiet = true 
+						})
+					end)
+					
+					if not format_success then
+						vim.notify("Formatting failed, saving without formatting", vim.log.levels.WARN)
+					end
+					
+					-- Small delay before save to let formatting complete
+					vim.wait(50)
+					
+					-- Save files
 					vim.cmd("wa")
 				end)
 				
-				if not ok then
-					-- If normal save fails, try force save
-					vim.notify("Normal save failed, trying force save...", vim.log.levels.WARN)
-					vim.cmd("wa!")
+				if not success then
+					vim.notify("Format and save operation failed", vim.log.levels.ERROR)
 				end
 			end, { desc = "Format file(s) and save" })
 		end,
