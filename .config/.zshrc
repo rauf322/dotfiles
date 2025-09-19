@@ -126,7 +126,8 @@ fzf-bat-nvim() {
     fi
 }
 
-# Bind to Ctrl+T (override default fzf binding)
+# Disable default fzf Ctrl+T binding and set custom one
+bindkey -r '^T'
 bindkey -s '^T' 'fzf-bat-nvim\n'
 
 alias ls="eza -la --icons --created --bytes --all"
