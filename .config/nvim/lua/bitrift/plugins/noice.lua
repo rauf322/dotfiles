@@ -39,6 +39,42 @@ return {
 				},
 				opts = { skip = true },
 			},
+			-- Filter out "no code action available" messages
+			{
+				filter = {
+					event = "notify",
+					find = "No code actions available",
+				},
+				opts = { skip = true },
+			},
+			{
+				filter = {
+					event = "notify",
+					find = "no code action available",
+				},
+				opts = { skip = true },
+			},
+			{
+				filter = {
+					event = "notify",
+					find = "No code action",
+				},
+				opts = { skip = true },
+			},
+			{
+				filter = {
+					event = "msg_show",
+					find = "no code action",
+				},
+				opts = { skip = true },
+			},
+			{
+				filter = {
+					event = "msg_show",
+					find = "No code action",
+				},
+				opts = { skip = true },
+			},
 		},
 		presets = {
 			bottom_search = true,
