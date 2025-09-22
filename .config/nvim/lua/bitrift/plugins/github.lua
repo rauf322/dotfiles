@@ -60,55 +60,20 @@ return {
 			vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", { desc = "Gitsign inspect preview" })
 		end,
 	},
-
-	-- Modern GitHub Copilot
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
 		event = "InsertEnter",
-		config = function()
-			require("copilot").setup({
-				panel = {
-					enabled = true,
-					auto_refresh = false,
-					keymap = {
-						jump_prev = "[[",
-						jump_next = "]]",
-						accept = "<CR>",
-						refresh = "gr",
-						open = "<M-CR>", -- Alt+Enter to open panel
-					},
-					layout = {
-						position = "bottom", -- | top | left | right
-						ratio = 0.4,
-					},
-				},
-				suggestion = {
-					enabled = false, -- Disable standalone suggestions, use only cmp integration
-				},
-				filetypes = {
-					yaml = false,
-					markdown = false,
-					help = false,
-					gitcommit = false,
-					gitrebase = false,
-					hgcommit = false,
-					svn = false,
-					cvs = false,
-					["."] = false,
-				},
-				copilot_node_command = "node", -- Node.js version must be > 18.x
-				server_opts_overrides = {},
-			})
-		end,
+		opts = {
+			suggestion = { enabled = false }, -- disable Copilot's popup; let blink handle it
+			panel = { enabled = false },
+			filetypes = {
+				["*"] = true,
+			},
+		},
 	},
-
-	-- Copilot integration with nvim-cmp
-	-- {
-	-- 	"zbirenbaum/copilot-cmp",
-	-- 	dependencies = { "zbirenbaum/copilot.lua" },
-	-- 	config = function()
-	-- 		require("copilot_cmp").setup()
-	-- 	end,
-	-- },
+	{
+		"fang2hou/blink-copilot",
+		dependencies = { "zbirenbaum/copilot.lua" },
+	},
 }

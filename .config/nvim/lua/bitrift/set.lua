@@ -30,6 +30,7 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "130"
 vim.lsp.inlay_hint.enable(true)
 vim.opt.laststatus = 3
+-- vim.opt.winborder = "rounded"
 
 -- Disable unnecessary providers to eliminate checkhealth warnings
 vim.g.loaded_node_provider = 0
@@ -63,5 +64,3 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.breakindent = true
 	end,
 })
-
-
