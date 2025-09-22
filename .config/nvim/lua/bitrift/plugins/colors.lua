@@ -75,6 +75,9 @@ function ColorMyPencils(color)
 			vim.api.nvim_set_hl(0, group, hl)
 		end
 	end
+
+	-- Brighter visual mode highlight
+	vim.api.nvim_set_hl(0, "Visual", { bg = "#404040", fg = "none" })
 end
 
 return {
