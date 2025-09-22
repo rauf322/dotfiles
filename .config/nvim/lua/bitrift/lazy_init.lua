@@ -12,7 +12,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	{ import = "bitrift.plugins" },
-	{ import = "bitrift.plugins.lsp" },
 	{ import = "bitrift.plugins.linting" },
 }, {
 	checker = {
