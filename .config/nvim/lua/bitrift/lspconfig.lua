@@ -6,7 +6,6 @@
 -- This actually just enables the lsp servers.
 -- The configuration is found in the lsp folder inside the nvim config folder,
 -- so in ~.config/lsp/lua_ls.lua for lua_ls, for example.
-
 local lsp_servers = {
 	"lua_ls",
 	"cssls",
