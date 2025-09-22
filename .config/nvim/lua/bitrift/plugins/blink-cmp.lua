@@ -14,12 +14,14 @@ return {
 			"rafamadriz/friendly-snippets",
 			"moyiz/blink-emoji.nvim",
 			"ray-x/cmp-sql",
+			"L3MON4D3/LuaSnip",
 			"zbirenbaum/copilot.lua",
 		},
 		version = "1.*",
 		---@module 'blink.cmp'
 		---@type blink.cmp.Config
 		opts = {
+			snippets = { preset = "luasnip" },
 			keymap = {
 				["<C-p>"] = { "select_prev" },
 				["<C-n>"] = { "select_next" },
