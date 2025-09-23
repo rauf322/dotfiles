@@ -42,7 +42,8 @@ return {
 							col = message.column - 1,
 							end_lnum = message.endLine and (message.endLine - 1) or (message.line - 1),
 							end_col = message.endColumn and (message.endColumn - 1) or (message.column - 1),
-							severity = message.severity == 1 and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR,
+							severity = message.severity == 1 and vim.diagnostic.severity.WARN
+								or vim.diagnostic.severity.ERROR,
 							message = message.message,
 							source = "eslint_d",
 							code = message.ruleId,
@@ -116,40 +117,52 @@ return {
 				},
 				format_on_save = { lsp_fallback = true, async = false, timeout_ms = 500 },
 			})
-
 			vim.keymap.set({ "n", "v" }, "<leader>s", function()
-				-- Add error handling for the entire format and save operation
-				local success = pcall(function()
-					-- First run JSX self-closing fix if it's a JSX/TSX file
-					local jsx_autofix = require("bitrift.utils.jsx-autofix")
-					jsx_autofix.fix_jsx_self_closing()
+				-- Wrap the whole operation and capture any error message
+				local ok, err = pcall(function()
+					-- require the jsx-autofix safely
+					local ok_req, jsx_autofix = pcall(require, "bitrift.utils.jsx-autofix")
+					if ok_req and jsx_autofix and type(jsx_autofix.fix_jsx_self_closing) == "function" then
+						-- run the JSX fixer, but protect it as well
+						local ok_fix, fix_err = pcall(jsx_autofix.fix_jsx_self_closing)
+						if not ok_fix then
+							vim.notify("JSX autofix failed: " .. tostring(fix_err), vim.log.levels.WARN)
+						end
+					end
 
-					-- Small delay to let LSP sync after JSX changes
+					-- small wait to let LSP / buffer updates settle
 					vim.wait(10)
 
-					-- Then format with conform with error handling
-					local format_success = pcall(function()
-						conform.format({ 
-							lsp_fallback = true, 
-							async = false, 
-							timeout_ms = 1000,
-							quiet = true 
-						})
-					end)
-					
-					if not format_success then
-						vim.notify("Formatting failed, saving without formatting", vim.log.levels.WARN)
+					-- Format with conform, but check that conform exists and has format
+					if type(conform) == "table" and type(conform.format) == "function" then
+						local ok_fmt, fmt_err = pcall(function()
+							conform.format({
+								lsp_fallback = true,
+								async = false,
+								timeout_ms = 1000,
+								quiet = true,
+							})
+						end)
+						if not ok_fmt then
+							vim.notify(
+								"Formatting failed: " .. tostring(fmt_err) .. ". Saving without formatting.",
+								vim.log.levels.WARN
+							)
+						end
+					else
+						vim.notify("conform.format not available; saving without formatting", vim.log.levels.WARN)
 					end
-					
-					-- Small delay before save to let formatting complete
+
+					-- Wait a bit to let formatting complete if any
 					vim.wait(50)
-					
-					-- Save files
+
+					-- Save all changed buffers
 					vim.cmd("wa")
 				end)
-				
-				if not success then
-					vim.notify("Format and save operation failed", vim.log.levels.ERROR)
+
+				if not ok then
+					-- show the actual error so you can debug why pcall failed
+					vim.notify("Format and save operation failed: " .. tostring(err), vim.log.levels.ERROR)
 				end
 			end, { desc = "Format file(s) and save" })
 		end,
