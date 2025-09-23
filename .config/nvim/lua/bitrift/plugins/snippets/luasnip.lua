@@ -33,8 +33,18 @@ ls.add_snippets("javascript", {
 		f(filename_no_ext),
 		t("());"),
 	}),
+	s("clg", {
+		t("console.log("),
+		i(1),
+		t(")"),
+	}),
 })
 ls.add_snippets("javascriptreact", {
+	s("clg", {
+		t("console.log("),
+		i(1),
+		t(")"),
+	}),
 	-- JSX self-closing component snippets
 	s("<", {
 		t("<"),
@@ -79,7 +89,20 @@ ls.add_snippets("javascriptreact", {
 	}),
 })
 
+ls.add_snippets("typescript", {
+	s("clg", {
+		t("console.log("),
+		i(1),
+		t(")"),
+	}),
+})
+
 ls.add_snippets("typescriptreact", {
+	s("clg", {
+		t("console.log("),
+		i(1),
+		t(")"),
+	}),
 	-- JSX self-closing component snippets
 	s("<", {
 		t("<"),

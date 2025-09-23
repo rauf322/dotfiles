@@ -38,6 +38,7 @@ return {
 				"pyright",
 				"eslint",
 				"quick_lint_js",
+				"jsonls",
 			},
 		})
 		mason_tool_installer.setup({

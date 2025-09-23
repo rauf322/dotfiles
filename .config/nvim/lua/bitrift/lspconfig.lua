@@ -13,6 +13,7 @@ local lsp_servers = {
 	"graphql",
 	"quick_lint_js",
 	"eslint",
+	"jsonls",
 }
 for _, server in ipairs(lsp_servers) do
 	vim.lsp.enable(server)

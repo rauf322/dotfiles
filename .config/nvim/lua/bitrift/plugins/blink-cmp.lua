@@ -38,15 +38,13 @@ return {
 			completion = {
 				list = {
 					selection = {
-						preselect = false,
+						preselect = true,
 						auto_insert = false,
 					},
 				},
 				documentation = {
 					auto_show = true,
-					auto_show_delay_ms = 250,
 					treesitter_highlighting = true,
-					update_delay_ms = 50,
 					window = { border = "rounded" },
 				},
 				menu = {
