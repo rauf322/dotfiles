@@ -36,6 +36,11 @@ return {
 				nerd_font_variant = "normal",
 			},
 			completion = {
+				accept = {
+					auto_brackets = {
+						enabled = true,
+					},
+				},
 				list = {
 					selection = {
 						preselect = true,
@@ -45,6 +50,7 @@ return {
 				documentation = {
 					auto_show = true,
 					treesitter_highlighting = true,
+					auto_show_delay_ms = 200,
 					window = { border = "rounded" },
 				},
 				menu = {
