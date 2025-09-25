@@ -74,6 +74,16 @@ return {
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer", "emoji", "sql", "copilot" },
 				providers = {
+					lsp = {
+						score_offset = 100, -- Highest priority
+						max_items = 3, -- Limit LSP suggestions to 5
+					},
+					path = {
+						score_offset = 50, -- Second priority
+					},
+					snippets = {
+						score_offset = -10, -- Lower priority
+					},
 					copilot = {
 						name = "copilot",
 						module = "blink-copilot",
