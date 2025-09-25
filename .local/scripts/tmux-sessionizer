@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-selected=$(find ~/ -mindepth 1 -maxdepth 2 -type d | fzf)
+selected=$(find ~/ -mindepth 1 -maxdepth 4 -type d | fzf)
 
 if [[ -z $selected ]]; then
     exit 0

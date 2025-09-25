@@ -50,6 +50,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		opts.desc = "Show buffer diagnostics"
 		vim.keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
+		opts.desc = "Show all diagnostics"
+		vim.keymap.set("n", "<leader>DA", "<cmd>Telescope diagnostics<CR>", opts) -- show diagnostics from all buffers
+
 		opts.desc = "Show line diagnostics"
 		vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
