@@ -28,6 +28,9 @@ return {
 					nowait = true,
 				},
 				mappings = {
+					-- Disable built-in search
+					["f"] = "noop",
+
 					-- Custom clipboard copy (C key)
 					["C"] = function(state)
 						local node = state.tree:get_node()
