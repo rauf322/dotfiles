@@ -177,31 +177,31 @@ set -g @plugin 'omerxx/tmux-sessionx'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @resurrect-capture-pane-contents "on"
 
-# -- SessionX True Telescope Layout (Search → List | Preview) ---------------
+# -- SessionX Modern Layout (VSCode-inspired) --------------------------------
 set -g @sessionx-zoxide-mode 'on'
 set -g @sessionx-bind 'w'                     # Bind to prefix + w
-set -g @sessionx-window-height '85%'          # Full height like telescope
-set -g @sessionx-window-width '85%'           # Full width like telescope
-set -g @sessionx-layout 'reverse'             # Default layout - search at top
-set -g @sessionx-preview-location 'right'     # Preview on right side
-set -g @sessionx-prompt " "
-set -g @sessionx-preview-ratio '50%'          # Half screen for preview
-set -g @sessionx-prompt ' '                  # Clean minimal prompt
-set -g @sessionx-pointer '▶'                  # Simple pointer
+set -g @sessionx-window-height '90%'          # Almost fullscreen
+set -g @sessionx-window-width '90%'           # Almost fullscreen
+set -g @sessionx-layout 'reverse'             # Reverse layout for modern feel
+set -g @sessionx-preview-location 'bottom'    # Preview at bottom like VSCode
+set -g @sessionx-preview-ratio '40%'          # Reasonable preview size
+set -g @sessionx-prompt '❯ '                  # Modern shell prompt
+set -g @sessionx-pointer '󰁕'                  # Stylish pointer
 
-# High contrast colors for better visibility
+# Modern colorscheme with better contrast
 set -g @sessionx-additional-options "\
---color=bg+:#181825,bg:#11111b \
---color=border:#cba6f7,header:#89b4fa \
---color=gutter:#11111b,hl:#f38ba8 \
---color=hl+:#f5c2e7,info:#89dceb \
---color=marker:#a6e3a1,pointer:#fab387 \
---color=prompt:#89b4fa,spinner:#a6e3a1 \
---color=fg:#cdd6f4,fg+:#ffffff \
---border=sharp \
---info=inline \
---no-scrollbar \
---cycle"
+--color=bg+:#313244,bg:#1e1e2e \
+--color=border:#89b4fa,header:#cba6f7 \
+--color=gutter:#1e1e2e,hl:#f38ba8 \
+--color=hl+:#f38ba8,info:#74c7ec \
+--color=marker:#a6e3a1,pointer:#f5c2e7 \
+--color=prompt:#cba6f7,spinner:#a6e3a1 \
+--color=fg:#cdd6f4,fg+:#f5e0dc \
+--border=rounded \
+--info=inline-right \
+--header-first \
+--cycle \
+--ansi"
 
 run '~/.config/tmux/plugins/tpm/tpm'
 
