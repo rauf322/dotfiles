@@ -1,7 +1,7 @@
 local audioSwitcher = require("audioSwitcher")
 
 audioSwitcher.start({
-	preferredSpeaker = "LC32G7xT",
+	preferredSpeaker = "Scarlett Solo USB",
 	builtinSpeaker = "Динамики MacBook Pro",
 	airPodsName = "Rauf’s AirPods #4",
 

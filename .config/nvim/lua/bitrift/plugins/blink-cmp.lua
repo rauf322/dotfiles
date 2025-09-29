@@ -25,12 +25,10 @@ return {
 			keymap = {
 				["<C-p>"] = { "select_prev" },
 				["<C-n>"] = { "select_next" },
+				["<Tab>"] = { "select_next" },
 				["<CR>"] = { "accept", "fallback" },
-				["<C-Space>"] = { "show" },
 				["<C-f>"] = { "snippet_forward" },
 				["<C-b>"] = { "snippet_backward" },
-				["<Tab>"] = { "snippet_forward", "fallback" },
-				["<S-Tab>"] = { "snippet_backward", "fallback" },
 			},
 			appearance = {
 				nerd_font_variant = "normal",
@@ -43,7 +41,7 @@ return {
 				},
 				list = {
 					selection = {
-						preselect = true,
+						preselect = false,
 						auto_insert = false,
 					},
 				},
