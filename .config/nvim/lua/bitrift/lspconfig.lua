@@ -14,6 +14,7 @@ local lsp_servers = {
 	"quick_lint_js",
 	"eslint",
 	"jsonls",
+	"emmet_language_server",
 }
 for _, server in ipairs(lsp_servers) do
 	vim.lsp.enable(server)

@@ -6,7 +6,7 @@ local M = {}
 
 -- Defaults
 local CFG = {
-	preferredSpeaker = "LC32G7xT",
+	preferredSpeaker = "Scarlett Solo USB",
 	builtinSpeaker = "Динамики MacBook Pro",
 	airPodsName = "Rauf’s AirPods #4",
 
@@ -15,7 +15,6 @@ local CFG = {
 	notify = true,
 	logDevices = true,
 	delays = { onAudioEvent = 0.5, onWake = 2.0, onUsbEvent = 1.0, onStart = 0.2 },
-
 }
 
 local sleepWatcher, usbWatcher, menu

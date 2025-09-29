@@ -6,7 +6,6 @@ eval "$(starship init zsh)"
 
 source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
-echo -ne '\e[2 q'
 #Reset PATH to prevent duplication issues
 export PATH=""
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -116,6 +115,17 @@ function y() {
 }
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 set -o vi
+
+# Cursor shape for vi mode - steady block in normal, blinking thin line in insert
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+    echo -ne '\e[2 q'  # steady block for normal mode
+  elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'  # blinking thin line for insert mode
+  fi
+}
+zle -N zle-keymap-select
+echo -ne '\e[5 q' # Start with blinking thin line
 
 # Custom fzf function with bat preview that opens in neovim
 fzf-bat-nvim() {
