@@ -30,3 +30,5 @@ This is a Neovim configuration written in Lua, organized under `lua/bitrift/` wi
 - Always check if module exists before requiring: `pcall(require, "module")`
 - Use `vim.keymap.set()` for keybindings with descriptive `desc` field
 - Prefer event-based lazy loading: `event = "BufReadPre"` or `event = "VeryLazy"`
+
+foo

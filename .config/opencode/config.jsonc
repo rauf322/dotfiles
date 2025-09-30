@@ -1,0 +1,282 @@
+{
+  "theme": "tymon-kanagawa",
+  "$schema": "https://opencode.ai/config.json",
+  "mode": {
+    "plan": {
+      "model": "github-copilot/claude-sonnet-4",
+    },
+    "build": {
+      "model": "github-copilot/claude-sonnet-4",
+    },
+  },
+  "formatter": {
+    "prettier": {
+      "command": [
+        "prettier",
+        "--write",
+        "$FILE"
+      ],
+      "extensions": [
+        ".js",
+        ".jsx",
+        ".ts",
+        ".tsx",
+        ".json",
+        ".html",
+        ".css",
+        ".scss",
+        ".less",
+        ".md",
+        ".yaml",
+        ".yml",
+      ],
+    },
+    "black": {
+      "command": [
+        "black",
+        "$FILE"
+      ],
+      "extensions": [
+        ".py",
+        ".pyi"
+      ],
+    },
+    "ruff": {
+      "command": [
+        "ruff",
+        "format",
+        "$FILE"
+      ],
+      "extensions": [
+        ".py",
+        ".pyi"
+      ],
+    },
+    "stylua": {
+      "command": [
+        "stylua",
+        "$FILE"
+      ],
+      "extensions": [
+        ".lua"
+      ],
+    },
+    "shfmt": {
+      "command": [
+        "shfmt",
+        "-i",
+        "2",
+        "-ci",
+        "$FILE"
+      ],
+      "extensions": [
+        ".sh",
+        ".bash",
+        ".zsh"
+      ],
+    },
+    "gofumpt": {
+      "command": [
+        "gofumpt",
+        "-w",
+        "$FILE"
+      ],
+      "extensions": [
+        ".go"
+      ],
+    },
+    "taplo": {
+      "command": [
+        "taplo",
+        "format",
+        "$FILE"
+      ],
+      "extensions": [
+        ".toml"
+      ],
+    },
+    "yamlfix": {
+      "command": [
+        "yamlfix",
+        "$FILE"
+      ],
+      "extensions": [
+        ".yaml",
+        ".yml"
+      ],
+    },
+    "usort": {
+      "command": [
+        "usort",
+        "format",
+        "$FILE"
+      ],
+      "extensions": [
+        ".py",
+        ".pyi"
+      ],
+    },
+  },
+  "lsp": {
+    "bash-language-server": {
+      "command": [
+        "bash-language-server",
+        "start"
+      ],
+      "extensions": [
+        ".sh",
+        ".bash",
+        ".zsh"
+      ],
+    },
+    "lua-language-server": {
+      "command": [
+        "lua-language-server"
+      ],
+      "extensions": [
+        ".lua"
+      ],
+    },
+    "gopls": {
+      "command": [
+        "gopls"
+      ],
+      "extensions": [
+        ".go",
+        ".mod",
+        ".sum"
+      ],
+    },
+    "rust-analyzer": {
+      "command": [
+        "rust-analyzer"
+      ],
+      "extensions": [
+        ".rs"
+      ],
+    },
+    "basedpyright": {
+      "command": [
+        "basedpyright-langserver",
+        "--stdio"
+      ],
+      "extensions": [
+        ".py",
+        ".pyi"
+      ],
+    },
+    "vtsls": {
+      "command": [
+        "vtsls",
+        "--stdio"
+      ],
+      "extensions": [
+        ".js",
+        ".jsx",
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".cjs",
+        ".mts",
+        ".cts",
+      ],
+    },
+    "yaml-language-server": {
+      "command": [
+        "yaml-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".yaml",
+        ".yml"
+      ],
+    },
+    "vscode-json-language-server": {
+      "command": [
+        "vscode-json-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".json",
+        ".jsonc"
+      ],
+    },
+    "marksman": {
+      "command": [
+        "marksman",
+        "server"
+      ],
+      "extensions": [
+        ".md",
+        ".markdown"
+      ],
+    },
+    "docker-langserver": {
+      "command": [
+        "docker-langserver",
+        "--stdio"
+      ],
+      "extensions": [
+        ".dockerfile",
+        "Dockerfile*"
+      ],
+    },
+    "docker-compose-langserver": {
+      "command": [
+        "docker-compose-langserver",
+        "--stdio"
+      ],
+      "extensions": [
+        "docker-compose.yml",
+        "docker-compose.yaml",
+        "compose.yml",
+        "compose.yaml",
+      ],
+    },
+    "jsonnet-language-server": {
+      "command": [
+        "jsonnet-language-server"
+      ],
+      "extensions": [
+        ".jsonnet",
+        ".libsonnet"
+      ],
+    },
+    "gitlab-ci-ls": {
+      "command": [
+        "gitlab-ci-ls"
+      ],
+      "extensions": [
+        ".gitlab-ci.yml",
+        ".gitlab-ci.yaml"
+      ],
+    },
+    "fish-lsp": {
+      "command": [
+        "fish-lsp",
+        "start"
+      ],
+      "extensions": [
+        ".fish"
+      ],
+    },
+    "golangci-lint-langserver": {
+      "command": [
+        "golangci-lint-langserver"
+      ],
+      "extensions": [
+        ".go"
+      ],
+    },
+    "taplo": {
+      "command": [
+        "taplo",
+        "lsp",
+        "stdio"
+      ],
+      "extensions": [
+        ".toml"
+      ],
+    },
+  },
+}

@@ -22,7 +22,9 @@ ls.add_snippets("html", {
 		t({ "", "  </body>", "</html>" }),
 	}),
 })
-ls.add_snippets("javascript", {
+
+-- Define JS/TS snippets once
+local js_snippets = {
 	s("!func", {
 		t("function "),
 		f(filename_no_ext),
@@ -38,14 +40,6 @@ ls.add_snippets("javascript", {
 		i(1),
 		t(")"),
 	}),
-})
-ls.add_snippets("javascriptreact", {
-	s("clg", {
-		t("console.log("),
-		i(1),
-		t(")"),
-	}),
-	-- JSX self-closing component snippets
 	s("<", {
 		t("<"),
 		i(1, "Component"),
@@ -87,62 +81,79 @@ ls.add_snippets("javascriptreact", {
 		i(0),
 		t({ "", "    </div>", "  );", "};" }),
 	}),
-})
-
-ls.add_snippets("typescript", {
-	s("clg", {
-		t("console.log("),
-		i(1),
-		t(")"),
-	}),
-})
-
-ls.add_snippets("typescriptreact", {
-	s("clg", {
-		t("console.log("),
-		i(1),
-		t(")"),
-	}),
-	-- JSX self-closing component snippets
-	s("<", {
-		t("<"),
-		i(1, "Component"),
-		t(" />"),
-	}),
-	s("comp", {
-		t("<"),
-		i(1, "Component"),
-		t(" />"),
-	}),
-	s("rsc", {
-		t("const "),
+	s("tst", {
+		t("import { createFileRoute } from '@tanstack/react-router'"),
+		t({ "", "", "export const Route = createFileRoute('/" }),
+		i(1, "path"),
+		t("')({"),
+		t({ "", "  component: " }),
 		f(filename_no_ext, {}),
-		t(" = () => {"),
+		t(","),
+		t({ "", "})", "", "function " }),
+		f(filename_no_ext, {}),
+		t("() {"),
 		t({ "", "  return (" }),
 		t({ "", "    <div>" }),
-		i(1),
-		t({ "", "    </div>", "  );", "};", "", "export default " }),
-		f(filename_no_ext, {}),
-		t(";"),
-	}),
-	s("rc", {
-		t("import { classNames } from '@/shared/lib/classNames/classNames';"),
-		t({ "", "import cls from './" }),
-		f(filename_no_ext, {}),
-		t(".module.scss';", "", ""),
-		t("interface "),
-		f(filename_no_ext, {}),
-		t("Props {"),
-		t({ "", "  className?: string;", "}", "", "export const " }),
-		f(filename_no_ext, {}),
-		t(" = ({ className }: "),
-		f(filename_no_ext, {}),
-		t("Props) => {"),
-		t({ "", "  return (" }),
-		t({ "", "    <div className={classNames(cls." }),
-		f(filename_no_ext, {}),
-		t(", {}, [className])}>"),
 		i(0),
-		t({ "", "    </div>", "  );", "};" }),
+		t({ "", "    </div>", "  )", "}" }),
 	}),
-})
+	s("routeloader", {
+		t("import { createFileRoute } from '@tanstack/react-router'"),
+		t({ "", "", "export const Route = createFileRoute('/" }),
+		i(1, "path"),
+		t("')({"),
+		t({ "", "  loader: async () => {" }),
+		t({ "", "    " }),
+		i(2, "// loader logic"),
+		t({ "", "  }," }),
+		t({ "", "  component: " }),
+		f(filename_no_ext, {}),
+		t(","),
+		t({ "", "})", "", "function " }),
+		f(filename_no_ext, {}),
+		t("() {"),
+		t({ "", "  const data = Route.useLoaderData()" }),
+		t({ "", "  return (" }),
+		t({ "", "    <div>" }),
+		i(0),
+		t({ "", "    </div>", "  )", "}" }),
+	}),
+	s("routeparams", {
+		t("import { createFileRoute } from '@tanstack/react-router'"),
+		t({ "", "", "export const Route = createFileRoute('/" }),
+		i(1, "path/$id"),
+		t("')({"),
+		t({ "", "  component: " }),
+		f(filename_no_ext, {}),
+		t(","),
+		t({ "", "})", "", "function " }),
+		f(filename_no_ext, {}),
+		t("() {"),
+		t({ "", "  const { " }),
+		i(2, "id"),
+		t(" } = Route.useParams()"),
+		t({ "", "  return (" }),
+		t({ "", "    <div>" }),
+		i(0),
+		t({ "", "    </div>", "  )", "}" }),
+	}),
+	s("layout", {
+		t("import { createFileRoute, Outlet } from '@tanstack/react-router'"),
+		t({ "", "", "export const Route = createFileRoute('/" }),
+		i(1, "_layout"),
+		t("')({"),
+		t({ "", "  component: LayoutComponent," }),
+		t({ "", "})", "", "function LayoutComponent() {" }),
+		t({ "", "  return (" }),
+		t({ "", "    <div>" }),
+		i(2, "<!-- Layout content -->"),
+		t({ "", "      <Outlet />" }),
+		t({ "", "    </div>", "  )", "}" }),
+		i(0),
+	}),
+}
+
+-- Apply snippets to all JS/TS filetypes
+for _, ft in ipairs({ "javascript", "javascriptreact", "typescript", "typescriptreact" }) do
+	ls.add_snippets(ft, js_snippets)
+end

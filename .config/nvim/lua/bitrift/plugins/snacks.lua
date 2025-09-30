@@ -186,6 +186,28 @@ return {
 			auto_close = false,
 			win = {
 				style = "minimal",
+				enter = true,
+				keys = {
+					term_normal = {
+						"<esc>",
+						function()
+							return "<C-\\><C-n>"
+						end,
+						mode = "t",
+						expr = true,
+						desc = "Escape to normal mode",
+					},
+					term_close = {
+						"<esc><esc>",
+						function()
+							vim.cmd("close")
+						end,
+						mode = "t",
+						desc = "Double escape to close terminal",
+					},
+					q = "hide",
+					["<esc>"] = "hide",
+				},
 			},
 		},
 	},
@@ -195,6 +217,9 @@ return {
 		vim.keymap.set("n", "<leader>`", function()
 			require("snacks.terminal").toggle()
 		end, { desc = "Toggle terminal" })
+
+		-- Terminal mode escape for snacks terminal
+		vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit snacks terminal mode" })
 		Snacks.toggle.new({
 			id = "ufo",
 			name = "Enable/Disable ufo",
