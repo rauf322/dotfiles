@@ -16,6 +16,9 @@ local mappings = {
 	{ mode = "i", key = "kk", command = "<Esc>" },
 	{ mode = "i", key = "hh", command = "<Esc>" },
 
+	-- Terminal mode escape
+	{ mode = "t", key = "<Esc>", command = "<C-\\><C-n>", opts = { desc = "Exit terminal mode" } },
+
 	-- Reload plugins + config
 	{
 		mode = "n",
@@ -34,7 +37,7 @@ local mappings = {
 
 	-- Maximize / equalize
 	{ mode = "n", key = "<Leader>f", command = "<C-w>_<C-w>|", opts = { desc = "full si[z]e" } },
-	{ mode = "n", key = "<Leader>F", command = "<C-w>=", opts = { desc = "even si[Z]e" } },
+	{ mode = "n", key = "<Leader>w=", command = "<C-w>=", opts = { desc = "even si[Z]e" } },
 
 	-- Window navigation
 	{ mode = "n", key = "<leader>h", command = "<C-w>h", opts = { desc = "Focus Left" } },

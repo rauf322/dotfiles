@@ -1,6 +1,62 @@
 return {
 	{ "nvim-telescope/telescope-fzf-native.nvim", event = "VeryLazy", build = "make" },
 	{
+		"NickvanDyke/opencode.nvim",
+		dependencies = {
+			{ "folke/snacks.nvim", opts = { input = { enabled = true } } },
+		},
+		config = function()
+			vim.g.opencode_opts = {
+				terminal = {
+					win = {
+						enter = true,
+					},
+					env = {
+						OPENCODE_THEME = "tymon-kanagawa",
+					},
+				},
+			}
+
+			-- Required for `opts.auto_reload`
+			vim.opt.autoread = true
+
+			-- Recommended/example keymaps
+			vim.keymap.set("n", "<leader>ot", function()
+				require("opencode").toggle()
+			end, { desc = "opencode: Toggle embedded" })
+			vim.keymap.set("n", "<leader>oA", function()
+				require("opencode").ask()
+			end, { desc = "opencode: Ask" })
+			vim.keymap.set("n", "<leader>oa", function()
+				require("opencode").ask("@cursor: ")
+			end, { desc = "opencode: Ask about this" })
+			vim.keymap.set("v", "<leader>oa", function()
+				require("opencode").ask("@selection: ")
+			end, { desc = "opencode: Ask about selection" })
+			vim.keymap.set("n", "<leader>oe", function()
+				require("opencode").prompt("Explain @cursor and its context")
+			end, { desc = "opencode: Explain this code" })
+			vim.keymap.set("n", "<leader>o+", function()
+				require("opencode").prompt("@buffer", { append = true })
+			end, { desc = "opencode: Add buffer to prompt" })
+			vim.keymap.set("v", "<leader>o+", function()
+				require("opencode").prompt("@selection", { append = true })
+			end, { desc = "opencode: Add selection to prompt" })
+			vim.keymap.set("n", "<leader>on", function()
+				require("opencode").command("session_new")
+			end, { desc = "opencode: New session" })
+			vim.keymap.set("n", "<S-C-u>", function()
+				require("opencode").command("messages_half_page_up")
+			end, { desc = "opencode: Messages half page up" })
+			vim.keymap.set("n", "<S-C-d>", function()
+				require("opencode").command("messages_half_page_down")
+			end, { desc = "opencode: Messages half page down" })
+			vim.keymap.set({ "n", "v" }, "<leader>os", function()
+				require("opencode").select()
+			end, { desc = "opencode: Select prompt" })
+		end,
+	},
+	{
 		"antosha417/nvim-lsp-file-operations",
 		dependencies = { "nvim-lua/plenary.nvim", "nvim-neo-tree/neo-tree.nvim" },
 		config = function()
@@ -48,6 +104,13 @@ return {
 		"mbbill/undotree",
 
 		config = function()
+			vim.g.undotree_DiffAutoOpen = 1
+			vim.g.undotree_DiffpanelHeight = 8
+			vim.g.undotree_HelpLine = 0
+			vim.g.undotree_HighlightChangedText = 1
+			vim.g.undotree_HighlightSyntaxAdd = "DiffAdd"
+			vim.g.undotree_HighlightSyntaxChange = "DiffChange"
+			vim.g.undotree_HighlightSyntaxDel = "DiffDelete"
 			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Undo: Toggle undotree" })
 		end,
 	},
