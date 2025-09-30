@@ -46,10 +46,8 @@ return {
 					},
 				},
 				documentation = {
-					auto_show = true,
-					treesitter_highlighting = true,
-					auto_show_delay_ms = 200,
-					window = { border = "rounded" },
+					auto_show = false,
+					auto_show_delay_ms = 0,
 				},
 				menu = {
 					border = "rounded",
@@ -63,7 +61,7 @@ return {
 				},
 				ghost_text = { enabled = true },
 			},
-			signature = { enabled = true },
+			signature = { enabled = false },
 			cmdline = {
 				keymap = { preset = "inherit" },
 				completion = { menu = { auto_show = true } },
@@ -133,9 +131,7 @@ return {
 	{
 		"L3MON4D3/LuaSnip",
 		config = function()
-			require("luasnip.loaders.from_lua").load({
-				paths = "~/.config/nvim/lua/bitrift/plugins/snippets/",
-			})
+			require("bitrift.plugins.snippets.luasnip")
 		end,
 	},
 }

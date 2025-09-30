@@ -31,6 +31,10 @@ return {
 					-- Disable built-in search
 					["f"] = "noop",
 
+					-- Directory navigation
+					["K"] = "navigate_up", -- Go to parent directory
+					["J"] = "set_root", -- Set current node as root
+
 					-- Custom clipboard copy (C key)
 					["C"] = function(state)
 						local node = state.tree:get_node()
@@ -163,18 +167,6 @@ return {
 		keymap.set("n", "<leader>er", "<cmd>Neotree filesystem refresh<CR>", { desc = "Refresh file explorer" })
 		keymap.set("n", "<M-Tab>", "<C-^>", { desc = "Toggle last buffer" })
 
-		-- Window equalization (same as nvim-tree)
-		keymap.set("n", "<leader>we", function()
-			-- Find neo-tree window and resize
-			local neo_tree_wins = vim.tbl_filter(function(win)
-				local buf = vim.api.nvim_win_get_buf(win)
-				return vim.bo[buf].filetype == "neo-tree"
-			end, vim.api.nvim_tabpage_list_wins(0))
 
-			if #neo_tree_wins > 0 then
-				vim.api.nvim_win_set_width(neo_tree_wins[1], 30)
-			end
-			vim.cmd("wincmd =")
-		end, { desc = "Equalize all windows" })
 	end,
 }
