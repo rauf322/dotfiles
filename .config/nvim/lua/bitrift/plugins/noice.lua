@@ -121,6 +121,15 @@ return {
 				enabled = true,
 				view = "mini",
 			},
+			signature = {
+				enabled = true,
+				opts = {
+					size = {
+						max_height = 15,
+						max_width = 80,
+					},
+				},
+			},
 			views = {
 				-- This sets the position for the search popup that shows up with / or with :
 				cmdline_popup = {
