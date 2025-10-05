@@ -1,6 +1,14 @@
 return {
 	{ "nvim-telescope/telescope-fzf-native.nvim", event = "VeryLazy", build = "make" },
 	{
+		"echasnovski/mini.pairs",
+		event = "InsertEnter",
+		config = function()
+			require("mini.pairs").setup()
+		end,
+	},
+
+	{
 		"NickvanDyke/opencode.nvim",
 		dependencies = {
 			{ "folke/snacks.nvim", opts = { input = { enabled = true } } },
@@ -232,19 +240,6 @@ return {
 				["leave"] = {},
 			},
 		},
-	},
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		config = function()
-			require("nvim-autopairs").setup({
-				check_ts = true,
-				ts_config = {
-					lua = { "string" },
-					javascript = { "template_string" },
-				},
-			})
-		end,
 	},
 	{
 		"okuuva/auto-save.nvim",
