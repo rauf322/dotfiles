@@ -122,7 +122,9 @@ return {
 			},
 		},
 		input = { enabled = true },
-		indent = { enabled = true },
+		indent = {
+			enabled = true,
+		},
 		dashboard = {
 			preset = {
 				pick = nil,
