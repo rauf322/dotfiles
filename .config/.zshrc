@@ -145,3 +145,7 @@ alias ll="eza -l "
 alias la="eza -la"
 
 . "$HOME/.local/bin/env"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
