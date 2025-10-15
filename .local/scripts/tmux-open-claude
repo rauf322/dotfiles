@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# tmux-opencode-pane
-# Open/focus an opencode pane in the CURRENT WINDOW
+# tmux-open-claude
+# Open/focus a claude code pane in the CURRENT WINDOW
 # Always split right with width = 40% of the current window
 
 set -euo pipefail
@@ -12,29 +12,29 @@ fi
 
 current_win_id="$(tmux display-message -p '#{window_id}')"
 
-# Look for existing opencode pane in this window
-opencode_pane_id="$(
+# Look for existing claude pane in this window
+claude_pane_id="$(
   tmux list-panes -t "$current_win_id" -F '#{pane_id} #{pane_current_command}' \
-  | awk '$2=="opencode"{print $1; exit}'
+  | awk '$2=="node"{print $1; exit}'
 )"
 
-if [[ -n "${opencode_pane_id:-}" ]]; then
-  # If opencode pane exists and has focus, hide it by zooming previous pane
+if [[ -n "${claude_pane_id:-}" ]]; then
+  # If claude pane exists and has focus, hide it by zooming previous pane
   current_pane_id="$(tmux display-message -p '#{pane_id}')"
-  if [[ "$current_pane_id" == "$opencode_pane_id" ]]; then
+  if [[ "$current_pane_id" == "$claude_pane_id" ]]; then
     tmux last-pane
     tmux resize-pane -Z
   else
-    tmux select-pane -t "$opencode_pane_id"
+    tmux select-pane -t "$claude_pane_id"
   fi
   exit 0
 fi
 
-# Create new opencode pane with 40% width
+# Create new claude pane with 40% width
 current_path="$(tmux display-message -p '#{pane_current_path}')"
 win_width="$(tmux display-message -p -t "$current_win_id" '#{window_width}')"
-target_width=$(( win_width * 30 / 100 ))
+target_width=$(( win_width * 40 / 100 ))
 
-new_pane_id="$(tmux split-window -h -c "$current_path" -P -F '#{pane_id}' "opencode")"
+new_pane_id="$(tmux split-window -h -c "$current_path" -P -F '#{pane_id}' "claude")"
 tmux resize-pane -t "$new_pane_id" -x "$target_width"
 tmux select-pane -t "$new_pane_id"

@@ -1,5 +1,6 @@
 return {
 	{ "nvim-telescope/telescope-fzf-native.nvim", event = "VeryLazy", build = "make" },
+
 	{
 		"echasnovski/mini.pairs",
 		event = "InsertEnter",
@@ -47,38 +48,25 @@ return {
 			vim.keymap.set("n", "<leader>ot", function()
 				require("opencode").toggle()
 			end, { desc = "opencode: Toggle embedded" })
-			vim.keymap.set("n", "<leader>oA", function()
-				require("opencode").ask()
-			end, { desc = "opencode: Ask" })
-			vim.keymap.set("n", "<leader>oa", function()
-				require("opencode").ask("@cursor: ")
-			end, { desc = "opencode: Ask about this" })
+			vim.keymap.set({ "n", "x" }, "<leader>oa", function()
+				require("opencode").ask("@this: ", { submit = true })
+			end, { desc = "Ask about this" })
 			vim.keymap.set("v", "<leader>oa", function()
 				require("opencode").ask("@selection: ")
 			end, { desc = "opencode: Ask about selection" })
-			vim.keymap.set("n", "<leader>oe", function()
-				require("opencode").prompt("Explain @cursor and its context")
-			end, { desc = "opencode: Explain this code" })
-			vim.keymap.set("n", "<leader>o+", function()
-				require("opencode").prompt("@buffer", { append = true })
-			end, { desc = "opencode: Add buffer to prompt" })
-			vim.keymap.set("v", "<leader>o+", function()
-				require("opencode").prompt("@selection", { append = true })
-			end, { desc = "opencode: Add selection to prompt" })
-			vim.keymap.set("n", "<leader>on", function()
-				require("opencode").command("session_new")
-			end, { desc = "opencode: New session" })
-			vim.keymap.set("n", "<S-C-u>", function()
-				require("opencode").command("messages_half_page_up")
-			end, { desc = "opencode: Messages half page up" })
-			vim.keymap.set("n", "<S-C-d>", function()
-				require("opencode").command("messages_half_page_down")
-			end, { desc = "opencode: Messages half page down" })
-			vim.keymap.set({ "n", "v" }, "<leader>os", function()
-				require("opencode").select()
-			end, { desc = "opencode: Select prompt" })
 		end,
 	},
+	--
+	-- {
+	-- 	"coder/claudecode.nvim",
+	-- 	dependencies = { "folke/snacks.nvim" },
+	-- 	config = true,
+	-- 	keys = {
+	-- 		{ "<leader>ot", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude embedded" },
+	-- 		{ "<leader>oa", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+	-- 		{ "<leader>oA", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+	-- 	},
+	-- },
 	{
 		"antosha417/nvim-lsp-file-operations",
 		dependencies = { "nvim-lua/plenary.nvim", "nvim-neo-tree/neo-tree.nvim" },
@@ -350,5 +338,32 @@ return {
 			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>", desc = "Navigate Right" },
 			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>", desc = "Navigate Previous" },
 		},
+	},
+	{
+		"Aasim-A/scrollEOF.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("scrollEOF").setup()
+		end,
+	},
+	{
+		"tpope/vim-dadbod",
+	},
+	{
+		"kristijanhusak/vim-dadbod-ui",
+		dependencies = {
+			{ "tpope/vim-dadbod", lazy = true },
+			{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+		},
+		cmd = {
+			"DBUI",
+			"DBUIToggle",
+			"DBUIAddConnection",
+			"DBUIFindBuffer",
+		},
+
+		init = function()
+			vim.g.db_ui_use_nerd_fonts = 1
+		end,
 	},
 }
