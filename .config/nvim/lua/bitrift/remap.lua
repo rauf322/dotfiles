@@ -45,6 +45,12 @@ local mappings = {
 	{ mode = "n", key = "<leader>j", command = "<C-w>j", opts = { desc = "Focus Down" } },
 	{ mode = "n", key = "<leader>k", command = "<C-w>k", opts = { desc = "Focus Up" } },
 
+	-- Window movement (swap window positions)
+	{ mode = "n", key = "<leader>wH", command = "<C-w>H", opts = { desc = "Move window left" } },
+	{ mode = "n", key = "<leader>wL", command = "<C-w>L", opts = { desc = "Move window right" } },
+	{ mode = "n", key = "<leader>wJ", command = "<C-w>J", opts = { desc = "Move window down" } },
+	{ mode = "n", key = "<leader>wK", command = "<C-w>K", opts = { desc = "Move window up" } },
+
 	-- Blank lines without leaving normal mode
 	{ mode = "n", key = "<leader>o", command = ":put =''<CR>", opts = { desc = "Blank line below" } },
 	{ mode = "n", key = "<leader>O", command = ":put! =''<CR>", opts = { desc = "Blank line above" } },

@@ -1,19 +1,26 @@
 {
   "theme": "tymon-kanagawa",
   "$schema": "https://opencode.ai/config.json",
-  "mode": {
-    "plan": {
-      "model": "github-copilot/claude-sonnet-4",
-    },
+  "agent": {
     "build": {
-      "model": "github-copilot/claude-sonnet-4",
+      "prompt": "You are a helpful AI assistant. Provide detailed explanations of your reasoning and actions. Explain what you're doing and why. Include context about the changes you make. Be conversational and thorough in your responses rather than overly concise."
     },
+    "plan": {
+      "prompt": "You are a helpful AI assistant. Provide detailed explanations of your reasoning and planning. Explain your approach and why you're taking certain steps. Be conversational and thorough in your responses rather than overly concise."
+    }
   },
   "formatter": {
     "prettier": {
       "command": [
         "prettier",
         "--write",
+        "--config-precedence",
+        "cli-override",
+        "--single-quote",
+        "--jsx-single-quote",
+        "--no-semi",
+        "--trailing-comma",
+        "all",
         "$FILE"
       ],
       "extensions": [

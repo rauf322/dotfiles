@@ -16,6 +16,7 @@ local lsp_servers = {
 	"jsonls",
 	"emmet_language_server",
 	"dockerls",
+	"sqls",
 }
 for _, server in ipairs(lsp_servers) do
 	vim.lsp.enable(server)
