@@ -183,8 +183,8 @@ return {
 			},
 		},
 		terminal = {
-			start_insert = false,
-			auto_insert = false,
+			start_insert = true,
+			auto_insert = true,
 			auto_close = false,
 			win = {
 				style = "minimal",

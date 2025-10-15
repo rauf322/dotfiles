@@ -39,18 +39,20 @@ return {
 				"quick_lint_js",
 				"jsonls",
 				"dockerls",
+				"sqls",
 			},
 		})
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
+				"prettier",
+				"stylua",
+				"isort",
+				"black",
 				"pylint",
-				{ "eslint_d", version = "13.1.2" },
+				"eslint_d",
 				"js-debug-adapter",
 				"htmlhint",
+				"sql-formatter",
 			},
 		})
 	end,
