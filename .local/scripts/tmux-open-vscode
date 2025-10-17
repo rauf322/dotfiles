@@ -6,7 +6,7 @@ if command -v code >/dev/null 2>&1; then
   # reuse an existing VS Code window
   exec code --reuse-window -- "$DIR"
 else
-  echo "code CLI not found on PATH (VS Code → Command Palette → “Shell Command: Install 'code' command in PATH”)." >&2
+  echo "code CLI not found on PATH (VS Code → Command Palette → \"Shell Command: Install 'code' command in PATH\")." >&2
   exit 127
 fi
 
