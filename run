@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# Replace any repeated slashes
 script_dir="${script_dir//\/\//\/}"
-# Remove trailing slash if there is one (optional)
 script_dir="${script_dir%/}"
 
-filter="" #find matching scripts
+filter=""
 dry="0"
-#/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# Put values from our input to filter and dry variables
-while [[ $# > 0 ]]; do
+
+while [[ $# -gt 0 ]]; do
     if [[ "$1" == "--dry" ]]; then
         dry="1"
     else 
@@ -21,37 +18,31 @@ done
 
 log() {
     if [[ $dry == "1" ]]; then
-        echo "[DRY_RUN]: $@"
+        echo "[DRY_RUN]: $*"
     else 
-        echo "$@"
+        echo "$*"
     fi
 }
 
 execute() {
-    log "execute $@"
+    log "execute $*"
     if [[ $dry == "1" ]]; then
         return
     fi
     "$@"
 }
 
-# Show the current script directory and the filter (if any)
 echo "$script_dir -- $filter"
 
-# Move to the script's directory
-cd $script_dir
+cd "$script_dir" || exit
 
-# Find all executable files in the "runs" directory
 scripts=$(find ./runs_MacOS -maxdepth 1 -mindepth 1 -type f -perm -111 | sed 's|^\./\./|./|;s|//|/|g')
 
-# Iterate over the found scripts
 for script in $scripts; do
-    # If the script doesn't match the filter, skip it
     if echo "$script" | grep -qv "$filter"; then
         log "filtering $script"
         continue
     fi
 
-    # Execute the matching script
-    execute ./$script
+    execute "./$script"
 done
