@@ -28,3 +28,23 @@ jobs:
           for script in ./runs_MacOS/*; do
             [ -f "$script" ] && bash -n "$script"
           done
+
+  full-install-test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run full installation
+        run: ./run
+        timeout-minutes: 90
+
+      - name: Verify key installations
+        run: |
+          echo "=== Verifying installations ==="
+          command -v nvim && nvim --version || echo "❌ neovim not found"
+          command -v git && git --version || echo "❌ git not found"
+          command -v gh && gh --version || echo "❌ gh not found"
+          command -v tmux && tmux -V || echo "❌ tmux not found"
+          command -v rg && rg --version || echo "❌ ripgrep not found"
+          command -v lazygit && lazygit --version || echo "❌ lazygit not found"
+          command -v btop && btop --version || echo "❌ btop not found"
