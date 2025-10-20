@@ -27,7 +27,7 @@ return {
 				preset = "default",
 				["<C-p>"] = { "select_prev" },
 				["<C-n>"] = { "select_next" },
-				["<Tab>"] = { "select_next" },
+				["<Tab>"] = { "select_next", "fallback" },
 				["<CR>"] = { "accept", "fallback" },
 				["<C-f>"] = { "snippet_forward" },
 				["<C-b>"] = { "snippet_backward" },

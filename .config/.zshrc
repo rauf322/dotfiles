@@ -114,9 +114,9 @@ function y() {
 	rm -f -- "$tmp"
 }
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-set -o vi
+bindkey -v
 
-# Cursor shape for vi mode - steady block in normal, blinking thin line in insert
+# Cursor shape for vi mode - steady block in normal, blinking thin line for insert
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
     echo -ne '\e[2 q'  # steady block for normal mode
@@ -125,7 +125,11 @@ function zle-keymap-select {
   fi
 }
 zle -N zle-keymap-select
-echo -ne '\e[5 q' # Start with blinking thin line
+
+function zle-line-init {
+  echo -ne '\e[5 q'  # blinking thin line for insert mode
+}
+zle -N zle-line-init
 
 # Custom fzf function with bat preview that opens in neovim
 fzf-bat-nvim() {
