@@ -17,6 +17,7 @@ local lsp_servers = {
 	"emmet_language_server",
 	"dockerls",
 	"sqls",
+	"yamlls",
 }
 for _, server in ipairs(lsp_servers) do
 	vim.lsp.enable(server)
