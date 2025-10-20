@@ -68,6 +68,14 @@ if.app-name-regex-substring = 'iina'
 run = ['layout floating','move-node-to-workspace 4']
 
 [[on-window-detected]]
+if.app-name-regex-substring = 'bartender'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'finder'
+run = 'layout floating'
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'excalidraw'
 run = 'move-node-to-workspace 3'
 

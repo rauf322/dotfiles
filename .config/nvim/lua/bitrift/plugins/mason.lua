@@ -40,6 +40,7 @@ return {
 				"jsonls",
 				"dockerls",
 				"sqls",
+				"yamlls",
 			},
 		})
 		mason_tool_installer.setup({
