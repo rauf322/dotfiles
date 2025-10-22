@@ -1,4 +1,4 @@
-font-size = 14
+font-size = 18
 font-family = MesloLGS Nerd Font Mono
 font-family-bold = MesloLGS Nerd Font Mono
 font-family-italic = MesloLGS Nerd Font Mono
@@ -16,6 +16,7 @@ window-colorspace = "display-p3"
 window-decoration = "none"
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = hidden
+window-vsync = true
 shell-integration-features = no-title,no-cursor,no-sudo
 confirm-close-surface = false
 title = " "

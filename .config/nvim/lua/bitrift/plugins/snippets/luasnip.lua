@@ -8,6 +8,11 @@ local filename_no_ext = function()
 	return vim.fn.expand("%:t:r")
 end
 
+local filename_capitalized = function()
+	local name = vim.fn.expand("%:t:r")
+	return name:sub(1, 1):upper() .. name:sub(2)
+end
+
 -- Define snippets
 ls.add_snippets("html", {
 	s("html", {
@@ -52,31 +57,31 @@ local js_snippets = {
 	}),
 	s("rsc", {
 		t("const "),
-		f(filename_no_ext, {}),
+		f(filename_capitalized, {}),
 		t(" = () => {"),
 		t({ "", "  return (" }),
 		t({ "", "    <div>" }),
 		i(1),
 		t({ "", "    </div>", "  );", "};", "", "export default " }),
-		f(filename_no_ext, {}),
+		f(filename_capitalized, {}),
 		t(";"),
 	}),
 	s("rc", {
 		t("import { classNames } from '@/shared/lib/classNames/classNames';"),
 		t({ "", "import cls from './" }),
-		f(filename_no_ext, {}),
+		f(filename_capitalized, {}),
 		t(".module.scss';", "", ""),
 		t("interface "),
-		f(filename_no_ext, {}),
+		f(filename_capitalized, {}),
 		t("Props {"),
 		t({ "", "  className?: string;", "}", "", "export const " }),
-		f(filename_no_ext, {}),
+		f(filename_capitalized, {}),
 		t(" = ({ className }: "),
-		f(filename_no_ext, {}),
+		f(filename_capitalized, {}),
 		t("Props) => {"),
 		t({ "", "  return (" }),
 		t({ "", "    <div className={classNames(cls." }),
-		f(filename_no_ext, {}),
+		f(filename_capitalized, {}),
 		t(", {}, [className])}>"),
 		i(0),
 		t({ "", "    </div>", "  );", "};" }),
