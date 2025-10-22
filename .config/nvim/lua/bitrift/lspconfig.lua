@@ -9,6 +9,7 @@
 local lsp_servers = {
 	"lua_ls",
 	"cssls",
+	"tailwindcss",
 	"svelte",
 	"graphql",
 	"quick_lint_js",
