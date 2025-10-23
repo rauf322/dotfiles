@@ -16,6 +16,7 @@ local lsp_servers = {
 	"eslint",
 	"jsonls",
 	"emmet_language_server",
+	"prismals",
 	"dockerls",
 	"sqls",
 	"yamlls",
