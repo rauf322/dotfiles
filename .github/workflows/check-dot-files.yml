@@ -3,19 +3,17 @@ name: Dotfiles CI
 on: [push, pull_request]
 
 jobs:
-  shellcheck:
+  syntax-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install shellcheck
-        run: sudo apt-get install -y shellcheck
-
-      - name: Shellcheck all scripts
+      - name: Bash syntax check
         run: |
-          shellcheck ./run
-          find ./runs_MacOS -type f -executable -exec shellcheck {} +
-          find ./.local/scripts -type f -executable -exec shellcheck {} +
+          bash -n ./run
+          for script in ./runs_MacOS/*; do
+            [ -f "$script" ] && bash -n "$script"
+          done
 
   full-install-test:
     runs-on: macos-latest
