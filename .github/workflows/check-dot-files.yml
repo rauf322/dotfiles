@@ -17,18 +17,6 @@ jobs:
           find ./runs_MacOS -type f -executable -exec shellcheck {} +
           find ./.local/scripts -type f -executable -exec shellcheck {} +
 
-  syntax-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Bash syntax check
-        run: |
-          bash -n ./run
-          for script in ./runs_MacOS/*; do
-            [ -f "$script" ] && bash -n "$script"
-          done
-
   full-install-test:
     runs-on: macos-latest
     steps:
