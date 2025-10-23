@@ -77,10 +77,7 @@ return {
 			},
 		},
 		image = {
-			enabled = true,
-		},
-		image = {
-			enabled = true,
+			enabled = false,
 			throttle = 100,
 		},
 		input = { enabled = true },
