@@ -12,8 +12,6 @@ local lsp_servers = {
 	"tailwindcss",
 	"svelte",
 	"graphql",
-	"quick_lint_js",
-	"eslint",
 	"jsonls",
 	"emmet_language_server",
 	"prismals",

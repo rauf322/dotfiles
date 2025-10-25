@@ -35,8 +35,6 @@ return {
 				"emmet_language_server",
 				"prismals",
 				"pyright",
-				"eslint",
-				"quick_lint_js",
 				"jsonls",
 				"dockerls",
 				"sqls",

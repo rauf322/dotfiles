@@ -1,154 +1,161 @@
 return {
 	{
-		"saghen/blink.compat",
-		-- use the latest release, via version = '*', if you also use the latest release for blink.cmp
-		version = "*",
-		-- lazy.nvim will automatically load the plugin when it's required by blink.cmp
-		lazy = true,
-		-- make sure to set opts so that lazy.nvim calls blink.compat's setup
-		opts = {},
-	},
-	{
-		"saghen/blink.cmp",
+		"hrsh7th/nvim-cmp",
+		branch = "main",
 		dependencies = {
-			"rafamadriz/friendly-snippets",
-			"moyiz/blink-emoji.nvim",
-			"ray-x/cmp-sql",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
 			"L3MON4D3/LuaSnip",
-			"zbirenbaum/copilot.lua",
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets",
+			"onsails/lspkind.nvim",
+			"hrsh7th/cmp-nvim-lsp",
+			"zbirenbaum/copilot-cmp",
 			"echasnovski/mini.pairs",
 		},
-		version = "1.*",
-		---@module 'blink.cmp'
-		---@type blink.cmp.Config
-		opts = {
-			snippets = { preset = "luasnip" },
-			keymap = {
-				preset = "default",
-				["<C-p>"] = { "select_prev" },
-				["<C-n>"] = { "select_next" },
-				["<Tab>"] = { "select_next", "fallback" },
-				["<CR>"] = { "accept", "fallback" },
-				["<C-f>"] = { "snippet_forward" },
-				["<C-b>"] = { "snippet_backward" },
-			},
-			appearance = {
-				nerd_font_variant = "normal",
-			},
-			completion = {
-				accept = {
-					auto_brackets = {
-						enabled = true,
-					},
+
+		config = function()
+			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+			local lspkind = require("lspkind")
+
+			local lsp_kinds = {
+				Class = " ",
+				Color = " ",
+				Constant = " ",
+				Constructor = " ",
+				Enum = " ",
+				EnumMember = " ",
+				Event = " ",
+				Field = " ",
+				File = " ",
+				Folder = " ",
+				Function = " ",
+				Interface = " ",
+				Keyword = " ",
+				Method = " ",
+				Module = " ",
+				Operator = " ",
+				Property = " ",
+				Reference = " ",
+				Snippet = " ",
+				Struct = " ",
+				Text = " ",
+				TypeParameter = " ",
+				Unit = " ",
+				Value = " ",
+				Variable = " ",
+			}
+
+			require("luasnip.loaders.from_vscode").lazy_load()
+
+			cmp.setup.cmdline("/", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "buffer" },
 				},
-				list = {
-					selection = {
-						preselect = false,
-						auto_insert = false,
-					},
-				},
-				documentation = {
-					auto_show = true,
-					auto_show_delay_ms = 200,
-					window = { border = "rounded" },
-				},
-				menu = {
-					border = "rounded",
-					draw = {
-						columns = {
-							{ "label", "label_description", gap = 1 },
-							{ "kind_icon", "kind" },
+			})
+
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = "path" },
+				}, {
+					{
+						name = "cmdline",
+						option = {
+							ignore_cmds = { "Man", "!" },
 						},
-						treesitter = { "lsp" },
 					},
+				}),
+			})
+
+			cmp.setup({
+				experimental = {
+					ghost_text = false,
 				},
-				ghost_text = { enabled = true },
-			},
-			signature = { enabled = false },
-			cmdline = {
-				keymap = { preset = "inherit" },
 				completion = {
-					menu = { auto_show = true },
-					list = {
-						selection = {
-							preselect = false,
-							auto_insert = false,
-						},
+					completeopt = "menu,menuone,noinsert,noselect",
+				},
+				preselect = cmp.PreselectMode.None,
+				window = {
+					documentation = {
+						border = "rounded",
+					},
+					completion = {
+						border = "rounded",
 					},
 				},
-			},
-
-			sources = {
-				default = { "lsp", "path", "snippets", "buffer", "emoji", "sql", "copilot" },
-				providers = {
-					lsp = {
-						score_offset = 100, -- Highest priority
-						max_items = 3, -- Limit LSP suggestions to 5
-					},
-					path = {
-						score_offset = 50, -- Second priority
-					},
-					snippets = {
-						score_offset = -10, -- Lower priority
-					},
-					copilot = {
-						name = "copilot",
-						module = "blink-copilot",
-						score_offset = -100,
-						async = true,
-					},
-					emoji = {
-						module = "blink-emoji",
-						name = "Emoji",
-						score_offset = 15, -- Tune by preference
-						opts = { insert = true }, -- Insert emoji (default) or complete its name
-						should_show_items = function()
-							return vim.tbl_contains(
-								-- Enable emoji completion only for git commits and markdown.
-								-- By default, enabled for all file-types.
-								{ "gitcommit", "markdown" },
-								vim.o.filetype
-							)
-						end,
-					},
-					sql = {
-						-- IMPORTANT: use the same name as you would for nvim-cmp
-						name = "sql",
-						module = "blink.compat.source",
-
-						-- all blink.cmp source config options work as normal:
-						score_offset = -3,
-
-						-- this table is passed directly to the proxied completion source
-						-- as the `option` field in nvim-cmp's source config
-						--
-						-- this is NOT the same as the opts in a plugin's lazy.nvim spec
-						opts = {},
-						should_show_items = function()
-							return vim.tbl_contains(
-								-- Enable emoji completion only for git commits and markdown.
-								-- By default, enabled for all file-types.
-								{ "sql" },
-								vim.o.filetype
-							)
-						end,
-					},
+				snippet = {
+					expand = function(args)
+						luasnip.lsp_expand(args.body)
+					end,
 				},
-			},
-			fuzzy = { implementation = "prefer_rust_with_warning" },
-		},
-		opts_extend = { "sources.default" },
-		config = function(_, opts)
-			require("blink.cmp").setup(opts)
-			
-			vim.keymap.set("i", "<CR>", function()
-				local blink = require("blink.cmp")
-				if blink.is_visible() and blink.get_selected_item() then
-					return blink.accept()
-				else
-					return vim.api.nvim_replace_termcodes(require("mini.pairs").cr(), true, true, true)
-				end
-			end, { expr = true, noremap = true })
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp", priority = 900, max_item_count = 3 },
+					{ name = "copilot", priority = 1100 },
+					{ name = "luasnip", priority = 1000 },
+					{ name = "buffer", priority = 500 },
+					{ name = "path", priority = 250 },
+				}),
+
+				mapping = cmp.mapping.preset.insert({
+					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+					["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+					["<C-Space>"] = cmp.mapping.complete(),
+					["<C-f>"] = cmp.mapping(function(fallback)
+						if luasnip.jumpable(1) then
+							luasnip.jump(1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<C-b>"] = cmp.mapping(function(fallback)
+						if luasnip.jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+						elseif luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+						elseif luasnip.jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<CR>"] = cmp.mapping({
+						i = function(fallback)
+							if cmp.visible() and cmp.get_selected_entry() then
+								cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+							else
+								fallback()
+							end
+						end,
+						s = cmp.mapping.confirm({ select = false }),
+					}),
+				}),
+				formatting = {
+					format = lspkind.cmp_format({
+						mode = "symbol_text",
+						maxwidth = 50,
+						ellipsis_char = "...",
+						symbol_map = { Copilot = "" },
+					}),
+				},
+			})
 		end,
 	},
 	{
