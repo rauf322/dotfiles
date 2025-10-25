@@ -5,7 +5,6 @@ return {
 		config = function()
 			local lint = require("lint")
 
-			-- Override eslint_d with more robust configuration
 			lint.linters.eslint_d = {
 				cmd = "eslint_d",
 				stdin = true,
@@ -53,6 +52,7 @@ return {
 					return diagnostics
 				end,
 			}
+
 			lint.linters_by_ft = {
 				javascript = { "eslint_d" },
 				typescript = { "eslint_d" },
