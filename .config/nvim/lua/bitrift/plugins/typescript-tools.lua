@@ -1,6 +1,5 @@
 return {
 	"pmizio/typescript-tools.nvim",
-	dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 	ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
 	config = function()
 		require("typescript-tools").setup({
@@ -27,12 +26,7 @@ return {
 					{ desc = "TS: Go to Source Definition" }
 				)
 				vim.keymap.set("n", "<leader>tr", "<cmd>TSToolsRenameFile<CR>", { desc = "TS: Rename File" })
-				vim.keymap.set(
-					"n",
-					"<leader>tR",
-					"<cmd>TSToolsFileReferences<CR>",
-					{ desc = "TS: File References" }
-				)
+				vim.keymap.set("n", "<leader>tR", "<cmd>TSToolsFileReferences<CR>", { desc = "TS: File References" })
 			end,
 			settings = {
 				separate_diagnostic_server = true,

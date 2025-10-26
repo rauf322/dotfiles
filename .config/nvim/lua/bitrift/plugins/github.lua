@@ -47,18 +47,6 @@ return {
 		end,
 	},
 	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		opts = {
-			suggestion = { enabled = false }, -- disable Copilot's popup; let blink handle it
-			panel = { enabled = false },
-			filetypes = {
-				["*"] = true,
-			},
-		},
-	},
-	{
 		"lewis6991/gitsigns.nvim",
 
 		config = function()

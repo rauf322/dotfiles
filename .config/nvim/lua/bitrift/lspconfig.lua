@@ -2,13 +2,11 @@ local keymap = vim.keymap
 
 -- Disabled inline completion (ghost text) - using nvim-cmp instead
 -- vim.lsp.inline_completion.enable()
-
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 	callback = function(ev)
 		local buffer = ev.buf
 		local opts = { buffer = buffer, silent = true }
-
 		-- Standard LSP keymaps
 		opts.desc = "Show LSP references"
 		keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)

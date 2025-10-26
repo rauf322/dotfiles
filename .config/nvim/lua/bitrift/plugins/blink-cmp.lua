@@ -14,10 +14,13 @@ return {
 			"rafamadriz/friendly-snippets",
 			"moyiz/blink-emoji.nvim",
 			"ray-x/cmp-sql",
-			"L3MON4D3/LuaSnip",
-			"zbirenbaum/copilot.lua",
-			"echasnovski/mini.pairs",
-			"giuxtaposition/blink-cmp-copilot",
+			{
+				"L3MON4D3/LuaSnip",
+				config = function()
+					require("bitrift.plugins.snippets.luasnip")
+				end,
+			},
+			"fang2hou/blink-copilot",
 		},
 		version = "1.*",
 		---@module 'blink.cmp'
@@ -78,7 +81,6 @@ return {
 					},
 				},
 			},
-
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer", "emoji", "sql", "copilot" },
 				providers = {
@@ -94,8 +96,9 @@ return {
 					},
 					copilot = {
 						name = "copilot",
-						module = "blink-cmp-copilot",
+						module = "blink-copilot",
 						async = true,
+						score_offset = 80, -- High priority for Copilot
 					},
 					emoji = {
 						module = "blink-emoji",
@@ -138,9 +141,9 @@ return {
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 		},
 		opts_extend = { "sources.default" },
+
 		config = function(_, opts)
 			require("blink.cmp").setup(opts)
-
 			vim.keymap.set("i", "<CR>", function()
 				local blink = require("blink.cmp")
 				if blink.is_visible() and blink.get_selected_item() then
@@ -149,12 +152,6 @@ return {
 					return vim.api.nvim_replace_termcodes(require("mini.pairs").cr(), true, true, true)
 				end
 			end, { expr = true, noremap = true })
-		end,
-	},
-	{
-		"L3MON4D3/LuaSnip",
-		config = function()
-			require("bitrift.plugins.snippets.luasnip")
 		end,
 	},
 }

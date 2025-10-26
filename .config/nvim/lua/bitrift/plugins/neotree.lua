@@ -4,7 +4,6 @@ return {
 	branch = "v3.x",
 	cmd = { "Neotree" },
 	dependencies = {
-		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",
 		"MunifTanjim/nui.nvim",
 	},
@@ -58,57 +57,60 @@ return {
 						end
 					end,
 
-				-- Paste image from clipboard (P key)
-				["P"] = function(state)
-					local inputs = require("neo-tree.ui.inputs")
-					local node = state.tree:get_node()
-					local dir_path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
+					-- Paste image from clipboard (P key)
+					["P"] = function(state)
+						local inputs = require("neo-tree.ui.inputs")
+						local node = state.tree:get_node()
+						local dir_path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
 
-					inputs.input("Image filename: ", "", function(filename)
-						if not filename or filename == "" then
+						inputs.input("Image filename: ", "", function(filename)
+							if not filename or filename == "" then
+								return
+							end
+
+							if not filename:match("%.png$") then
+								filename = filename .. ".png"
+							end
+
+							local target_path = dir_path .. "/" .. filename
+							local cmd = string.format(
+								"osascript -e 'set png_data to the clipboard as «class PNGf»' -e 'set the_file to open for access POSIX file \"%s\" with write permission' -e 'write png_data to the_file' -e 'close access the_file'",
+								target_path
+							)
+
+							local result = os.execute(cmd)
+							if result == 0 then
+								print("Pasted image: " .. filename)
+								require("neo-tree.sources.manager").refresh("filesystem")
+							else
+								print("Failed to paste image from clipboard")
+							end
+						end)
+					end,
+
+					-- Delete to trash (D key)
+					["D"] = function(state)
+						local inputs = require("neo-tree.ui.inputs")
+						local node = state.tree:get_node()
+						if node.type == "message" then
 							return
 						end
+						local msg = "Are you sure you want to delete " .. node.name .. " to trash?"
+						inputs.confirm(msg, function(confirmed)
+							if not confirmed then
+								return
+							end
 
-						if not filename:match("%.png$") then
-							filename = filename .. ".png"
-						end
-
-						local target_path = dir_path .. "/" .. filename
-						local cmd = string.format("osascript -e 'set png_data to the clipboard as «class PNGf»' -e 'set the_file to open for access POSIX file \"%s\" with write permission' -e 'write png_data to the_file' -e 'close access the_file'", target_path)
-
-						local result = os.execute(cmd)
-						if result == 0 then
-							print("Pasted image: " .. filename)
-							require("neo-tree.sources.manager").refresh("filesystem")
-						else
-							print("Failed to paste image from clipboard")
-						end
-					end)
-				end,
-
-				-- Delete to trash (D key)
-				["D"] = function(state)
-					local inputs = require("neo-tree.ui.inputs")
-					local node = state.tree:get_node()
-					if node.type == "message" then
-						return
-					end
-					local msg = "Are you sure you want to delete " .. node.name .. " to trash?"
-					inputs.confirm(msg, function(confirmed)
-						if not confirmed then
-							return
-						end
-
-						local trash_cmd = "trash " .. vim.fn.shellescape(node.path)
-						local result = vim.fn.system(trash_cmd)
-						if vim.v.shell_error == 0 then
-							print("Moved to trash: " .. node.name)
-							require("neo-tree.sources.manager").refresh("filesystem")
-						else
-							print("Failed to move to trash: " .. result)
-						end
-					end)
-				end,
+							local trash_cmd = "trash " .. vim.fn.shellescape(node.path)
+							local result = vim.fn.system(trash_cmd)
+							if vim.v.shell_error == 0 then
+								print("Moved to trash: " .. node.name)
+								require("neo-tree.sources.manager").refresh("filesystem")
+							else
+								print("Failed to move to trash: " .. result)
+							end
+						end)
+					end,
 
 					-- Normal delete (d key) - keep default behavior
 					-- ["d"] uses neo-tree's default delete
@@ -193,7 +195,5 @@ return {
 		keymap.set("n", "<leader>ec", "<cmd>Neotree close<CR>", { desc = "Close file explorer" })
 		keymap.set("n", "<leader>er", "<cmd>Neotree filesystem refresh<CR>", { desc = "Refresh file explorer" })
 		keymap.set("n", "<M-Tab>", "<C-^>", { desc = "Toggle last buffer" })
-
-
 	end,
 }
