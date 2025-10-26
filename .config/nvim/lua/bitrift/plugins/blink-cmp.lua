@@ -92,12 +92,11 @@ return {
 					snippets = {
 						score_offset = -10, -- Lower priority
 					},
-				copilot = {
-					name = "copilot",
-					module = "blink-cmp-copilot",
-					score_offset = -100,
-					async = true,
-				},
+					copilot = {
+						name = "copilot",
+						module = "blink-cmp-copilot",
+						async = true,
+					},
 					emoji = {
 						module = "blink-emoji",
 						name = "Emoji",
