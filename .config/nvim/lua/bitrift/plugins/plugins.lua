@@ -1,10 +1,10 @@
 return {
 	{ "nvim-telescope/telescope-fzf-native.nvim", event = "VeryLazy", build = "make" },
+
 	{
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
 		lazy = false,
-		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
 			local harpoon = require("harpoon")
 			harpoon:setup()
@@ -49,22 +49,7 @@ return {
 		"echasnovski/mini.pairs",
 		event = "InsertEnter",
 		config = function()
-			require("mini.pairs").setup({
-				modes = { insert = true, command = false, terminal = false },
-				mappings = {
-					["("] = { action = "open", pair = "()", neigh_pattern = "[^\\]." },
-					["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\]." },
-					["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\]." },
-
-					[")"] = { action = "close", pair = "()", neigh_pattern = "[^\\]." },
-					["]"] = { action = "close", pair = "[]", neigh_pattern = "[^\\]." },
-					["}"] = { action = "close", pair = "{}", neigh_pattern = "[^\\]." },
-
-					['"'] = { action = "closeopen", pair = '""', neigh_pattern = "[^\\].", register = { cr = true } },
-					["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^%a\\].", register = { cr = true } },
-					["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^\\].", register = { cr = true } },
-				},
-			})
+			require("mini.pairs").setup({})
 		end,
 	},
 
@@ -113,7 +98,7 @@ return {
 	-- },
 	{
 		"antosha417/nvim-lsp-file-operations",
-		dependencies = { "nvim-lua/plenary.nvim", "nvim-neo-tree/neo-tree.nvim" },
+		dependencies = { "nvim-neo-tree/neo-tree.nvim" },
 		config = function()
 			require("lsp-file-operations").setup()
 		end,
@@ -172,10 +157,6 @@ return {
 	{
 		"theprimeagen/vim-be-good",
 
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-
 		config = function() end,
 	},
 	{
@@ -198,9 +179,6 @@ return {
 		version = "*", -- recommended, use latest release instead of latest commit
 		lazy = true,
 		ft = "markdown",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
 		opts = {
 			workspaces = {
 				{
@@ -232,7 +210,6 @@ return {
 		"kawre/leetcode.nvim",
 		build = ":TSUpdate html",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
 			"nvim-telescope/telescope.nvim", -- Use your existing Telescope
 		},
@@ -434,8 +411,5 @@ return {
 			},
 		},
 		config = true,
-	},
-	{
-		"neovim/nvim-lspconfig",
 	},
 }
