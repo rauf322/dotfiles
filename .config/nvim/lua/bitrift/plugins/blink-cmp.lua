@@ -11,16 +11,11 @@ return {
 	{
 		"saghen/blink.cmp",
 		dependencies = {
-			"rafamadriz/friendly-snippets",
 			"moyiz/blink-emoji.nvim",
 			"ray-x/cmp-sql",
-			{
-				"L3MON4D3/LuaSnip",
-				config = function()
-					require("bitrift.plugins.snippets.luasnip")
-				end,
-			},
 			"fang2hou/blink-copilot",
+			"supermaven-inc/supermaven-nvim",
+			"echasnovski/mini.pairs",
 		},
 		version = "1.*",
 		---@module 'blink.cmp'
@@ -92,13 +87,13 @@ return {
 						score_offset = 50, -- Second priority
 					},
 					snippets = {
-						score_offset = -10, -- Lower priority
+						score_offset = 80, -- Lower priority
 					},
 					copilot = {
 						name = "copilot",
 						module = "blink-copilot",
 						async = true,
-						score_offset = 80, -- High priority for Copilot
+						score_offset = -10, -- High priority for Copilot
 					},
 					emoji = {
 						module = "blink-emoji",
