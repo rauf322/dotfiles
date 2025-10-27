@@ -13,7 +13,28 @@ return {
 		})
 	end,
 	keys = {
-
+		{
+			"gy",
+			function()
+				Snacks.picker.lsp_type_definitions()
+			end,
+			desc = "Goto T[y]pe Definition",
+		},
+		{
+			"gI",
+			function()
+				Snacks.picker.lsp_implementations()
+			end,
+			desc = "Goto Implementation",
+		},
+		{
+			"gr",
+			function()
+				Snacks.picker.lsp_references()
+			end,
+			nowait = true,
+			desc = "References",
+		},
 		{
 			"<leader>ps",
 			function()
@@ -21,6 +42,41 @@ return {
 			end,
 			desc = "Search in files",
 			mode = "n",
+		},
+		{
+			"<leader>u",
+			function()
+				Snacks.picker.undo()
+			end,
+			desc = "Undo History",
+		},
+		{
+			"gD",
+			function()
+				Snacks.picker.lsp_declarations()
+			end,
+			desc = "Goto Declaration",
+		},
+		{
+			"<leader>DA",
+			function()
+				Snacks.picker.diagnostics()
+			end,
+			desc = "Show all Diagnostics",
+		},
+		{
+			"gd",
+			function()
+				Snacks.picker.lsp_definitions()
+			end,
+			desc = "Goto Definition",
+		},
+		{
+			"<leader>D",
+			function()
+				Snacks.picker.diagnostics_buffer()
+			end,
+			desc = "Buffer Diagnostics",
 		},
 		{
 			"<leader>bd",
@@ -54,12 +110,29 @@ return {
 			mode = "n",
 		},
 		{
+			"H",
+			function()
+				Snacks.picker.buffers()
+			end,
+			desc = "Buffers",
+			mode = "n",
+		},
+		{
 			"<leader>bz",
 			function()
 				Snacks.zen()
 			end,
 			desc = "Toggle Zen Mode",
 			mode = "n",
+		},
+		{
+			"<leader>?",
+			function()
+				Snacks.picker.keymaps({
+					layout = { preview = false },
+				})
+			end,
+			desc = "Keymaps",
 		},
 	},
 	opts = {
