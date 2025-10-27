@@ -141,20 +141,6 @@ return {
 		end,
 	},
 	{
-		"mbbill/undotree",
-
-		config = function()
-			vim.g.undotree_DiffAutoOpen = 1
-			vim.g.undotree_DiffpanelHeight = 8
-			vim.g.undotree_HelpLine = 0
-			vim.g.undotree_HighlightChangedText = 1
-			vim.g.undotree_HighlightSyntaxAdd = "DiffAdd"
-			vim.g.undotree_HighlightSyntaxChange = "DiffChange"
-			vim.g.undotree_HighlightSyntaxDel = "DiffDelete"
-			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Undo: Toggle undotree" })
-		end,
-	},
-	{
 		"theprimeagen/vim-be-good",
 
 		config = function() end,
@@ -412,5 +398,4 @@ return {
 		},
 		config = true,
 	},
-
 }
