@@ -63,15 +63,6 @@ return {
 			telescope.load_extension("ui-select")
 			telescope.load_extension("noice")
 			local keymap = vim.keymap.set
-			keymap("n", "<leader>?", ":Telescope keymaps<CR>", { desc = "Telescope: Show Keymaps" })
-			keymap("n", "<C-p>", builtin.git_files, { desc = "Telescope: Git Files" })
-			keymap("n", "<leader>pws", function()
-				builtin.grep_string({ search = vim.fn.expand("<cword>") })
-			end, { desc = "Telescope: Grep Current Word" })
-			keymap("n", "<leader>pWs", function()
-				builtin.grep_string({ search = vim.fn.expand("<cWORD>") })
-			end, { desc = "Telescope: Grep Current WORD" })
-			keymap("n", "<leader>vh", builtin.help_tags, { desc = "Telescope: Help Tags" })
 			keymap("n", "<leader>gt", ":Telescope git_branches <CR>", { desc = "Telescope: Git branches" })
 		end,
 	},
