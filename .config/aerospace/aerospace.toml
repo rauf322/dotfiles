@@ -8,6 +8,8 @@ exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE'
 ]
 
+on-focus-changed = ['move-mouse window-lazy-center']
+
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
@@ -23,7 +25,6 @@ key-mapping.preset = 'qwerty'
 4 = 'Built-in Retina Display'
 
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-on-focus-changed = "move-mouse window-lazy-center"
 
 [gaps]
 inner.horizontal = [{ monitor.'LC32G7xT' = 5 }, { monitor.main = 5 }, 5]
