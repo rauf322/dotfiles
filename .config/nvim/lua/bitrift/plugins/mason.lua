@@ -9,6 +9,7 @@ return {
 				"svelte",
 				"lua_ls",
 				"graphql",
+				"ts_ls",
 				"emmet_ls",
 				"prismals",
 				"pyright",

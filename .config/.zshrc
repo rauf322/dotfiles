@@ -25,6 +25,10 @@ export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/app
 export PATH="/Library/Apple/usr/bin:$PATH"
 export PATH="$HOME/.local/scripts:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+
+# Ghostty
+export GHOSTTY_BIN_DIR="/Applications/Ghostty.app/Contents/MacOS"
+export PATH="$GHOSTTY_BIN_DIR:$PATH"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 # alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf"

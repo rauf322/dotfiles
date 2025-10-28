@@ -103,12 +103,12 @@ return {
 							"$FILENAME",
 							"--single-quote",
 							"--jsx-single-quote",
-							-- "--print-width=140",
+							"--print-width=140",
 						},
 					},
 					stylua = {
 						args = {
-							-- "--column-width=140",
+							"--column-width=140",
 							"--stdin-filepath",
 							"$FILENAME",
 							"-",
