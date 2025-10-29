@@ -136,17 +136,5 @@ return {
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 		},
 		opts_extend = { "sources.default" },
-
-		config = function(_, opts)
-			require("blink.cmp").setup(opts)
-			vim.keymap.set("i", "<CR>", function()
-				local blink = require("blink.cmp")
-				if blink.is_visible() and blink.get_selected_item() then
-					return blink.accept()
-				else
-					return vim.api.nvim_replace_termcodes(require("mini.pairs").cr(), true, true, true)
-				end
-			end, { expr = true, noremap = true })
-		end,
 	},
 }
