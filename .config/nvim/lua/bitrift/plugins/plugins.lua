@@ -56,16 +56,19 @@ return {
 	{
 		"NickvanDyke/opencode.nvim",
 		dependencies = {
-			{ "folke/snacks.nvim", opts = { input = { enabled = true } } },
+			{ "folke/snacks.nvim" },
 		},
 		config = function()
 			vim.g.opencode_opts = {
-				terminal = {
-					win = {
-						enter = true,
-					},
-					env = {
-						OPENCODE_THEME = "tymon-kanagawa",
+				provider = {
+					name = "snacks",
+					snacks = {
+						win = {
+							enter = true,
+						},
+						env = {
+							OPENCODE_THEME = "system",
+						},
 					},
 				},
 			}
