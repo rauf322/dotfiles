@@ -1,4 +1,4 @@
-font-size = 20
+font-size = 18
 font-family = JetBrainsMono Nerd Font Mono
 theme = Rose Pine
 cursor-style = bar
@@ -11,6 +11,7 @@ window-padding-x = 5
 window-padding-y = 0
 window-save-state = always
 window-colorspace = "display-p3"
+background = #000000
 
 window-decoration = "none"
 macos-titlebar-proxy-icon = hidden
@@ -19,5 +20,4 @@ window-vsync = true
 shell-integration-features = no-title,no-cursor,no-sudo
 confirm-close-surface = false
 title = " "
-
 
