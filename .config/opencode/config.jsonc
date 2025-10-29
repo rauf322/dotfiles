@@ -1,5 +1,5 @@
 {
-  "theme": "tymon-kanagawa",
+  "theme": "system",
   "$schema": "https://opencode.ai/config.json",
   "agent": {
     "build": {
