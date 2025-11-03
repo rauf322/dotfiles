@@ -43,23 +43,19 @@ return {
 				list = {
 					selection = {
 						preselect = false,
-						auto_insert = false,
+						auto_insert = true,
 					},
 				},
 				documentation = {
 					auto_show = true,
-					auto_show_delay_ms = 200,
-					window = { border = "rounded" },
+					window = {
+						border = "rounded",
+					},
 				},
+
 				menu = {
 					border = "rounded",
-					draw = {
-						columns = {
-							{ "label", "label_description", gap = 1 },
-							{ "kind_icon", "kind" },
-						},
-						treesitter = { "lsp" },
-					},
+					winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
 				},
 				ghost_text = { enabled = true },
 			},
@@ -79,31 +75,18 @@ return {
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer", "emoji", "sql", "copilot" },
 				providers = {
-					lsp = {
-						score_offset = 100, -- Highest priority
-						max_items = 3, -- Limit LSP suggestions to 5
-					},
-					path = {
-						score_offset = 50, -- Second priority
-					},
-					snippets = {
-						score_offset = 80, -- Lower priority
-					},
 					copilot = {
 						name = "copilot",
 						module = "blink-copilot",
 						async = true,
-						score_offset = -10, -- High priority for Copilot
 					},
 					emoji = {
 						module = "blink-emoji",
 						name = "Emoji",
-						score_offset = 15, -- Tune by preference
 						opts = { insert = true }, -- Insert emoji (default) or complete its name
 						should_show_items = function()
 							return vim.tbl_contains(
 								-- Enable emoji completion only for git commits and markdown.
-								-- By default, enabled for all file-types.
 								{ "gitcommit", "markdown" },
 								vim.o.filetype
 							)
@@ -113,19 +96,10 @@ return {
 						-- IMPORTANT: use the same name as you would for nvim-cmp
 						name = "sql",
 						module = "blink.compat.source",
-
-						-- all blink.cmp source config options work as normal:
-						score_offset = -3,
-
-						-- this table is passed directly to the proxied completion source
-						-- as the `option` field in nvim-cmp's source config
-						--
-						-- this is NOT the same as the opts in a plugin's lazy.nvim spec
 						opts = {},
 						should_show_items = function()
 							return vim.tbl_contains(
-								-- Enable emoji completion only for git commits and markdown.
-								-- By default, enabled for all file-types.
+								-- Enable SQL completion only for sql files.
 								{ "sql" },
 								vim.o.filetype
 							)

@@ -62,7 +62,7 @@ function M.run_file()
 	local filename = vim.fn.expand("%")
 	local runners = {
 		js = function()
-			return vim.fn.system("node " .. filename)
+			return vim.fn.system("bun run " .. filename)
 		end,
 		py = function()
 			return vim.fn.system("python3 " .. filename)
@@ -90,7 +90,7 @@ function M.run_file()
 			end
 		end,
 		ts = function()
-			return vim.fn.system('ts-node --compiler-options \'{"module":"commonjs"}\' ' .. filename)
+			return vim.fn.system("bun run " .. filename)
 		end,
 	}
 
@@ -123,7 +123,7 @@ function M.run_selection()
 
 	local runners = {
 		js = function()
-			return vim.fn.system("node " .. tmpfile)
+			return vim.fn.system("bun run " .. tmpfile)
 		end,
 		py = function()
 			return vim.fn.system("python3 " .. tmpfile)
@@ -135,7 +135,7 @@ function M.run_selection()
 			return vim.fn.system("go run " .. tmpfile)
 		end,
 		ts = function()
-			return vim.fn.system('ts-node --compiler-options \'{"module":"commonjs"}\' ' .. tmpfile)
+			return vim.fn.system("bun run " .. tmpfile)
 		end,
 	}
 
