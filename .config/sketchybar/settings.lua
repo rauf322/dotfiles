@@ -1,52 +1,22 @@
 return {
-    --Left side bar 
-    font = {
-        text = "SF Pro",
-        numbers = "SF Pro",
-        size = 14.0,
-        style_map = {
-            ["Regular"] = "Regular",
-            ["Semibold"] = "Semibold",
-            ["Bold"] = "Bold",
-            ["Heavy"] = "Heavy",
-            ["Black"] = "Black",
-        },
-    },
-    --Right side bar
-    font_icon = {
-        text = "Nerd Font",
-        numbers = "Nerd Font",
-        size = 15.0,
-        style_map = {
-            ["Regular"] = "Regular",
-            ["Semibold"] = "Semibold",
-            ["Bold"] = "Bold",
-            ["Heavy"] = "Heavy",
-            ["Black"] = "Black",
-        },
-    },
-    --Bar t
-    height = 30,
-    paddings = 8,
-    group_paddings = 5,
-    padding = {
-        icon_item = {
-            --icon left not !aerospace!
-            icon = {
-                padding_left = 12,
-                padding_right = 12,
-            },
-        },
-        icon_label_item = {
-            --icon right not !calendar!
-            icon = {
-                padding_left = 12,
-                padding_right = 0,
-            },
-            label = {
-                padding_left = 12,
-                padding_right = 8,
-            }
-        }
-    }
+  paddings = 3,
+  group_paddings = 5,
+
+  icons = "sf-symbols", -- alternatively available: NerdFont
+
+  -- This is a font configuration for SF Pro and SF Mono (installed manually)
+  font = require("helpers.default_font"),
+
+  -- Alternatively, this is a font config for JetBrainsMono Nerd Font
+  -- font = {
+  --   text = "JetBrainsMono Nerd Font", -- Used for text
+  --   numbers = "JetBrainsMono Nerd Font", -- Used for numbers
+  --   style_map = {
+  --     ["Regular"] = "Regular",
+  --     ["Semibold"] = "Medium",
+  --     ["Bold"] = "SemiBold",
+  --     ["Heavy"] = "Bold",
+  --     ["Black"] = "ExtraBold",
+  --   },
+  -- },
 }

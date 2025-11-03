@@ -31,7 +31,7 @@ return {
 			},
 			sync_install = false,
 			highlight = { enable = true },
-			indent = { enable = false }, -- fucked up indeantation for some languages
+			indent = { enable = true, disable = { "javascript", "typescript" } }, -- fucked up indentation for JS/TS only
 			incremental_selection = {
 				enable = true,
 				keymaps = {

@@ -151,9 +151,17 @@ bindkey -s '^T' 'fzf-bat-nvim\n'
 alias ls="eza -la --icons --created --bytes --all"
 alias ll="eza -l "
 alias la="eza -la"
+alias b="bun"
 
 . "$HOME/.local/bin/env"
 
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+# bun completions
+[ -s "/Users/rauffaizov/.bun/_bun" ] && source "/Users/rauffaizov/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
