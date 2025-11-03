@@ -249,6 +249,10 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 		updateWindows()
 	end)
 
+	space_window_observer:subscribe("aerospace_workspace_change", function()
+		updateWindows()
+	end)
+
 	space_window_observer:subscribe("display_change", function()
 		updateWorkspaceMonitor()
 		updateWindows()
