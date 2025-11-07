@@ -20,9 +20,6 @@ default-root-container-orientation = 'auto'
 
 key-mapping.preset = 'qwerty'
 
-[workspace-to-monitor-force-assignment]
-3 = 'Built-in Retina Display'
-4 = 'Built-in Retina Display'
 
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 

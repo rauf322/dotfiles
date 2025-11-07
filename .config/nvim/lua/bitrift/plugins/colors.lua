@@ -78,6 +78,11 @@ function ColorMyPencils(color)
 
 	-- Brighter visual mode highlight
 	vim.api.nvim_set_hl(0, "Visual", { bg = "#404040", fg = "none" })
+
+	-- LSP reference highlighting (for document_highlight)
+	vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#3e4452" })
+	vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#3e4452" })
+	vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#4a3e45" })
 end
 
 return {
