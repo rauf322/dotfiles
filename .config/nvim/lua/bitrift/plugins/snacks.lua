@@ -44,6 +44,15 @@ return {
 			mode = "n",
 		},
 		{
+			"<leader>pws",
+			function()
+				local word = vim.fn.expand("<cword>")
+				Snacks.picker.grep({ search = word })
+			end,
+			desc = "Search word under cursor",
+			mode = "n",
+		},
+		{
 			"<leader>u",
 			function()
 				Snacks.picker.undo()
