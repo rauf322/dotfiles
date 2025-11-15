@@ -1,5 +1,12 @@
 return {
 	{ "nvim-telescope/telescope-fzf-native.nvim", event = "VeryLazy", build = "make" },
+	{
+		"stevearc/quicker.nvim",
+		ft = "qf",
+		---@module "quicker"
+		---@type quicker.SetupOptions
+		opts = {},
+	},
 
 	{
 		"ThePrimeagen/harpoon",
