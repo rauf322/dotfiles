@@ -5,6 +5,9 @@
 
 set -euo pipefail
 
+# Add Bun to PATH for claude
+export PATH="$HOME/.bun/bin:$PATH"
+
 if [[ -z "${TMUX-}" ]]; then
   echo "Not inside tmux." >&2
   exit 1
