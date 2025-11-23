@@ -19,6 +19,7 @@ return {
 				"yamlls",
 				"copilot",
 				"eslint",
+				"solidity_ls_nomicfoundation",
 			},
 		},
 		dependencies = {
