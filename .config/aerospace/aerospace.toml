@@ -29,7 +29,7 @@ inner.vertical = [{ monitor.'LC32G7xT' = 5}, { monitor.main = 5 }, 5]
 outer.left = [{ monitor.'LC32G7xT' = 5 }, { monitor.main = 5 }, 5]
 outer.right = [{ monitor.'LC32G7xT' = 5 }, { monitor.main = 5 }, 5]
 outer.bottom = [{ monitor.'LC32G7xT' = 5 }, { monitor.main = 5 }, 5]
-outer.top = [{ monitor.'LC32G7xT' = 40 }, { monitor.'Built-in Retina Display' = 10 }, 20]
+outer.top = [ {monitor.'MX279' = 40},{ monitor.'LC32G7xT' = 40 }, { monitor.'Built-in Retina Display' = 10 }, 20]
 
 
 
