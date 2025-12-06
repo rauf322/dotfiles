@@ -81,31 +81,33 @@ return {
 			local conform = require("conform")
 			conform.setup({
 				formatters_by_ft = {
-					javascript = { "prettier" },
-					typescript = { "prettier" },
-					javascriptreact = { "prettier" },
-					typescriptreact = { "prettier" },
+					javascript = { "biome", "prettier" },
+					typescript = { "biome", "prettier" },
+					javascriptreact = { "biome", "prettier" },
+					typescriptreact = { "biome", "prettier" },
 					svelte = { "prettier" },
-					css = { "prettier" },
+					css = { "biome", "prettier" },
 					html = { "prettier" },
-					json = { "prettier" },
+					json = { "biome", "prettier" },
+					jsonc = { "biome", "prettier" },
 					yaml = { "prettier" },
 					markdown = { "prettier" },
 					graphql = { "prettier" },
 					liquid = { "prettier" },
 					lua = { "stylua" },
 					python = { "isort", "black" },
+					go = { "goimports", "gofumpt" },
 				},
 				formatters = {
-					prettier = {
-						args = {
-							"--stdin-filepath",
-							"$FILENAME",
-							"--single-quote",
-							"--jsx-single-quote",
-							-- "--print-width=140",
-						},
-					},
+					-- prettier = {
+					-- 	args = {
+					-- 		"--stdin-filepath",
+					-- 		"$FILENAME",
+					-- 		"--single-quote",
+					-- 		"--jsx-single-quote",
+					-- 		-- "--print-width=140",
+					-- 	},
+					-- },
 					stylua = {
 						args = {
 							-- "--column-width=140",
