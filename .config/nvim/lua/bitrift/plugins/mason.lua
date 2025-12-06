@@ -20,6 +20,7 @@ return {
 				"copilot",
 				"eslint",
 				"solidity_ls_nomicfoundation",
+				"gopls",
 			},
 		},
 		dependencies = {
@@ -42,6 +43,7 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		opts = {
 			ensure_installed = {
+				"biome",
 				"prettier",
 				"stylua",
 				"isort",
@@ -51,6 +53,8 @@ return {
 				"js-debug-adapter",
 				"htmlhint",
 				"sql-formatter",
+				"gofumpt",
+				"goimports",
 			},
 		},
 	},

@@ -2,6 +2,7 @@ local keymap = vim.keymap
 
 -- Disabled inline completion (ghost text) - using nvim-cmp instead
 -- vim.lsp.inline_completion.enable()
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 	callback = function(ev)
