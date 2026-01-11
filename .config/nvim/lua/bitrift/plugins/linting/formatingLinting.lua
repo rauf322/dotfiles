@@ -81,19 +81,19 @@ return {
 			local conform = require("conform")
 			conform.setup({
 				formatters_by_ft = {
-					javascript = { "biome", "prettier" },
-					typescript = { "biome", "prettier" },
-					javascriptreact = { "biome", "prettier" },
-					typescriptreact = { "biome", "prettier" },
-					svelte = { "prettier" },
-					css = { "biome", "prettier" },
-					html = { "prettier" },
-					json = { "biome", "prettier" },
-					jsonc = { "biome", "prettier" },
-					yaml = { "prettier" },
-					markdown = { "prettier" },
-					graphql = { "prettier" },
-					liquid = { "prettier" },
+					javascript = { "prettierd" },
+					typescript = { "prettierd" },
+					javascriptreact = { "prettierd" },
+					typescriptreact = { "prettierd" },
+					svelte = { "prettierd" },
+					css = { "prettierd" },
+					html = { "prettierd" },
+					json = { "prettierd" },
+					jsonc = { "prettierd" },
+					yaml = { "prettierd" },
+					markdown = { "prettierd" },
+					graphql = { "prettierd" },
+					liquid = { "prettierd" },
 					lua = { "stylua" },
 					python = { "isort", "black" },
 					go = { "goimports", "gofumpt" },
@@ -117,7 +117,10 @@ return {
 						},
 					},
 				},
-				format_on_save = { lsp_fallback = true, async = false, timeout_ms = 500 },
+				format_on_save = {
+					async = false,
+					lsp_fallback = false,
+				},
 			})
 			vim.keymap.set({ "n", "v" }, "<leader>s", function()
 				-- Wrap the whole operation and capture any error message
@@ -141,7 +144,6 @@ return {
 							conform.format({
 								lsp_fallback = true,
 								async = false,
-								timeout_ms = 1000,
 								quiet = true,
 							})
 						end)

@@ -185,6 +185,12 @@ return {
 		local keymap = vim.keymap
 		keymap.set("n", "<leader>ef", "<cmd>Neotree toggle<CR>", { desc = "Toggle file explorer" })
 		keymap.set("n", "<leader>ff", function()
+			-- Skip if in CodeDiff view (let codediff handle its own explorer toggle)
+			local bufname = vim.api.nvim_buf_get_name(0)
+			if bufname:match("^codediff://") or vim.bo.filetype:match("^codediff") then
+				return
+			end
+
 			-- Smart behavior: close if in neo-tree, reveal if outside
 			if vim.bo.filetype == "neo-tree" then
 				vim.cmd("Neotree close")

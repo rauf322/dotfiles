@@ -14,12 +14,33 @@ return {
 			require("mini.pairs").setup({})
 		end,
 	},
+	{
+		"rmagatti/auto-session",
+		config = function()
+			require("auto-session").setup()
+		end,
+	},
+	{
+		"esmuellert/codediff.nvim",
+		dependencies = { "MunifTanjim/nui.nvim" },
+		cmd = "CodeDiff",
+		keys = {
+			{ "<leader>gg", "<cmd>CodeDiff<cr>", desc = "Git diff explorer" },
+		},
+		config = function()
+			require("codediff").setup({
+				keymaps = {
+					view = {
+						toggle_explorer = "<leader>ff",
+					},
+				},
+			})
+		end,
+	},
 
 	{
 		"NickvanDyke/opencode.nvim",
-		dependencies = {
-			-- { "folke/snacks.nvim" },
-		},
+		dependencies = {},
 		config = function()
 			vim.g.opencode_opts = {
 				provider = {
@@ -27,14 +48,6 @@ return {
 					tmux = {
 						options = "-h",
 					},
-					-- snacks = {
-					-- 	win = {
-					-- 		enter = true,
-					-- 	},
-					-- 	env = {
-					-- 		OPENCODE_THEME = "system",
-					-- 	},
-					-- },
 				},
 			}
 
