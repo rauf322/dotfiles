@@ -44,7 +44,7 @@ return {
 		opts = {
 			ensure_installed = {
 				"biome",
-				"prettier",
+				"prettierd",
 				"stylua",
 				"isort",
 				"black",

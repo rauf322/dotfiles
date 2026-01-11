@@ -37,13 +37,10 @@ outer.top = [ {monitor.'MX279' = 40},{ monitor.'LC32G7xT' = 40 }, { monitor.'Bui
 if.app-name-regex-substring = 'Arc'
 run = 'move-node-to-workspace 1'
 
-[[on-window-detected]]
-if.app-name-regex-substring = 'Slack'
-run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'Google Chrome'
-run = 'move-node-to-workspace 1'
+run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'Brave'
@@ -55,19 +52,23 @@ run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'ghostty'
-run = 'move-node-to-workspace 2'
+run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'RunJs'
-run = 'move-node-to-workspace 2'
+run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'cursor'
-run = ['layout tiling','move-node-to-workspace 2']
+run = ['layout tiling','move-node-to-workspace 3']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'code'
-run = ['layout tiling','move-node-to-workspace 2']
+run = ['layout tiling','move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Slack'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'iina'
@@ -83,11 +84,11 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'excalidraw'
-run = 'move-node-to-workspace 3'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'spark'
-run = 'move-node-to-workspace 3'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'goodnotes'
