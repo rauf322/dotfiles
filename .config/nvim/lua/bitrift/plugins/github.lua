@@ -53,7 +53,8 @@ return {
 			require("gitsigns").setup({
 				current_line_blame = true,
 			})
-			vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", { desc = "Gitsign inspect preview" })
+			vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", { desc = "Gitsigns preview hunk" })
+			vim.keymap.set({ "n", "v" }, "<leader>ga", ":Gitsigns <Tab>", { desc = "Gitsigns actions" })
 		end,
 	},
 }

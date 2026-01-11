@@ -152,7 +152,7 @@ alias ls="eza -la --icons --created --bytes --all"
 alias ll="eza -l "
 alias la="eza -la"
 alias b="bun"
-alias p="opencode"
+alias p="opencode --port"
 
 . "$HOME/.local/bin/env"
 
