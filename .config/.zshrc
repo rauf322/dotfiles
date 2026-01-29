@@ -153,6 +153,7 @@ alias ll="eza -l "
 alias la="eza -la"
 alias b="bun"
 alias p="opencode --port"
+alias lg="ghostty --config-file=$HOME/.config/ghostty/config --config='font-size=12' -e lazygit"
 
 . "$HOME/.local/bin/env"
 
@@ -166,3 +167,4 @@ source <(ng completion script)
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"

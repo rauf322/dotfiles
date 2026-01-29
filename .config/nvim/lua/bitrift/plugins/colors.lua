@@ -83,6 +83,12 @@ function ColorMyPencils(color)
 	vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#3e4452" })
 	vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#3e4452" })
 	vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#4a3e45" })
+
+	-- Fix for snacks.nvim gh picker (needs fg on Diff highlights)
+	-- See: https://github.com/folke/snacks.nvim/issues/2662
+	vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#1c3a1c", fg = "#9ece6a" })
+	vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#3a1c1c", fg = "#f7768e" })
+	vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1c2a3a", fg = "#7aa2f7" })
 end
 
 return {

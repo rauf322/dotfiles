@@ -12,158 +12,23 @@ return {
 			end,
 		})
 	end,
-	keys = {
-		{
-			"gy",
-			function()
-				Snacks.picker.lsp_type_definitions()
-			end,
-			desc = "Goto T[y]pe Definition",
-		},
-		{
-			"gI",
-			function()
-				Snacks.picker.lsp_implementations()
-			end,
-			desc = "Goto Implementation",
-		},
-		{
-			"gr",
-			function()
-				Snacks.picker.lsp_references()
-			end,
-			nowait = true,
-			desc = "References",
-		},
-		{
-			"<leader>ps",
-			function()
-				Snacks.picker.grep()
-			end,
-			desc = "Search in files",
-			mode = "n",
-		},
-		{
-			"<leader>pws",
-			function()
-				local word = vim.fn.expand("<cword>")
-				Snacks.picker.grep({ search = word })
-			end,
-			desc = "Search word under cursor",
-			mode = "n",
-		},
-		{
-			"<leader>u",
-			function()
-				Snacks.picker.undo()
-			end,
-			desc = "Undo History",
-		},
-		{
-			"gD",
-			function()
-				Snacks.picker.lsp_declarations()
-			end,
-			desc = "Goto Declaration",
-		},
-		{
-			"<leader>DA",
-			function()
-				Snacks.picker.diagnostics()
-			end,
-			desc = "Show all Diagnostics",
-		},
-		{
-			"gd",
-			function()
-				Snacks.picker.lsp_definitions()
-			end,
-			desc = "Goto Definition",
-		},
-		{
-			"<leader>D",
-			function()
-				Snacks.picker.diagnostics_buffer()
-			end,
-			desc = "Buffer Diagnostics",
-		},
-		{
-			"<leader>bd",
-			function()
-				Snacks.bufdelete()
-			end,
-			desc = "Buffer delete",
-			mode = "n",
-		},
-		{
-			"<leader>ba",
-			function()
-				Snacks.bufdelete.all()
-			end,
-			desc = "Buffer delete all",
-			mode = "n",
-		},
-		{
-			"<leader><Tab>",
-			function()
-				Snacks.picker.files()
-			end,
-			desc = "Find Files",
-		},
-		{
-			"<leader>bo",
-			function()
-				Snacks.bufdelete.other()
-			end,
-			desc = "Buffer delete other",
-			mode = "n",
-		},
-		{
-			"H",
-			function()
-				Snacks.picker.buffers({
-					on_show = function()
-						vim.cmd.stopinsert()
-					end,
-					finder = "buffers",
-					format = "buffer",
-					hidden = false,
-					unloaded = true,
-					current = true,
-					sort_lastused = true,
-					win = {
-						input = {
-							keys = {
-								["d"] = "bufdelete",
-							},
-						},
-						list = { keys = { ["d"] = "bufdelete" } },
-					},
-				})
-			end,
-			desc = "Buffers",
-			mode = "n",
-		},
-		{
-			"<leader>bz",
-			function()
-				Snacks.zen()
-			end,
-			desc = "Toggle Zen Mode",
-			mode = "n",
-		},
-		{
-			"<leader>?",
-			function()
-				Snacks.picker.keymaps({
-					layout = { preview = false },
-				})
-			end,
-			desc = "Keymaps",
-		},
-	},
 	opts = {
+		gh = {},
 		picker = {
+			sources = {
+				files = {
+					ignored = true, -- Show gitignored files
+					exclude = { "node_modules", ".git", "dist", "build" }, -- Hide common directories
+				},
+				gh_issue = {
+					-- your gh_issue picker configuration comes here
+					-- or leave it empty to use the default settings
+				},
+				gh_pr = {
+					-- your gh_pr picker configuration comes here
+					-- or leave it empty to use the default settings
+				},
+			},
 			formatters = {
 				file = {
 					filename_first = true,
@@ -270,6 +135,190 @@ return {
 					["<esc>"] = "hide",
 				},
 			},
+		},
+	},
+	keys = {
+		{
+			"<leader>gi",
+			function()
+				Snacks.picker.gh_issue()
+			end,
+			desc = "GitHub Issues (open)",
+		},
+		{
+			"<leader>gI",
+			function()
+				Snacks.picker.gh_issue({ state = "all" })
+			end,
+			desc = "GitHub Issues (all)",
+		},
+		{
+			"<leader>gp",
+			function()
+				Snacks.picker.gh_pr()
+			end,
+			desc = "GitHub Pull Requests (open)",
+		},
+		{
+			"<leader>gP",
+			function()
+				Snacks.picker.gh_pr({ state = "all" })
+			end,
+			desc = "GitHub Pull Requests (all)",
+		},
+		{
+			"gy",
+			function()
+				Snacks.picker.lsp_type_definitions()
+			end,
+			desc = "Goto T[y]pe Definition",
+		},
+		{
+			"gI",
+			function()
+				Snacks.picker.lsp_implementations()
+			end,
+			desc = "Goto Implementation",
+		},
+		{
+			"gr",
+			function()
+				Snacks.picker.lsp_references()
+			end,
+			nowait = true,
+			desc = "References",
+		},
+		{
+			"<leader>ps",
+			function()
+				Snacks.picker.grep()
+			end,
+			desc = "Search in files",
+			mode = "n",
+		},
+		{
+			"<leader>pws",
+			function()
+				local word = vim.fn.expand("<cword>")
+				Snacks.picker.grep({ search = word })
+			end,
+			desc = "Search word under cursor",
+			mode = "n",
+		},
+		{
+			"<leader>u",
+			function()
+				Snacks.picker.undo()
+			end,
+			desc = "Undo History",
+		},
+		{
+			"gD",
+			function()
+				Snacks.picker.lsp_declarations()
+			end,
+			desc = "Goto Declaration",
+		},
+		{
+			"<leader>DA",
+			function()
+				Snacks.picker.diagnostics()
+			end,
+			desc = "Show all Diagnostics",
+		},
+		{
+			"gd",
+			function()
+				Snacks.picker.lsp_definitions()
+			end,
+			desc = "Goto Definition",
+		},
+		{
+			"td",
+			function()
+				Snacks.picker.lsp_type_definitions()
+			end,
+		},
+		{
+			"<leader>D",
+			function()
+				Snacks.picker.diagnostics()
+			end,
+			desc = "All Diagnostics",
+		},
+		{
+			"<leader>bd",
+			function()
+				Snacks.bufdelete()
+			end,
+			desc = "Buffer delete",
+			mode = "n",
+		},
+		{
+			"<leader>ba",
+			function()
+				Snacks.bufdelete.all()
+			end,
+			desc = "Buffer delete all",
+			mode = "n",
+		},
+		{
+			"<leader><Tab>",
+			function()
+				Snacks.picker.files()
+			end,
+			desc = "Find Files",
+		},
+		{
+			"<leader>bo",
+			function()
+				Snacks.bufdelete.other()
+			end,
+			desc = "Buffer delete other",
+			mode = "n",
+		},
+		{
+			"H",
+			function()
+				Snacks.picker.buffers({
+					on_show = function()
+						vim.cmd.stopinsert()
+					end,
+					finder = "buffers",
+					format = "buffer",
+					hidden = false,
+					unloaded = true,
+					current = true,
+					sort_lastused = true,
+					win = {
+						input = {
+							keys = {
+								["d"] = "bufdelete",
+							},
+						},
+						list = { keys = { ["d"] = "bufdelete" } },
+					},
+				})
+			end,
+			desc = "Buffers",
+			mode = "n",
+		},
+		{
+			"<leader>bz",
+			function()
+				Snacks.zen()
+			end,
+			desc = "Toggle Zen Mode",
+			mode = "n",
+		},
+		{
+			"<leader>?",
+			function()
+				Snacks.picker.keymaps({
+					layout = { preview = false },
+				})
+			end,
+			desc = "Keymaps",
 		},
 	},
 

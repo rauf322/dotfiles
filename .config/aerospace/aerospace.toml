@@ -63,6 +63,10 @@ if.app-name-regex-substring = 'cursor'
 run = ['layout tiling','move-node-to-workspace 3']
 
 [[on-window-detected]]
+if.app-name-regex-substring = 'zed'
+run = ['layout tiling','move-node-to-workspace 3']
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'code'
 run = ['layout tiling','move-node-to-workspace 3']
 

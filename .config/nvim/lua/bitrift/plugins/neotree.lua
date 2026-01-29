@@ -160,10 +160,22 @@ return {
 				},
 				-- Show hidden files by default (matches nvim-tree filters.dotfiles = true)
 				filtered_items = {
-					visible = false, -- Hidden by default
+					visible = false,
 					hide_dotfiles = true,
-					hide_gitignored = true,
+					hide_gitignored = false,
 					hide_hidden = true,
+					hide_by_name = {
+						"node_modules",
+						".git",
+						"dist",
+						"build",
+					},
+					hide_by_pattern = {
+						"*.o",
+						"*.a",
+						"*.out",
+						"*.class",
+					},
 				},
 				-- Auto-refresh on write
 				use_libuv_file_watcher = true,

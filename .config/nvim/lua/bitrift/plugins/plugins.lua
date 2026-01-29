@@ -15,6 +15,15 @@ return {
 		end,
 	},
 	{
+		"nvim-mini/mini.animate",
+		version = "*",
+		config = function()
+			require("mini.animate").setup({
+				scroll = { enable = false },
+			})
+		end,
+	},
+	{
 		"rmagatti/auto-session",
 		config = function()
 			require("auto-session").setup()
@@ -33,6 +42,9 @@ return {
 					view = {
 						toggle_explorer = "<leader>ff",
 					},
+				},
+				diff = {
+					original_position = "right",
 				},
 			})
 		end,
@@ -117,8 +129,9 @@ return {
 		event = "BufEnter",
 		config = function()
 			require("treesitter-context").setup({
-				max_lines = 5,
+				max_lines = 0,
 			})
+			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#111111" })
 		end,
 	},
 	{
