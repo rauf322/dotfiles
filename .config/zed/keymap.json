@@ -17,36 +17,57 @@
       "space g d": "editor::GoToDefinition",
       "space g r": "editor::FindAllReferences",
       "space e": "workspace::ToggleLeftDock",
+      "shift-tab": "project_panel::ToggleFocus",
       "space tab": "file_finder::Toggle",
       "shift-h": "tab_switcher::ToggleAll",
-    },
+      "space shift-P": "agent::ToggleFocus",
+      "space |": "pane::SplitVertical",
+      "space -": "pane::SplitHorizontal",
+      "space h": "workspace::ActivatePaneLeft",
+      "space j": "workspace::ActivatePaneDown",
+      "space k": "workspace::ActivatePaneUp",
+      "space l": "workspace::ActivatePaneRight",
+      "space w shift-h": "workspace::MovePaneLeft",
+      "space w shift-j": "workspace::MovePaneDown",
+      "space w shift-k": "workspace::MovePaneUp",
+      "space w shift-l": "workspace::MovePaneRight",
+      "space w h": "vim::ResizePaneRight",
+      "space w l": "vim::ResizePaneLeft",
+      "space w j": "vim::ResizePaneUp",
+      "space w k": "vim::ResizePaneDown",
+      "space w =": "vim::ResetPaneSizes",
+      "space f": "workspace::ToggleZoom"
+    }
   },
-  {
-    "context": "Editor",
-    "bindings": {
-      "space tab": "file_finder::Toggle",
-    },
-  },
-
+  // {
+  //   "context": "Editor",
+  //   "bindings": {
+  //   }
+  // },
   {
     "context": "Editor && vim_mode == insert && !VimWaiting && !menu",
     "bindings": {
       "j k": "vim::NormalBefore",
       "k k": "vim::NormalBefore",
-      "h h": "vim::NormalBefore",
-    },
+      "h h": "vim::NormalBefore"
+    }
   },
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
     "bindings": {
       "shift-k": "editor::MoveLineUp",
-      "shift-j": "editor::MoveLineDown",
-    },
+      "shift-j": "editor::MoveLineDown"
+    }
   },
   {
-    "context": "Editor && vim_mode == insert && !menu",
+    "context": "ProjectPanel ",
     "bindings": {
-      "cmd-shift-f": "pane::DeploySearch",
-    },
-  },
+      "a": "project_panel::NewFile",
+      "r": "project_panel::Rename",
+      "shift-d": "project_panel::Delete",
+      "shift-tab": "workspace::ToggleRightDock",
+      "space h": "workspace::ActivatePaneLeft",
+      "space tab": "file_finder::Toggle"
+    }
+  }
 ]
