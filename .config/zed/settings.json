@@ -1,55 +1,82 @@
 {
+  "agent_servers": {
+    "opencode": {
+      "type": "extension",
+      "favorite_models": [
+        "anthropic/claude-sonnet-4-5-20250929",
+        "github-copilot/claude-sonnet-4.5"
+      ]
+    }
+  },
+  "agent": {
+    "default_model": {
+      "provider": "opencode",
+      "model": "anthropic/claude-sonnet-4-5"
+    }
+  },
+  "git_panel": {
+    "tree_view": true
+  },
   "session": {
-    "trust_all_worktrees": true,
+    "trust_all_worktrees": true
   },
   "format_on_save": "on",
   "languages": {
     "JavaScript": {
       "formatter": "prettier",
-      "format_on_save": "on",
+      "format_on_save": "on"
     },
     "TypeScript": {
       "formatter": "prettier",
-      "format_on_save": "on",
+      "format_on_save": "on"
     },
     "TSX": {
       "formatter": "prettier",
-      "format_on_save": "on",
+      "format_on_save": "on"
     },
     "JSON": {
-      "formatter": "prettier",
+      "formatter": "prettier"
     },
     "HTML": {
-      "formatter": "prettier",
+      "formatter": "prettier"
     },
     "CSS": {
-      "formatter": "prettier",
+      "formatter": "prettier"
     },
     "YAML": {
-      "formatter": "prettier",
+      "formatter": "prettier"
     },
     "Markdown": {
-      "formatter": "prettier",
+      "formatter": "prettier"
     },
+    "Lua": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "stylua"
+        }
+      }
+    }
   },
   "terminal": {
+    "dock": "bottom",
     "font_size": 18.0,
     "max_scroll_history_lines": 500,
     "font_family": "JetBrainsMono Nerd Font Mono",
     "line_height": {
-      "custom": 2,
-    },
+      "custom": 2
+    }
   },
   "project_panel": {
     "hide_gitignore": true,
     "auto_fold_dirs": false,
     "dock": "right",
     "default_width": 400,
-    "hide_root": true,
+    "hide_root": true
   },
   "tab_bar": {
     "show": false,
-    "show_tab_bar_buttons": false,
+    "show_tab_bar_buttons": false
   },
   "show_signature_help_after_edits": false,
   "auto_signature_help": false,
@@ -57,75 +84,74 @@
   "relative_line_numbers": "enabled",
   "file_scan_exclusions": ["node_modules"],
   "scrollbar": {
-    "show": "never",
+    "show": "never"
   },
   "lsp": {
     "typescript-language-server": {
       "initialization_options": {
         "preferences": {
           "quotePreference": "single",
-          "importModuleSpecifierPreference": "shortest",
-        },
-      },
+          "importModuleSpecifierPreference": "shortest"
+        }
+      }
     },
     "pyright": {
       "initialization_options": {
-        "python.analysis.typeCheckingMode": "basic",
-      },
+        "python.analysis.typeCheckingMode": "basic"
+      }
     },
     "gopls": {
       "initialization_options": {
         "usePlaceholders": true,
-        "completeUnimported": true,
-      },
+        "completeUnimported": true
+      }
     },
     "lua-language-server": {
       "initialization_options": {
         "Lua": {
           "runtime": {
-            "version": "LuaJIT",
+            "version": "LuaJIT"
           },
           "diagnostics": {
-            "globals": ["vim"],
-          },
-        },
-      },
+            "globals": ["vim"]
+          }
+        }
+      }
     },
     "yaml-language-server": {
       "settings": {
         "yaml": {
           "schemaStore": {
-            "enable": true,
-          },
-        },
-      },
-    },
+            "enable": true
+          }
+        }
+      }
+    }
   },
   "sticky_scroll": {
-    "enabled": false,
+    "enabled": false
   },
   "vertical_scroll_margin": 10.0,
   "gutter": {
-    "line_numbers": true,
+    "line_numbers": true
   },
   "minimap": {
-    "show": "never",
+    "show": "never"
   },
   "current_line_highlight": "all",
   "cursor_shape": "bar",
   "cursor_blink": false,
   "autosave": {
     "after_delay": {
-      "milliseconds": 100,
-    },
+      "milliseconds": 100
+    }
   },
   "buffer_font_family": "JetBrainsMono Nerd Font Mono",
   "linked_edits": true,
   "show_whitespaces": "none",
   "show_edit_predictions": false,
-  "ensure_final_newline_on_save": true,
   "indent_guides": {
-    "enabled": false,
+    "enabled": false
   },
   "wrap_guides": [130],
   "preferred_line_length": 130,
@@ -137,12 +163,12 @@
   "icon_theme": {
     "mode": "system",
     "light": "Zed (Default)",
-    "dark": "Warm Charmed Icons",
+    "dark": "Warm Charmed Icons"
   },
   "ui_font_size": 23,
   "buffer_font_size": 20.0,
   "buffer_line_height": {
-    "custom": 2,
+    "custom": 2
   },
-  "theme": "Rose Pine Moon",
+  "theme": "Rose Pine Moon"
 }
