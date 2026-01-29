@@ -2,11 +2,11 @@
 set -euo pipefail
 DIR="${1:-$(tmux display -p -F "#{pane_current_path}")}"
 
-if command -v cursor >/dev/null 2>&1; then
-  # reuse an existing Cursor window, suppress all output
-  cursor --reuse-window -- "$DIR" >/dev/null 2>&1
+if command -v zed >/dev/null 2>&1; then
+  # open directory in Zed
+  zed "$DIR" >/dev/null 2>&1
 else
-  echo "cursor CLI not found on PATH" >&2
+  echo "zed CLI not found on PATH" >&2
   exit 127
 fi
 

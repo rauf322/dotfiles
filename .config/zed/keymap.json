@@ -1,0 +1,52 @@
+[
+  {
+    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
+    "bindings": {
+      "shift-k": "editor::Hover",
+      "alt-tab": "pane::AlternateFile",
+      "space c a": "editor::ToggleCodeActions",
+      "space s": "editor::Format",
+      "space r n": "editor::Rename",
+      "space shift-d": "diagnostics::Deploy",
+      "space p s": "pane::DeploySearch",
+      "space b": "tab_switcher::Toggle",
+      "space f f": "workspace::ToggleRightDock",
+      "space g c": "editor::ToggleComments",
+      "space space": "command_palette::Toggle",
+      "space g t": "editor::GoToTypeDefinition",
+      "space g d": "editor::GoToDefinition",
+      "space g r": "editor::FindAllReferences",
+      "space e": "workspace::ToggleLeftDock",
+      "space tab": "file_finder::Toggle",
+      "shift-h": "tab_switcher::ToggleAll",
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "space tab": "file_finder::Toggle",
+    },
+  },
+
+  {
+    "context": "Editor && vim_mode == insert && !VimWaiting && !menu",
+    "bindings": {
+      "j k": "vim::NormalBefore",
+      "k k": "vim::NormalBefore",
+      "h h": "vim::NormalBefore",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
+    "bindings": {
+      "shift-k": "editor::MoveLineUp",
+      "shift-j": "editor::MoveLineDown",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert && !menu",
+    "bindings": {
+      "cmd-shift-f": "pane::DeploySearch",
+    },
+  },
+]

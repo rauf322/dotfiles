@@ -34,19 +34,26 @@ return {
 						return {}
 					end
 
+					local first_line = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
+					if first_line:match("^%s*/%*%s*eslint%-disable") then
+						return {}
+					end
+
 					local diagnostics = {}
 					for _, message in ipairs(result[1].messages) do
-						table.insert(diagnostics, {
-							lnum = message.line - 1,
-							col = message.column - 1,
-							end_lnum = message.endLine and (message.endLine - 1) or (message.line - 1),
-							end_col = message.endColumn and (message.endColumn - 1) or (message.column - 1),
-							severity = message.severity == 1 and vim.diagnostic.severity.WARN
-								or vim.diagnostic.severity.ERROR,
-							message = message.message,
-							source = "eslint_d",
-							code = message.ruleId,
-						})
+						if message.line then
+							table.insert(diagnostics, {
+								lnum = message.line - 1,
+								col = message.column - 1,
+								end_lnum = message.endLine and (message.endLine - 1) or (message.line - 1),
+								end_col = message.endColumn and (message.endColumn - 1) or (message.column - 1),
+								severity = message.severity == 1 and vim.diagnostic.severity.WARN
+									or vim.diagnostic.severity.ERROR,
+								message = message.message,
+								source = "eslint_d",
+								code = message.ruleId,
+							})
+						end
 					end
 
 					return diagnostics
