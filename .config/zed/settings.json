@@ -2,10 +2,7 @@
   "agent_servers": {
     "opencode": {
       "type": "extension",
-      "favorite_models": [
-        "anthropic/claude-sonnet-4-5-20250929",
-        "github-copilot/claude-sonnet-4.5"
-      ]
+      "favorite_models": ["anthropic/claude-sonnet-4-5-20250929", "github-copilot/claude-sonnet-4.5"]
     }
   },
   "agent": {
@@ -80,7 +77,7 @@
   },
   "show_signature_help_after_edits": false,
   "auto_signature_help": false,
-  "use_smartcase_search": true,
+  "use_smartcase_search": false,
   "relative_line_numbers": "enabled",
   "file_scan_exclusions": ["node_modules"],
   "scrollbar": {
