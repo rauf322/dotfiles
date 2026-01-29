@@ -7,11 +7,11 @@
       "name": "Rose Pine Moon",
       "appearance": "dark",
       "style": {
-        "border": "#44415aff",
-        "border.variant": "#2a283eff",
+        "border.variant": "#000000ff",
         "border.focused": "#c4a7e7ff",
         "border.selected": "#31748fff",
         "border.transparent": "#00000000",
+        "border": "#000000",
         "border.disabled": "#44415aff",
         "elevated_surface.background": "#000000ff",
         "surface.background": "#000000ff",
@@ -148,44 +148,9 @@
         "warning.border": "#c8875fff",
         "players": [
           {
-            "cursor": "#9ccfd8ff",
+            "cursor": "#F8FAFD",
             "background": "#9ccfd8ff",
             "selection": "#9ccfd83d"
-          },
-          {
-            "cursor": "#eb6f92ff",
-            "background": "#eb6f92ff",
-            "selection": "#eb6f923d"
-          },
-          {
-            "cursor": "#f6c177ff",
-            "background": "#f6c177ff",
-            "selection": "#f6c1773d"
-          },
-          {
-            "cursor": "#c4a7e7ff",
-            "background": "#c4a7e7ff",
-            "selection": "#c4a7e73d"
-          },
-          {
-            "cursor": "#31748fff",
-            "background": "#31748fff",
-            "selection": "#31748f3d"
-          },
-          {
-            "cursor": "#ebbcbaff",
-            "background": "#ebbcbaff",
-            "selection": "#ebbcba3d"
-          },
-          {
-            "cursor": "#a1c181ff",
-            "background": "#a1c181ff",
-            "selection": "#a1c1813d"
-          },
-          {
-            "cursor": "#7aa2f7ff",
-            "background": "#7aa2f7ff",
-            "selection": "#7aa2f73d"
           }
         ],
         "syntax": {
