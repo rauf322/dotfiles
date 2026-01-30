@@ -3,6 +3,17 @@
     "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
       "shift-k": "editor::Hover",
+      "space P": [
+        "agent::ToggleFocus",
+        {
+          "agent": {
+            "custom": {
+              "name": "OpenCode"
+            }
+          }
+        }
+      ],
+      "ctrl-n": "assistant::InlineAssist",
       "space c a": "editor::ToggleCodeActions",
       "space s": "editor::Format",
       "space r n": "editor::Rename",
@@ -11,15 +22,12 @@
       "space b": "tab_switcher::Toggle",
       "space f f": "project_panel::ToggleFocus",
       "space g c": "editor::ToggleComments",
-      "space g g": "git_panel::ToggleFocus",
+      "space g g": ["task::Spawn", { "task_name": "lazygit" }],
       "space space": "command_palette::Toggle",
       "space g t": "editor::GoToTypeDefinition",
       "space g d": "editor::GoToDefinition",
       "space g r": "editor::FindAllReferences",
       "space e": "workspace::ToggleLeftDock",
-      "space tab": "file_finder::Toggle",
-      "shift-h": "tab_switcher::ToggleAll",
-      "space shift-P": "agent::ToggleFocus",
       "space |": "pane::SplitVertical",
       "space -": "pane::SplitHorizontal",
       "space h": "workspace::ActivatePaneLeft",
@@ -74,7 +82,21 @@
       "i": "git_panel::FocusEditor",
       "j": "git_panel::NextEntry",
       "k": "git_panel::PreviousEntry",
-      "space l": "workspace::ActivatePaneRight"
+      "space l": "workspace::ActivatePaneRight",
+      "enter": ["action::Sequence", ["project_panel::Open", "workspace::ToggleLeftDock"]]
+    }
+  },
+  {
+    "context": "!Terminal && !(vim_mode == insert)",
+    "bindings": {
+      "space tab": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "",
+    "bindings": {
+      "alt-tab": "pane::AlternateFile",
+      "shift-h": "tab_switcher::ToggleAll"
     }
   }
 ]
