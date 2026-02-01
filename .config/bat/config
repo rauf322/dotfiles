@@ -1,0 +1,24 @@
+# Bat configuration
+# Theme: Use Catppuccin Mocha to match Rose Pine Moon aesthetic (both are dark, warm themes)
+--theme="Catppuccin Mocha"
+
+# Style: Show line numbers and git changes
+--style="numbers,changes"
+
+# Enable italic text
+--italic-text=always
+
+# Paging: Use 'never' for FZF integration (FZF handles scrolling)
+--paging=never
+
+# Wrap mode: never wrap lines (let FZF/terminal handle it)
+--wrap=never
+
+# Terminal decorations: always show colors
+--color=always
+
+# Map files without extensions
+--map-syntax=".ignore:Git Ignore"
+--map-syntax=".gitignore:Git Ignore"
+--map-syntax="*.conf:INI"
+--map-syntax="Brewfile:Ruby"
