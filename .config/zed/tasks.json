@@ -6,7 +6,7 @@
     "reveal_target": "center",
     "allow_concurrent_runs": false,
     "use_new_terminal": false,
-    "hide": "never",
+    "hide": "on_success",
     "show_summary": false,
     "show_command": false
   },
@@ -20,5 +20,35 @@
     "hide": "never",
     "show_summary": false,
     "show_command": false
+  },
+  {
+    "label": "FZF File Finder",
+    "command": "PATH=/opt/homebrew/bin:$PATH; cd \"$ZED_WORKTREE_ROOT\" && EXCLUDE_DIRS=('node_modules' '.git' 'dist' 'build' 'coverage' '.next' '.nuxt' '.cache' '.turbo' 'target' 'vendor' '__pycache__'); FD_EXCLUDES=(); for dir in \"${EXCLUDE_DIRS[@]}\"; do FD_EXCLUDES+=(-E \"$dir\"); done; result=$(fd -t f -I \"${FD_EXCLUDES[@]}\" | fzf --preview-window=right:60% --preview='bat --style=numbers --color=always {}') && [ -n \"$result\" ] && zed \"$ZED_WORKTREE_ROOT/$result\"",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "reveal": "always",
+    "hide": "always",
+    "allow_concurrent_runs": false,
+    "use_new_terminal": true,
+    "shell": {
+      "with_arguments": {
+        "program": "/bin/bash",
+        "args": ["--noprofile", "--norc", "-c"]
+      }
+    }
+  },
+  {
+    "label": "FZF Text Search",
+    "command": "PATH=/opt/homebrew/bin:$PATH; cd \"$ZED_WORKTREE_ROOT\" && EXCLUDE_DIRS=('node_modules' '.git' 'dist' 'build' 'coverage' '.next' '.nuxt' '.cache' '.turbo' 'target' 'vendor' '__pycache__'); EXCLUDE_FILES=('*.min.js' '*.min.css' 'package-lock.json' 'yarn.lock' 'pnpm-lock.yaml'); RG_EXCLUDES=(); for item in \"${EXCLUDE_DIRS[@]}\" \"${EXCLUDE_FILES[@]}\"; do RG_EXCLUDES+=(-g \"!$item\"); done; result=$(rg --no-ignore --smart-case --line-number --no-heading --color=always \"${RG_EXCLUDES[@]}\" \"${ZED_SELECTED_TEXT:-}\" . | fzf --exact --ansi --query \"${ZED_SELECTED_TEXT:-}\" --delimiter : --nth 3.. --preview 'bat --style=numbers --color=always --highlight-line {2} {1}') && [ -n \"$result\" ] && file=$(echo \"$result\" | cut -d: -f1) && line=$(echo \"$result\" | cut -d: -f2) && zed \"$ZED_WORKTREE_ROOT/$file:$line\"",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "reveal": "always",
+    "hide": "always",
+    "allow_concurrent_runs": false,
+    "use_new_terminal": true,
+    "shell": {
+      "with_arguments": {
+        "program": "/bin/bash",
+        "args": ["--noprofile", "--norc", "-c"]
+      }
+    }
   }
 ]

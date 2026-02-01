@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+# Get the current working directory basename as session name
+# If ZED_WORKTREE_ROOT is set, use that; otherwise use PWD
+if [[ -n "$ZED_WORKTREE_ROOT" ]]; then
+  SESSION_NAME=$(basename "$ZED_WORKTREE_ROOT")
+else
+  SESSION_NAME=$(basename "$PWD")
+fi
+
+# Sanitize session name (tmux doesn't like special chars)
+SESSION_NAME="${SESSION_NAME//[^a-zA-Z0-9_-]/_}"
+
+# Create or attach to session with the directory name
+exec tmux new-session -A -s "$SESSION_NAME"
