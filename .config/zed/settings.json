@@ -127,6 +127,9 @@
   "scrollbar": {
     "show": "never"
   },
+  "semantic_index": {
+    "enabled": true
+  },
   "lsp": {
     "typescript-language-server": {
       "initialization_options": {
@@ -210,5 +213,17 @@
   "buffer_line_height": {
     "custom": 2
   },
-  "theme": "Rose Pine Moon"
+  "theme": "Rose Pine Moon",
+  "experimental.theme_overrides": {
+    "comment.italic": false,
+    "keyword.italic": false,
+    "function.italic": false,
+    "type.italic": false,
+    "string.italic": false,
+    "variable.italic": false,
+    "emphasis.italic": false,
+    "strong.italic": false,
+    "parameter": "#c4a7e7",
+    "variable.parameter": "#c4a7e7"
+  }
 }

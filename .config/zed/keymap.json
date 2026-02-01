@@ -23,7 +23,7 @@
       "space g c": "editor::ToggleComments",
       "space g g": ["task::Spawn", { "task_name": "lazygit" }],
       "space space": "command_palette::Toggle",
-      "space g t": "editor::GoToTypeDefinition",
+      "space t d": "editor::GoToTypeDefinition",
       "space g d": "editor::GoToDefinition",
       "space g r": "editor::FindAllReferences",
       "space e": "workspace::ToggleLeftDock",
