@@ -48,6 +48,13 @@
     }
   },
   {
+    "context": "!Terminal && Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
+    "bindings": {
+      "shift-down": ["workspace::SendKeystrokes", "5 ctrl-e"],
+      "shift-up": ["workspace::SendKeystrokes", "5 ctrl-y"]
+    }
+  },
+  {
     "context": "Editor && vim_mode == insert && !VimWaiting && !menu",
     "bindings": {
       "j k": "vim::NormalBefore",
