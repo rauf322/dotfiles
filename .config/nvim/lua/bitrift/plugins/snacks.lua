@@ -20,6 +20,10 @@ return {
 					ignored = true, -- Show gitignored files
 					exclude = { "node_modules", ".git", "dist", "build" }, -- Hide common directories
 				},
+				grep = {
+					ignored = true, -- Search in gitignored files
+					exclude = { "node_modules", ".git", "dist", "build" }, -- Hide common directories
+				},
 				gh_issue = {
 					-- your gh_issue picker configuration comes here
 					-- or leave it empty to use the default settings
