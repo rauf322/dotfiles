@@ -1,6 +1,6 @@
 [
   {
-    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
+    "context": "!Terminal && Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
       "shift-k": "editor::Hover",
       "space P": [
@@ -18,7 +18,6 @@
       "space s": "editor::Format",
       "space r n": "editor::Rename",
       "space shift-d": "diagnostics::Deploy",
-      "space p s": "pane::DeploySearch",
       "space b": "tab_switcher::Toggle",
       "space f f": "project_panel::ToggleFocus",
       "space g c": "editor::ToggleComments",
@@ -44,7 +43,8 @@
       "space w k": "vim::ResizePaneDown",
       "space w =": "vim::ResetPaneSizes",
       "space s h": "git::StageAndNext",
-      "space u h": "git::UnstageAndNext"
+      "space u h": "git::UnstageAndNext",
+      "shift-h": "tab_switcher::ToggleAll"
     }
   },
   {
@@ -87,16 +87,23 @@
     }
   },
   {
-    "context": "!Terminal && !(vim_mode == insert)",
+    "context": "!Terminal && Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
-      "space tab": "file_finder::Toggle"
+      "space tab": ["task::Spawn", { "task_name": "FZF File Finder", "reveal_target": "center" }],
+      "space p s": ["task::Spawn", { "task_name": "FZF Text Search", "reveal_target": "center" }]
+    }
+  },
+  {
+    "context": "!Terminal && !Editor && vim_mode != insert",
+    "bindings": {
+      "space tab": ["task::Spawn", { "task_name": "FZF File Finder", "reveal_target": "center" }],
+      "space p s": ["task::Spawn", { "task_name": "FZF Text Search", "reveal_target": "center" }]
     }
   },
   {
     "context": "",
     "bindings": {
-      "alt-tab": "pane::AlternateFile",
-      "shift-h": "tab_switcher::ToggleAll"
+      "alt-tab": "pane::AlternateFile"
     }
   }
 ]

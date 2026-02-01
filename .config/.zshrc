@@ -102,7 +102,6 @@ nvopen() {
 alias v="nvim"
 
 #yazi-cwd
-export FZF_DEFAULT_COMMAND='find "$PWD" -mindepth 1 -maxdepth 4 \( -type f -o -type d \)'
 export EDITOR="nvim"
 fcur() {
     file=$(fd --type f --max-depth 1 --hidden --exclude .git | fzf) || return
@@ -135,18 +134,28 @@ function zle-line-init {
 }
 zle -N zle-line-init
 
-# Custom fzf function with bat preview that opens in neovim
-fzf-bat-nvim() {
-    local file
-    file=$(fd --type f --hidden --exclude .git --max-depth 3 | fzf --preview 'bat --color=always --style=header,grid --line-range :50 {}' --preview-window=right:60%)
-    if [[ -n $file ]]; then
-        nvim "$file"
-    fi
-}
+# FZF configuration
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS='--layout=reverse --border=rounded --info=inline --preview "bat --style=numbers --color=always {}" --preview-window=right:60%:border-rounded'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always {}' --preview-window=right:60%:border-rounded"
 
-# Disable default fzf Ctrl+T binding and set custom one
-bindkey -r '^T'
-bindkey -s '^T' 'fzf-bat-nvim\n'
+# FZF shell integration
+source /opt/homebrew/Cellar/fzf/0.66.1/shell/key-bindings.zsh
+source /opt/homebrew/Cellar/fzf/0.66.1/shell/completion.zsh
+
+# Custom widget to open file in nvim with Ctrl+T (must be after sourcing FZF)
+fzf-nvim-widget() {
+  local selected
+  selected=$(eval "$FZF_DEFAULT_COMMAND" | fzf --layout=reverse --border=rounded --info=inline --preview 'bat --style=numbers --color=always {}' --preview-window=right:60%:border-rounded)
+  if [[ -n "$selected" ]]; then
+    BUFFER="nvim $selected"
+    zle accept-line
+  fi
+  zle reset-prompt
+}
+zle -N fzf-nvim-widget
+bindkey '^T' fzf-nvim-widget
 
 alias ls="eza -la --icons --created --bytes --all"
 alias ll="eza -l "
