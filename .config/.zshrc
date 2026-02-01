@@ -136,9 +136,9 @@ zle -N zle-line-init
 
 # FZF configuration
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_OPTS='--layout=reverse --border=rounded --info=inline --preview "bat --style=numbers --color=always {}" --preview-window=right:60%:border-rounded'
+export FZF_DEFAULT_OPTS='--layout=reverse --border=rounded --info=inline --preview "bat {}" --preview-window=right:60%:border-rounded'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always {}' --preview-window=right:60%:border-rounded"
+export FZF_CTRL_T_OPTS="--preview 'bat {}' --preview-window=right:60%:border-rounded"
 
 # FZF shell integration
 source /opt/homebrew/Cellar/fzf/0.66.1/shell/key-bindings.zsh
@@ -147,7 +147,7 @@ source /opt/homebrew/Cellar/fzf/0.66.1/shell/completion.zsh
 # Custom widget to open file in nvim with Ctrl+T (must be after sourcing FZF)
 fzf-nvim-widget() {
   local selected
-  selected=$(eval "$FZF_DEFAULT_COMMAND" | fzf --layout=reverse --border=rounded --info=inline --preview 'bat --style=numbers --color=always {}' --preview-window=right:60%:border-rounded)
+  selected=$(eval "$FZF_DEFAULT_COMMAND" | fzf --layout=reverse --border=rounded --info=inline --preview 'bat {}' --preview-window=right:60%:border-rounded)
   if [[ -n "$selected" ]]; then
     BUFFER="nvim $selected"
     zle accept-line
