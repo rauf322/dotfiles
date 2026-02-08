@@ -28,7 +28,6 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "130"
-vim.lsp.inlay_hint.enable(true)
 vim.opt.laststatus = 3
 -- vim.opt.winborder = "rounded"
 
@@ -38,15 +37,15 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.opt.fillchars = {
-	vert = " ",
-	fold = "┈",
-	diff = "┈",
-	horiz = " ",
-	horizup = " ",
-	horizdown = " ",
-	vertleft = " ",
-	vertright = " ",
-	verthoriz = " ",
+  vert = " ",
+  fold = "┈",
+  diff = "┈",
+  horiz = " ",
+  horizup = " ",
+  horizdown = " ",
+  vertleft = " ",
+  vertright = " ",
+  verthoriz = " ",
 }
 
 -- Import the runner module
@@ -58,86 +57,86 @@ vim.keymap.set("v", "<leader>x", runner.run_selection, { noremap = true, silent 
 vim.opt.conceallevel = 2
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "markdown",
-	callback = function()
-		vim.opt_local.wrap = true
-		vim.opt_local.linebreak = true
-		vim.opt_local.breakindent = true
-	end,
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.breakindent = true
+  end,
 })
 
 vim.api.nvim_create_autocmd("textyankpost", {
-	group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
-	pattern = "*",
-	desc = "highlight selection on yank",
-	callback = function()
-		vim.highlight.on_yank({ higroup = "YankHighlight", timeout = 200, visual = true })
-	end,
+  group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+  pattern = "*",
+  desc = "highlight selection on yank",
+  callback = function()
+    vim.highlight.on_yank({ higroup = "YankHighlight", timeout = 200, visual = true })
+  end,
 })
 
 vim.api.nvim_create_autocmd("BufReadPost", {
-	callback = function(args)
-		local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
-		local line_count = vim.api.nvim_buf_line_count(args.buf)
-		if mark[1] > 0 and mark[1] <= line_count then
-			vim.api.nvim_win_set_cursor(0, mark)
-			-- defer centering slightly so it's applied after render
-			vim.schedule(function()
-				vim.cmd("normal! zz")
-			end)
-		end
-	end,
+  callback = function(args)
+    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+    local line_count = vim.api.nvim_buf_line_count(args.buf)
+    if mark[1] > 0 and mark[1] <= line_count then
+      vim.api.nvim_win_set_cursor(0, mark)
+      -- defer centering slightly so it's applied after render
+      vim.schedule(function()
+        vim.cmd("normal! zz")
+      end)
+    end
+  end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "help",
-	command = "wincmd L",
+  pattern = "help",
+  command = "wincmd L",
 })
 
 vim.api.nvim_create_autocmd("VimResized", {
-	command = "wincmd =",
+  command = "wincmd =",
 })
 
 vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
-	group = vim.api.nvim_create_augroup("active_cursorline", { clear = true }),
-	callback = function()
-		vim.opt_local.cursorline = false
-	end,
+  group = vim.api.nvim_create_augroup("active_cursorline", { clear = true }),
+  callback = function()
+    vim.opt_local.cursorline = false
+  end,
 })
 
 vim.api.nvim_create_autocmd("CursorMoved", {
-	group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = true }),
-	desc = "Highlight references under cursor",
-	callback = function()
-		if vim.fn.mode() ~= "i" then
-			local clients = vim.lsp.get_clients({ bufnr = 0 })
-			local supports_highlight = false
-			for _, client in ipairs(clients) do
-				if client.server_capabilities.documentHighlightProvider then
-					supports_highlight = true
-					break
-				end
-			end
+  group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = true }),
+  desc = "Highlight references under cursor",
+  callback = function()
+    if vim.fn.mode() ~= "i" then
+      local clients = vim.lsp.get_clients({ bufnr = 0 })
+      local supports_highlight = false
+      for _, client in ipairs(clients) do
+        if client.server_capabilities.documentHighlightProvider then
+          supports_highlight = true
+          break
+        end
+      end
 
-			if supports_highlight then
-				vim.lsp.buf.clear_references()
-				vim.lsp.buf.document_highlight()
-			end
-		end
-	end,
+      if supports_highlight then
+        vim.lsp.buf.clear_references()
+        vim.lsp.buf.document_highlight()
+      end
+    end
+  end,
 })
 
 vim.api.nvim_create_autocmd({ "CursorMovedI", "InsertEnter" }, {
-	group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = false }),
-	desc = "Clear highlights when entering insert mode",
-	callback = function()
-		vim.lsp.buf.clear_references()
-	end,
+  group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = false }),
+  desc = "Clear highlights when entering insert mode",
+  callback = function()
+    vim.lsp.buf.clear_references()
+  end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("no_auto_comment", {}),
-	callback = function()
-		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
-	end,
+  group = vim.api.nvim_create_augroup("no_auto_comment", {}),
+  callback = function()
+    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+  end,
 })

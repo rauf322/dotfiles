@@ -1,3 +1,3 @@
 return {
-	filetypes = { "graphql", "gql", "svelte" },
+  filetypes = { "graphql", "gql", "svelte" },
 }
