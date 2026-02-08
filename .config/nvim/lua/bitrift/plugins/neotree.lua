@@ -45,8 +45,7 @@ return {
 						local path = vim.fn.expand(node.path)
 						path = path:gsub('"', '\\"')
 
-						local applescript_cmd =
-							string.format('osascript -e "set the clipboard to POSIX file \\"%s\\""', path)
+						local applescript_cmd = string.format('osascript -e "set the clipboard to POSIX file \\"%s\\""', path)
 						local result = os.execute(applescript_cmd)
 
 						if result == 0 then
@@ -212,6 +211,14 @@ return {
 		end, { desc = "Toggle file explorer on current file" })
 		keymap.set("n", "<leader>ec", "<cmd>Neotree close<CR>", { desc = "Close file explorer" })
 		keymap.set("n", "<leader>er", "<cmd>Neotree filesystem refresh<CR>", { desc = "Refresh file explorer" })
-		keymap.set("n", "<M-Tab>", "<C-^>", { desc = "Toggle last buffer" })
+		keymap.set("n", "<M-Tab>", function()
+			if vim.bo.filetype == "neo-tree" then
+				return
+			end
+			local alt_buf = vim.fn.bufnr("#")
+			if alt_buf > 0 and vim.fn.buflisted(alt_buf) == 1 then
+				vim.cmd("b#")
+			end
+		end, { desc = "Toggle last buffer" })
 	end,
 }

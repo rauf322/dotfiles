@@ -66,9 +66,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Custom highlight group for yank
-vim.api.nvim_set_hl(0, "YankHighlight", { bg = "#83a598", fg = "#282828" })
-
 vim.api.nvim_create_autocmd("textyankpost", {
 	group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
 	pattern = "*",
