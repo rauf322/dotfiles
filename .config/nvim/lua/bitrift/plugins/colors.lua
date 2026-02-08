@@ -2,125 +2,85 @@ function ColorMyPencils(color)
 	color = color or "rose-pine-moon"
 	vim.cmd.colorscheme(color)
 
-	-- Remove background
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-
-	-- Make command line transparent
-	vim.api.nvim_set_hl(0, "MsgArea", { bg = "none" })
-	vim.api.nvim_set_hl(0, "MsgSeparator", { bg = "none" })
-	vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
-	vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "none" })
-
-	-- Add subtle UI borders (0.2px equivalent)
-	vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#3e4452", bg = "none" })
-	vim.api.nvim_set_hl(0, "VertSplit", { fg = "#3e4452", bg = "none" })
-	vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#3e4452", bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalBorder", { fg = "#3e4452", bg = "none" })
-
-	-- Subtle statusline underline border
-	vim.api.nvim_set_hl(0, "StatusLine", { fg = "#ffffff", bg = "none", underline = true })
-	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#6c7086", bg = "none", underline = true })
-
-	-- Globally remove all italics from any theme
-	local highlight_groups = {
-		"Comment",
-		"Conditional",
-		"Repeat",
-		"Label",
-		"Keyword",
-		"Exception",
-		"Include",
-		"PreProc",
-		"Define",
-		"Macro",
-		"PreCondit",
-		"StorageClass",
-		"Structure",
-		"Typedef",
-		"Special",
-		"SpecialChar",
-		"Tag",
-		"Delimiter",
-		"SpecialComment",
-		"Debug",
-		"Function",
-		"Identifier",
-		"Type",
-		"String",
-		"Character",
-		"Number",
-		"Boolean",
-		"Float",
-		"Statement",
-		"Operator",
-		"Constant",
-		"Variable",
-		"Property",
-		"Parameter",
-		"Field",
-		"Method",
-		"Constructor",
-		"Namespace",
-		"Class",
-		"Interface",
-		"Enum",
-		"EnumMember",
-	}
-
-	for _, group in ipairs(highlight_groups) do
-		local hl = vim.api.nvim_get_hl(0, { name = group })
-		if hl.italic then
-			hl.italic = false
-			vim.api.nvim_set_hl(0, group, hl)
-		end
-	end
-
-	-- Brighter visual mode highlight
-	vim.api.nvim_set_hl(0, "Visual", { bg = "#404040", fg = "none" })
-
-	-- LSP reference highlighting (for document_highlight)
-	vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#3e4452" })
-	vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#3e4452" })
-	vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#4a3e45" })
-
-	-- Fix for snacks.nvim gh picker (needs fg on Diff highlights)
-	-- See: https://github.com/folke/snacks.nvim/issues/2662
-	vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#1c3a1c", fg = "#9ece6a" })
-	vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#3a1c1c", fg = "#f7768e" })
-	vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1c2a3a", fg = "#7aa2f7" })
 end
 
 return {
+
+	{
+		"erikbackman/brightburn.vim",
+	},
+
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		opts = {},
+		config = function()
+			ColorMyPencils()
+		end,
+	},
+	{
+		"ellisonleao/gruvbox.nvim",
+		name = "gruvbox",
+		config = function()
+			require("gruvbox").setup({
+				terminal_colors = true, -- add neovim terminal colors
+				undercurl = true,
+				underline = false,
+				bold = true,
+				italic = {
+					strings = false,
+					emphasis = false,
+					comments = false,
+					operators = false,
+					folds = false,
+				},
+				strikethrough = true,
+				invert_selection = false,
+				invert_signs = false,
+				invert_tabline = false,
+				invert_intend_guides = false,
+				inverse = true, -- invert background for search, diffs, statuslines and errors
+				contrast = "", -- can be "hard", "soft" or empty string
+				palette_overrides = {},
+				overrides = {},
+				dim_inactive = false,
+				transparent_mode = false,
+			})
+		end,
+	},
+	{
+		"folke/tokyonight.nvim",
+		config = function()
+			require("tokyonight").setup({
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				style = "storm", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+				transparent = true, -- Enable this to disable setting the background color
+				terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+				styles = {
+					-- Style to be applied to different syntax groups
+					-- Value is any valid attr-list value for `:help nvim_set_hl`
+					comments = { italic = false },
+					keywords = { italic = false },
+					-- Background styles. Can be "dark", "transparent" or "normal"
+					sidebars = "dark", -- style for sidebars, see below
+					floats = "dark", -- style for floating windows
+				},
+			})
+		end,
+	},
+
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
 		config = function()
 			require("rose-pine").setup({
-				variant = "auto", -- auto, main, moon, or dawn
-				dark_variant = "moon",
 				disable_background = true,
-				disable_float_background = true,
 				styles = {
-					bold = true,
 					italic = false,
-					transparency = true,
 				},
-				groups = {
-					background = "none",
-					background_nc = "none",
-					panel = "none",
-					panel_nc = "none",
-					border = "none",
-				},
-				palette = {
-					love = "#b4637a",
-				},
-				before_highlight = function(group, highlight, palette)
-					if highlight.bg then
-						highlight.bg = "none"
-					end
-				end,
 			})
 
 			ColorMyPencils()
