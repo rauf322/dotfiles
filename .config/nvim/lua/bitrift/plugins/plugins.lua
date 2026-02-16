@@ -15,6 +15,14 @@ return {
     end,
   },
   {
+    "dmmulroy/tsc.nvim",
+    cmd = "TSC",
+    config = function()
+      require("tsc").setup({})
+    end,
+  },
+
+  {
     "rmagatti/auto-session",
     config = function()
       require("auto-session").setup()
@@ -74,34 +82,41 @@ return {
   },
   {
     "folke/trouble.nvim",
-    config = function()
-      require("trouble").setup({
-        icons = false,
-      })
-
-      -- Toggle the Trouble window
-      vim.keymap.set("n", "<leader>tt", function()
-        require("trouble").toggle()
-      end, { desc = "Trouble: Toggle the Trouble window" })
-
-      -- Navigate to the next item in Trouble
-      vim.keymap.set("n", "[t", function()
-        require("trouble").next({ skip_groups = true, jump = true })
-      end, { desc = "Trouble: Go to next item (skip groups)" })
-
-      -- Navigate to the previous item in Trouble
-      vim.keymap.set("n", "]t", function()
-        require("trouble").previous({ skip_groups = true, jump = true })
-      end, { desc = "Trouble: Go to previous item (skip groups)" })
-    end,
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>tt",
+        function()
+          require("trouble").toggle()
+        end,
+        desc = "Trouble: Toggle the Trouble window",
+      },
+      {
+        "[t",
+        function()
+          require("trouble").next({ skip_groups = true, jump = true })
+        end,
+        desc = "Trouble: Go to next item (skip groups)",
+      },
+      {
+        "]t",
+        function()
+          require("trouble").previous({ skip_groups = true, jump = true })
+        end,
+        desc = "Trouble: Go to previous item (skip groups)",
+      },
+    },
+    opts = {
+      icons = false,
+    },
   },
   {
     "theprimeagen/vim-be-good",
-
-    config = function() end,
+    cmd = "VimBeGood",
   },
   {
     "tpope/vim-surround",
+    event = { "BufReadPre", "BufNewFile" },
   },
   {
     "toppair/peek.nvim",
@@ -149,6 +164,7 @@ return {
   },
   {
     "kawre/leetcode.nvim",
+    cmd = "Leet",
     build = ":TSUpdate html",
     dependencies = {
       "MunifTanjim/nui.nvim",
@@ -223,7 +239,7 @@ return {
   -- 	noautocmd = false,
   -- 	debounce_delay = 2000,
   -- },
-  { "nvim-treesitter/nvim-treesitter-textobjects" },
+  { "nvim-treesitter/nvim-treesitter-textobjects", event = { "BufReadPre", "BufNewFile" } },
   {
     "windwp/nvim-ts-autotag",
     dependencies = "nvim-treesitter/nvim-treesitter",
@@ -234,8 +250,8 @@ return {
     event = "VeryLazy",
   },
   {
-
     "laytan/cloak.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("cloak").setup({
         enabled = true,
@@ -310,6 +326,7 @@ return {
   },
   {
     "tpope/vim-dadbod",
+    lazy = true,
   },
   {
     "kristijanhusak/vim-dadbod-ui",
@@ -352,5 +369,58 @@ return {
       },
     },
     config = true,
+  },
+  {
+    "vuki656/package-info.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    ft = "json",
+    opts = {
+      autostart = true,
+      hide_up_to_date = true,
+    },
+    keys = {
+      {
+        "<leader>ns",
+        function()
+          require("package-info").show()
+        end,
+        desc = "Package: Show versions",
+      },
+      {
+        "<leader>nu",
+        function()
+          require("package-info").update()
+        end,
+        desc = "Package: Update dependency",
+      },
+      {
+        "<leader>nd",
+        function()
+          require("package-info").delete()
+        end,
+        desc = "Package: Delete dependency",
+      },
+      {
+        "<leader>ni",
+        function()
+          require("package-info").install()
+        end,
+        desc = "Package: Install dependency",
+      },
+      {
+        "<leader>np",
+        function()
+          require("package-info").change_version()
+        end,
+        desc = "Package: Change version",
+      },
+      {
+        "<leader>nt",
+        function()
+          require("package-info").toggle()
+        end,
+        desc = "Package: Toggle versions",
+      },
+    },
   },
 }

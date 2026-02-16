@@ -1,6 +1,10 @@
 return {
   {
     "tpope/vim-fugitive",
+    cmd = "Git",
+    keys = {
+      { "<leader>gs", vim.cmd.Git, desc = "Fugitive: Git Status" },
+    },
     config = function()
       vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { desc = "Fugitive: Git Status" })
 
@@ -48,7 +52,7 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
-
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("gitsigns").setup({
         current_line_blame = true,

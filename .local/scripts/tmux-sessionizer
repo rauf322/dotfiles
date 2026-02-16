@@ -332,15 +332,13 @@ fi
 selected_name=$(basename "$selected" | tr . _)
 
 if ! is_tmux_running; then
-    tmux new-session -ds "$selected_name" -c "$selected"
+    tmux new-session -ds "$selected_name" -c "$selected" "nvim"
     hydrate "$selected_name" "$selected"
-    tmux send-keys -t "$selected_name" "nvim" C-m
 fi
 
 if ! has_session "$selected_name"; then
-    tmux new-session -ds "$selected_name" -c "$selected"
+    tmux new-session -ds "$selected_name" -c "$selected" "nvim"
     hydrate "$selected_name" "$selected"
-    tmux send-keys -t "$selected_name" "nvim" C-m
 fi
 
 switch_to "$selected_name"
