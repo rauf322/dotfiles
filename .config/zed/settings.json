@@ -7,10 +7,7 @@
     },
     "opencode": {
       "type": "extension",
-      "favorite_models": [
-        "anthropic/claude-sonnet-4-5-20250929",
-        "github-copilot/claude-sonnet-4.5"
-      ]
+      "favorite_models": ["anthropic/claude-sonnet-4-5-20250929", "github-copilot/claude-sonnet-4.5"]
     },
     "OpenCode": {
       "type": "custom",
@@ -194,7 +191,10 @@
   "show_whitespaces": "none",
   "show_edit_predictions": true,
   "indent_guides": {
-    "enabled": false
+    "background_coloring": "disabled",
+    "active_line_width": 2,
+    "line_width": 2,
+    "enabled": true
   },
   "wrap_guides": [130],
   "preferred_line_length": 130,
@@ -211,19 +211,12 @@
   "ui_font_size": 23,
   "buffer_font_size": 20.0,
   "buffer_line_height": {
-    "custom": 2
+    "custom": 1.6
   },
-  "theme": "Rose Pine Moon",
+  "theme": "Catppuccin Mocha",
+  "buffer_font_weight": 400,
   "experimental.theme_overrides": {
-    "comment.italic": false,
-    "keyword.italic": false,
-    "function.italic": false,
-    "type.italic": false,
-    "string.italic": false,
-    "variable.italic": false,
-    "emphasis.italic": false,
-    "strong.italic": false,
-    "parameter": "#c4a7e7",
-    "variable.parameter": "#c4a7e7"
+    "editor.indent_guide": "#393552",
+    "editor.indent_guide_active": "#9ccfd8"
   }
 }

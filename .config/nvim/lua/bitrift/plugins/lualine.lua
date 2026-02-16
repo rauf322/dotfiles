@@ -1,5 +1,6 @@
 return {
   "nvim-lualine/lualine.nvim",
+  event = "VeryLazy",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local lualine = require("lualine")
@@ -37,7 +38,13 @@ return {
         },
         lualine_y = { "progress" },
         lualine_z = {
-          require("opencode").statusline,
+          function()
+            local ok, opencode = pcall(require, "opencode")
+            if ok then
+              return opencode.statusline()
+            end
+            return ""
+          end,
         },
       },
       inactive_sections = {

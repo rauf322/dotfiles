@@ -48,12 +48,13 @@ vim.opt.fillchars = {
   verthoriz = " ",
 }
 
--- Import the runner module
-local runner = require("bitrift.utils.runner")
-
 vim.opt.showtabline = 0
-vim.keymap.set("n", "<leader><leader>x", runner.run_file, { noremap = true, silent = false })
-vim.keymap.set("v", "<leader>x", runner.run_selection, { noremap = true, silent = false })
+vim.keymap.set("n", "<leader><leader>x", function()
+  require("bitrift.utils.runner").run_file()
+end, { noremap = true, silent = false })
+vim.keymap.set("v", "<leader>x", function()
+  require("bitrift.utils.runner").run_selection()
+end, { noremap = true, silent = false })
 vim.opt.conceallevel = 2
 
 vim.api.nvim_create_autocmd("FileType", {
