@@ -1,4 +1,5 @@
 export ZSH="$HOME/.oh-my-zsh"
+ulimit -n 524288
 # ZSH_THEME="robbyrussell"
 export EDITOR=nvim
 export VISUAL=nvim
