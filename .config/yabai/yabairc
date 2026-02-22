@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+# ── Scripting Addition (requires SIP partially disabled) ──
+sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# ── Global Settings ──
+yabai -m config layout                 bsp
+yabai -m config window_placement       second_child
+yabai -m config auto_balance           off
+
+# Mouse follows focus (aerospace: on-focus-changed = move-mouse window-lazy-center)
+yabai -m config mouse_follows_focus    on
+
+# Mouse modifier for floating windows
+yabai -m config mouse_modifier         alt
+yabai -m config mouse_action1          move
+yabai -m config mouse_action2          resize
+yabai -m config mouse_drop_action      swap
+
+# ── Gaps (matching your aerospace per-monitor defaults) ──
+yabai -m config window_gap             5
+yabai -m config top_padding            8
+yabai -m config bottom_padding         5
+yabai -m config left_padding           5
+yabai -m config right_padding          5
+
+# ── Follow focus to space when a new window opens on a different space ──
+yabai -m signal --add event=window_created action='
+  win_space=$(yabai -m query --windows --window $YABAI_WINDOW_ID | /usr/bin/python3 -c "import json,sys; print(json.load(sys.stdin)[\"space\"])" 2>/dev/null)
+  cur_space=$(yabai -m query --spaces --space | /usr/bin/python3 -c "import json,sys; print(json.load(sys.stdin)[\"index\"])" 2>/dev/null)
+  if [ -n "$win_space" ] && [ -n "$cur_space" ] && [ "$win_space" != "$cur_space" ]; then
+    yabai -m space --focus "$win_space"
+  fi
+'
+
+# ── Follow focus to space when an existing window is focused (e.g. Raycast, Cmd-Tab) ──
+yabai -m signal --add event=window_focused action='
+  win_space=$(yabai -m query --windows --window $YABAI_WINDOW_ID | /usr/bin/python3 -c "import json,sys; print(json.load(sys.stdin)[\"space\"])" 2>/dev/null)
+  cur_space=$(yabai -m query --spaces --space | /usr/bin/python3 -c "import json,sys; print(json.load(sys.stdin)[\"index\"])" 2>/dev/null)
+  if [ -n "$win_space" ] && [ -n "$cur_space" ] && [ "$win_space" != "$cur_space" ]; then
+    yabai -m space --focus "$win_space"
+  fi
+'
+
+# ── Sketchybar Integration ──
+yabai -m signal --add event=space_changed \
+  action="sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=\$YABAI_SPACE_ID PREV_WORKSPACE=\$YABAI_RECENT_SPACE_ID"
+
+# ── App Rules: Workspace 1 (Browsers) ──
+yabai -m rule --add app="^Arc$"             space=1
+yabai -m rule --add app="^Brave Browser$"   space=1
+yabai -m rule --add app="^[Zz]en"           space=1
+
+# ── App Rules: Workspace 2 (Chrome) ──
+yabai -m rule --add app="^Google Chrome$"   space=2
+
+# ── App Rules: Workspace 3 (Dev) ──
+yabai -m rule --add app="^[Gg]hostty$"      space=3
+yabai -m rule --add app="^RunJs$"           space=3
+yabai -m rule --add app="^[Cc]ursor$"       space=3
+yabai -m rule --add app="^Zed$"             space=3
+yabai -m rule --add app="^Code$"            space=3
+
+# ── App Rules: Workspace 4 (Productivity) ──
+yabai -m rule --add app="^Slack$"           space=4
+yabai -m rule --add app="^Excalidraw$"      space=4
+yabai -m rule --add app="^Spark$"           space=4
+yabai -m rule --add app="^GoodNotes$"       space=4
+yabai -m rule --add app="^Obsidian$"        space=4
+yabai -m rule --add app="^IINA$"            manage=off space=4
+
+# ── App Rules: Workspace 7 (Chat) ──
+yabai -m rule --add app="^[Dd]iscord$"      space=7
+yabai -m rule --add app="^Telegram$"        space=7
+
+# ── App Rules: Workspace 8 (Files) ──
+yabai -m rule --add app="^Finder$"          manage=off space=8
+
+# ── App Rules: Workspace 9 (Music) ──
+yabai -m rule --add app="^Spotify$"         space=9
+
+# ── Floating Rules ──
+yabai -m rule --add app="^Bartender"        manage=off
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^Calculator$"      manage=off
+yabai -m rule --add app="^Karabiner"        manage=off
+yabai -m rule --add app="^Activity Monitor$" manage=off
+
+echo "yabai config loaded"

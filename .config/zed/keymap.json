@@ -70,7 +70,7 @@
     }
   },
   {
-    "context": "ProjectPanel",
+    "context": "ProjectPanel && !editing",
     "bindings": {
       "a": "project_panel::NewFile",
       "r": "project_panel::Rename",
@@ -110,7 +110,7 @@
   {
     "context": "",
     "bindings": {
-      "alt-tab": "pane::AlternateFile"
+      "alt-tab": "tab_switcher::Toggle"
     }
   }
 ]
