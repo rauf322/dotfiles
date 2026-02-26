@@ -1,15 +1,6 @@
 return {
   "NickvanDyke/opencode.nvim",
   config = function()
-    vim.g.opencode_opts = {
-      provider = {
-        enabled = "tmux",
-        tmux = {
-          options = "tmux new-window -d",
-        },
-      },
-    }
-
     vim.opt.autoread = true
 
     -- Recommended/example keymaps

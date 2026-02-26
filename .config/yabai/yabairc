@@ -1,41 +1,54 @@
 #!/usr/bin/env bash
 
-# ── Scripting Addition (requires SIP partially disabled) ──
+###############################################################################
+# ENV
+###############################################################################
 
 if [ -f "$HOME/.config/yabai/yabai_env.sh" ]; then
   source "$HOME/.config/yabai/yabai_env.sh"
 fi
 
+###############################################################################
+# SCRIPTING ADDITION
+###############################################################################
+
 sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
+# Prevent macOS space auto-reordering
+defaults write com.apple.dock mru-spaces -bool false
+
 ###############################################################################
-#                              Excluded apps
+# EXCLUDED APPS (SAFE)
 ###############################################################################
 
 yabai -m rule --add app="^${apps_mgoff_normal}$" manage=off
 yabai -m rule --add app="^${apps_mgoff_below}$" manage=off sub-layer=below
 yabai -m rule --add app="^${apps_mgoff_above}$" manage=off sub-layer=above
 
-# In order to prevent simple-bar freezing upon yabai restart, you'll need to add
-# this line at the start of your .yabairc file
-# https://www.jeantinland.com/toolbox/simple-bar/documentation/installation/#update-your-yabai-config
+# Float on current space + move to wherever you are when it opens
+yabai -m rule --add app="^OpenVPN Connect$" manage=off
+yabai -m signal --add event=window_created app="^OpenVPN Connect$" action="yabai -m window \$YABAI_WINDOW_ID --space mouse && yabai -m window --focus \$YABAI_WINDOW_ID"
+
+###############################################################################
+# ÜBERSICHT REFRESH (SAFE)
+###############################################################################
+
 osascript -e 'tell application id "tracesOf.Uebersicht" to refresh' >/dev/null 2>&1 || true
 
+###############################################################################
+# SKETCHYBAR PADDING
+###############################################################################
+
 if command -v sketchybar &>/dev/null; then
-  # Text-based resolution detection
   display_resolution="$(system_profiler SPDisplaysDataType | grep Resolution)"
 
-  # Check built-in Mac resolution first.
-  # When both monitors are connected, display_resolution contains both lines.
   if [[ "$display_resolution" == *"3648 x 2052"* ]]; then
-    # yabai -m config top_padding 12
     yabai -m config top_padding 42
     yabai -m config bottom_padding 10
     yabai -m config left_padding 10
     yabai -m config right_padding 10
   elif [[ "$display_resolution" == *"3024 x 1964 Retina"* ]]; then
-    echo "Shorts detected, setting padding to 0"
     yabai -m config top_padding 5
     yabai -m config bottom_padding 5
     yabai -m config left_padding 5
@@ -49,141 +62,90 @@ else
   yabai -m config bottom_padding 0
 fi
 
-
-# Mouse follows focus (aerospace: on-focus-changed = move-mouse window-lazy-center)
-yabai -m config mouse_follows_focus    on
-
-
-# ── Sketchybar Integration ──
-yabai -m signal --add event=space_changed \
-  action="sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=\$YABAI_SPACE_ID PREV_WORKSPACE=\$YABAI_RECENT_SPACE_ID"
-
 ###############################################################################
-#                                Defaults
+# CORE SETTINGS
 ###############################################################################
 
 yabai -m config \
+  layout bsp \
   focus_follows_mouse off \
+  mouse_follows_focus on \
   window_origin_display default \
   window_placement second_child \
   window_zoom_persist on \
   window_shadow off \
-  window_opacity_duration 0.0 \
-  insert_feedback_color 0xffd75f5f \
-  active_window_border_color 0xff775759 \
-  normal_window_border_color 0xff555555 \
-  window_border_width 4 \
-  window_border_radius 12 \
-  window_border_blur off \
-  window_border_hidpi on \
-  window_border off \
-  split_ratio 0.50 \
-  split_type auto \
   auto_balance off \
-  window_gap 02 \
-  mouse_modifier fn \
-  mouse_action1 move \
-  mouse_action2 resize \
-  mouse_drop_action swap
-
-
+  split_ratio 0.50 \
+  window_gap 10
 
 ###############################################################################
-#                             Yabai Spaces
+# SKETCHYBAR SIGNAL
 ###############################################################################
 
-# Configure the layout mode
-# "stack" - is what I use, keeps a single app on the front
-# "bsp" - binary space partitioning enables automatic tiling (partitioning)
-# "float" - default mode, windows are not managed
-yabai -m config layout stack
-# yabai -m config layout bsp
-# yabai -m config layout float
+yabai -m signal --add event=space_changed \
+  action="sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=\$YABAI_SPACE_ID PREV_WORKSPACE=\$YABAI_RECENT_SPACE_ID"
 
-# I want to have all the apps in desktop 1, and just a few in other desktops
-# If apps are organized incorrectly, just restart yabai
-# https://github.com/koekeishiya/yabai/issues/1685
+###############################################################################
+# SPACES
+###############################################################################
 
-yabai -m space 1 --label desk1
-yabai -m space 2 --label desk2
-yabai -m space 3 --label desk3 --layout bsp
-yabai -m space 4 --label desk4
+for i in {1..10}; do
+  yabai -m space $i --label desk$i
+done
 
-# For a strange reason, socialstream main screen shows on the right all the
-# time, this flips it
-yabai -m space 5 --label desk5 --layout bsp
+# Special layout overrides
+yabai -m space desk3 --layout bsp
+yabai -m space desk5 --layout bsp
 yabai -m space desk5 --mirror y-axis
 
-yabai -m space 6 --label desk6
-yabai -m space 7 --label desk7
-yabai -m space 8 --label desk8
-yabai -m space 9 --label desk9
-yabai -m space 10 --label desk10
+###############################################################################
+# MULTI-MONITOR SAFE LOGIC
+###############################################################################
 
 displays_json="$(yabai -m query --displays)"
 display_count="$(echo "$displays_json" | jq 'length')"
 
-if ! [[ "$display_count" =~ ^[0-9]+$ ]]; then
-  display_count=1
-fi
-
-# Default target
-non_stream_space="desk1"
-# Single display → desk1
-if [ "$display_count" -eq 1 ]; then
-  non_stream_space="desk1"
-  bkp_terminal_space="desk2"
-else
-  # Multiple displays, pick the display with the fewest spaces, take its first space
+if [[ "$display_count" -gt 1 ]]; then
   first_space_index="$(
     echo "$displays_json" |
       jq 'min_by(.spaces | length) | .spaces[0]'
   )"
-  # Build label deskN
-  non_stream_space="desk${first_space_index}"
-  bkp_terminal_space="desk$((first_space_index + 1))"
-  # Label the spaces, if you don't this does NOT work
-  yabai -m space "$first_space_index" --label "$non_stream_space"
-  yabai -m space "$((first_space_index + 1))" --label "$bkp_terminal_space"
-  #after labeling them we can reference them
+
   yabai -m config --space "$first_space_index" top_padding 5
-  yabai -m config --space "$first_space_index" right_padding 2
-  yabai -m config --space "$first_space_index" left_padding 2
-  yabai -m config --space "$first_space_index" bottom_padding 2
 fi
 
+###############################################################################
+# APP RULES (NO GLOBAL CATCH-ALL RULE)
+###############################################################################
 
-# ── App Rules: Workspace 1 (Browsers) ──
-yabai -m rule --add app="^.*$" space=desk1
-yabai -m rule --add app="^Brave Browser$"   space=desk1
-yabai -m rule --add app="^[Zz]en"           space=desk1
+# Browsers
+yabai -m rule --add app="^Brave Browser$" space=desk1
+yabai -m rule --add app="^[Zz]en" space=desk1
+yabai -m rule --add app="^Google Chrome$" space=desk2
 
-# ── App Rules: Workspace 2 (Chrome) ──
-yabai -m rule --add app="^Google Chrome$"   space=desk2
+# Dev
+yabai -m rule --add app="^[Gg]hostty$" space=desk3
+yabai -m rule --add app="^RunJs$" space=desk3
+yabai -m rule --add app="^[Cc]ursor$" space=desk3
+yabai -m rule --add app="^Zed$" space=desk3
+yabai -m rule --add app="^Code$" space=desk3
 
-# ── App Rules: Workspace 3 (Dev) ──
-yabai -m rule --add app="^[Gg]hostty$"      space=desk3
-yabai -m rule --add app="^RunJs$"           space=desk3
-yabai -m rule --add app="^[Cc]ursor$"       space=desk3
-yabai -m rule --add app="^Zed$"             space=desk3
-yabai -m rule --add app="^Code$"            space=desk3
+# Productivity
+yabai -m rule --add app="^Slack$" space=desk4
+yabai -m rule --add app="^Excalidraw$" space=desk4
+yabai -m rule --add app="^Spark$" space=desk4
+yabai -m rule --add app="^GoodNotes$" space=desk4
+yabai -m rule --add app="^Obsidian$" space=desk4
+yabai -m rule --add app="^IINA$" manage=off space=desk4
 
-# ── App Rules: Workspace 4 (Productivity) ──
-yabai -m rule --add app="^Slack$"           space=desk4
-yabai -m rule --add app="^Excalidraw$"      space=desk4
-yabai -m rule --add app="^Spark$"           space=desk4
-yabai -m rule --add app="^GoodNotes$"       space=desk4
-yabai -m rule --add app="^Obsidian$"        space=desk4
-yabai -m rule --add app="^IINA$"            manage=off space=desk4
+# Chat
+yabai -m rule --add app="^[Dd]iscord$" space=desk7
+yabai -m rule --add app="^Telegram$" space=desk7
 
-# ── App Rules: Workspace 7 (Chat) ──
-yabai -m rule --add app="^[Dd]iscord$"      space=desk7
-yabai -m rule --add app="^Telegram$"        space=desk7
+# Files
+yabai -m rule --add app="^Finder$" manage=off space=desk8
 
-# ── App Rules: Workspace 8 (Files) ──
-yabai -m rule --add app="^Finder$"          manage=off space=desk8
-
-# ── App Rules: Workspace 9 (Music) ──
-yabai -m rule --add app="^Spotify$"         space=desk9
+# Music
+yabai -m rule --add app="^Spotify$" space=desk9
 
 yabai -m rule --apply
