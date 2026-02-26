@@ -196,9 +196,10 @@ return {
     local keymap = vim.keymap
     keymap.set("n", "<leader>ef", "<cmd>Neotree toggle<CR>", { desc = "Toggle file explorer" })
     keymap.set("n", "<leader>ff", function()
-      -- Skip if in CodeDiff view (let codediff handle its own explorer toggle)
-      local bufname = vim.api.nvim_buf_get_name(0)
-      if bufname:match("^codediff://") or vim.bo.filetype:match("^codediff") then
+      -- If in a Diffview tab, toggle diffview file panel instead
+      local ok, lib = pcall(require, "diffview.lib")
+      if ok and lib.get_current_view() then
+        vim.cmd("DiffviewToggleFiles")
         return
       end
 

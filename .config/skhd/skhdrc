@@ -1,76 +1,92 @@
-# ══════════════════════════════════════
-# Focus windows (alt + hjkl)
-# Falls through to monitor focus when at edge
-# ══════════════════════════════════════
-alt - h : /Users/rauffaizov/.config/yabai/focus_any.sh west  || yabai -m display --focus west
-alt - j : /Users/rauffaizov/.config/yabai/focus_any.sh south
-alt - k : /Users/rauffaizov/.config/yabai/focus_any.sh north
-alt - l : /Users/rauffaizov/.config/yabai/focus_any.sh east  || yabai -m display --focus east
+###############################################################################
+# WINDOW FOCUS (alt + hjkl)
+###############################################################################
 
-# ══════════════════════════════════════
-# Swap windows (alt + shift + hjkl)
-# Falls through to cross-monitor move when at edge
-# ══════════════════════════════════════
-shift + alt - h : yabai -m window --swap west  || (yabai -m window --display west && yabai -m display --focus west)
+alt - h : yabai -m window --focus west  || yabai -m display --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east  || yabai -m display --focus east
+
+###############################################################################
+# WINDOW SWAP (shift + alt + hjkl)
+###############################################################################
+
+shift + alt - h : yabai -m window --swap west
 shift + alt - j : yabai -m window --swap south
 shift + alt - k : yabai -m window --swap north
-shift + alt - l : yabai -m window --swap east  || (yabai -m window --display east && yabai -m display --focus east)
+shift + alt - l : yabai -m window --swap east
 
-# ══════════════════════════════════════
-# Resize windows (alt + shift + minus/equal)
-# ══════════════════════════════════════
-shift + alt - 0x1B : yabai -m window --resize right:-50:0 || yabai -m window --resize left:50:0
-shift + alt - 0x18 : yabai -m window --resize right:50:0  || yabai -m window --resize left:-50:0
+###############################################################################
+# WINDOW RESIZE
+###############################################################################
 
-# ══════════════════════════════════════
-# Switch workspace (alt + N)
-# ══════════════════════════════════════
-alt - 1 : yabai -m space --focus 1 && yabai -m window --focus first 2>/dev/null
-alt - 2 : yabai -m space --focus 2 && yabai -m window --focus first 2>/dev/null
-alt - 3 : yabai -m space --focus 3 && yabai -m window --focus first 2>/dev/null
-alt - 4 : yabai -m space --focus 4 && yabai -m window --focus first 2>/dev/null
-alt - 7 : yabai -m space --focus 7 && yabai -m window --focus first 2>/dev/null
-alt - 8 : yabai -m space --focus 8 && yabai -m window --focus first 2>/dev/null
-alt - 9 : yabai -m space --focus 9 && yabai -m window --focus first 2>/dev/null
+shift + alt - 0x1B : yabai -m window --resize left:-50:0
+shift + alt - 0x18 : yabai -m window --resize right:50:0
 
-# ══════════════════════════════════════
-# Move window to workspace (alt + shift + N)
-# Also focuses that workspace after moving
-# ══════════════════════════════════════
+###############################################################################
+# SWITCH SPACE (alt + number)
+###############################################################################
+
+alt - 1 : yabai -m space --focus 1
+alt - 2 : yabai -m space --focus 2
+alt - 3 : yabai -m space --focus 3
+alt - 4 : yabai -m space --focus 4
+alt - 5 : yabai -m space --focus 5
+alt - 6 : yabai -m space --focus 6
+alt - 7 : yabai -m space --focus 7
+alt - 8 : yabai -m space --focus 8
+alt - 9 : yabai -m space --focus 9
+alt - 0 : yabai -m space --focus 10
+
+###############################################################################
+# MOVE WINDOW TO SPACE (shift + alt + number)
+###############################################################################
+
 shift + alt - 1 : yabai -m window --space 1 && yabai -m space --focus 1
 shift + alt - 2 : yabai -m window --space 2 && yabai -m space --focus 2
 shift + alt - 3 : yabai -m window --space 3 && yabai -m space --focus 3
 shift + alt - 4 : yabai -m window --space 4 && yabai -m space --focus 4
+shift + alt - 5 : yabai -m window --space 5 && yabai -m space --focus 5
+shift + alt - 6 : yabai -m window --space 6 && yabai -m space --focus 6
 shift + alt - 7 : yabai -m window --space 7 && yabai -m space --focus 7
 shift + alt - 8 : yabai -m window --space 8 && yabai -m space --focus 8
 shift + alt - 9 : yabai -m window --space 9 && yabai -m space --focus 9
+shift + alt - 0 : yabai -m window --space 10 && yabai -m space --focus 10
 
-# ══════════════════════════════════════
-# Layout toggles
-# alt-slash  → BSP (tiles)
-# alt-comma  → Stack (accordion)
-# ══════════════════════════════════════
-alt - 0x2C : yabai -m space --layout bsp
-alt - 0x2B : yabai -m space --layout stack
+###############################################################################
+# LAYOUT
+###############################################################################
 
-# ══════════════════════════════════════
-# Fullscreen (alt + shift + f)
-# ══════════════════════════════════════
-shift + alt - f : yabai -m window --toggle zoom-fullscreen
+alt - b : yabai -m space --layout bsp
+alt - s : yabai -m space --layout stack
 
-# ══════════════════════════════════════
-# Move window to next monitor (alt + shift + tab)
-# ══════════════════════════════════════
-shift + alt - tab : yabai -m window --display next || yabai -m window --display first
+###############################################################################
+# FLOAT TOGGLE
+###############################################################################
 
-# ══════════════════════════════════════
-# Service-mode equivalents
-# ══════════════════════════════════════
-# Toggle float/tile (was: service mode → f)
 shift + alt - space : yabai -m window --toggle float
 
-# Balance tree / equalize splits (closest to flatten-workspace-tree)
+###############################################################################
+# FULLSCREEN
+###############################################################################
+
+shift + alt - f : yabai -m window --toggle zoom-fullscreen
+
+###############################################################################
+# BALANCE
+###############################################################################
+
 shift + cmd - b : yabai -m space --balance
 
-# Restart yabai (was: service mode → esc → reload-config)
-shift + cmd - r : yabai --restart-service
+###############################################################################
+# MOVE WINDOW TO NEXT MONITOR
+###############################################################################
+
+shift + alt - tab : yabai -m window --display next || yabai -m window --display first
+
+###############################################################################
+# RESTART SERVICES
+###############################################################################
+
+shift + cmd - r : brew services restart yabai
+shift + cmd - e : brew services restart skhd

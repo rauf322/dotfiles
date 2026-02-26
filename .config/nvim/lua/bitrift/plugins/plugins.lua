@@ -28,26 +28,6 @@ return {
       require("auto-session").setup()
     end,
   },
-  {
-    "esmuellert/codediff.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    cmd = "CodeDiff",
-    keys = {
-      { "<leader>gg", "<cmd>CodeDiff<cr>", desc = "Git diff explorer" },
-    },
-    config = function()
-      require("codediff").setup({
-        keymaps = {
-          view = {
-            toggle_explorer = "<leader>ff",
-          },
-        },
-        diff = {
-          original_position = "right",
-        },
-      })
-    end,
-  },
   -- {
   -- 	"coder/claudecode.nvim",
   -- 	dependencies = { "folke/snacks.nvim" },
