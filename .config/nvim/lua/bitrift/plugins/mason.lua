@@ -21,6 +21,7 @@ return {
         "eslint",
         "solidity_ls_nomicfoundation",
         "gopls",
+        "rust_analyzer",
       },
     },
     dependencies = {
@@ -48,8 +49,6 @@ return {
         "stylua",
         "isort",
         "black",
-        "pylint",
-        "eslint_d",
         "js-debug-adapter",
         "htmlhint",
         "sql-formatter",
