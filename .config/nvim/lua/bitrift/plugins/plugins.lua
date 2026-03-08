@@ -91,6 +91,12 @@ return {
     },
   },
   {
+    "folke/todo-comments.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+  },
+  {
     "theprimeagen/vim-be-good",
     cmd = "VimBeGood",
   },
@@ -328,8 +334,10 @@ return {
   {
     "Nvchad/nvim-colorizer.lua",
     opts = {
-      user_default_options = {
-        tailwind = true,
+      options = {
+        parsers = {
+          tailwind = { enable = true },
+        },
       },
     },
   },
