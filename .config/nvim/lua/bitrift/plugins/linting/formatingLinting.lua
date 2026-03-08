@@ -1,86 +1,5 @@
 return {
   {
-    "mfussenegger/nvim-lint",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      local lint = require("lint")
-
-      lint.linters.eslint_d = {
-        cmd = "eslint_d",
-        stdin = true,
-        args = {
-          "--format",
-          "json",
-          "--stdin",
-          "--stdin-filename",
-          function()
-            return vim.api.nvim_buf_get_name(0)
-          end,
-        },
-        stream = "stdout",
-        ignore_exitcode = true,
-        parser = function(output, bufnr)
-          if output == "" then
-            return {}
-          end
-
-          local ok, result = pcall(vim.json.decode, output)
-          if not ok then
-            vim.notify("ESLint output parsing failed: " .. tostring(result), vim.log.levels.WARN)
-            return {}
-          end
-
-          if not result or not result[1] or not result[1].messages then
-            return {}
-          end
-
-          local first_line = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
-          if first_line:match("^%s*/%*%s*eslint%-disable") then
-            return {}
-          end
-
-          local diagnostics = {}
-          for _, message in ipairs(result[1].messages) do
-            if message.line then
-              table.insert(diagnostics, {
-                lnum = message.line - 1,
-                col = message.column - 1,
-                end_lnum = message.endLine and (message.endLine - 1) or (message.line - 1),
-                end_col = message.endColumn and (message.endColumn - 1) or (message.column - 1),
-                severity = message.severity == 1 and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR,
-                message = message.message,
-                source = "eslint_d",
-                code = message.ruleId,
-              })
-            end
-          end
-
-          return diagnostics
-        end,
-      }
-
-      lint.linters_by_ft = {
-        javascript = { "eslint_d" },
-        typescript = { "eslint_d" },
-        javascriptreact = { "eslint_d" },
-        typescriptreact = { "eslint_d" },
-        svelte = { "eslint_d" },
-        python = { "pylint" },
-      }
-      local grp = vim.api.nvim_create_augroup("lint", { clear = true })
-      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-        group = grp,
-        callback = function()
-          lint.try_lint()
-        end,
-      })
-      vim.keymap.set("n", "<leader>tl", function()
-        lint.try_lint()
-      end, { desc = "Trigger linting" })
-    end,
-  },
-
-  {
     "stevearc/conform.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -103,6 +22,7 @@ return {
           lua = { "stylua" },
           python = { "isort", "black" },
           go = { "goimports", "gofumpt" },
+          rust = { "rustfmt" },
         },
         formatters = {
           -- prettier = {
