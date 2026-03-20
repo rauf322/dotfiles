@@ -184,14 +184,7 @@ return {
       end,
       desc = "Goto Implementation",
     },
-    {
-      "gr",
-      function()
-        Snacks.picker.lsp_references()
-      end,
-      nowait = true,
-      desc = "References",
-    },
+
     {
       "<leader>ps",
       function()
@@ -216,20 +209,7 @@ return {
       end,
       desc = "Undo History",
     },
-    {
-      "gD",
-      function()
-        Snacks.picker.lsp_declarations()
-      end,
-      desc = "Goto Declaration",
-    },
-    {
-      "<leader>DA",
-      function()
-        Snacks.picker.diagnostics()
-      end,
-      desc = "Show all Diagnostics",
-    },
+
     {
       "gd",
       function()
@@ -246,9 +226,14 @@ return {
     {
       "<leader>D",
       function()
-        Snacks.picker.diagnostics()
+        Snacks.picker.diagnostics({
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+        })
       end,
       desc = "All Diagnostics",
+      mode = "n",
     },
     {
       "<leader>bd",

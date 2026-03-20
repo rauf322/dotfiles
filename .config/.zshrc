@@ -162,7 +162,7 @@ alias ls="eza -la --icons --created --bytes --all"
 alias ll="eza -l "
 alias la="eza -la"
 alias b="bun"
-alias p="opencode --port"
+alias p='ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 opencode --port'
 alias lg="ghostty --config-file=$HOME/.config/ghostty/config --config='font-size=12' -e lazygit"
 
 . "$HOME/.local/bin/env"
@@ -178,3 +178,5 @@ source <(ng completion script)
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+
+export PATH="$HOME/.cargo/bin:$PATH"
