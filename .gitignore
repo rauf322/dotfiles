@@ -14,4 +14,5 @@
 .config/opencode/opencode.jsonc
 .local/pipx
 .local/scripts
-.local
+.local/bin
+.local/.DS_Store
