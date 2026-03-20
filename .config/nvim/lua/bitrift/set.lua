@@ -106,31 +106,21 @@ vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd("CursorMoved", {
+vim.api.nvim_create_autocmd("CursorHold", {
   group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = true }),
-  desc = "Highlight references under cursor",
   callback = function()
-    if vim.fn.mode() ~= "i" then
-      local clients = vim.lsp.get_clients({ bufnr = 0 })
-      local supports_highlight = false
-      for _, client in ipairs(clients) do
-        if client.server_capabilities.documentHighlightProvider then
-          supports_highlight = true
-          break
-        end
-      end
-
-      if supports_highlight then
-        vim.lsp.buf.clear_references()
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
+    for _, client in ipairs(clients) do
+      if client.server_capabilities.documentHighlightProvider then
         vim.lsp.buf.document_highlight()
+        break
       end
     end
   end,
 })
 
-vim.api.nvim_create_autocmd({ "CursorMovedI", "InsertEnter" }, {
+vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
   group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = false }),
-  desc = "Clear highlights when entering insert mode",
   callback = function()
     vim.lsp.buf.clear_references()
   end,

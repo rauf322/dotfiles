@@ -9,7 +9,7 @@ This is a Neovim configuration written in Lua, organized under `lua/bitrift/` wi
 - **Line Length**: 140 characters max (stylua --column-width=140, prettier --print-width=140)
 - **Naming**: snake_case for variables/functions/files, PascalCase for classes
 - **Quotes**: Single quotes for JS/TS (prettier --single-quote --jsx-single-quote)
-- **Module Pattern**: Use `return { ... }` for plugin specs, `require("module")` for imports
+- **Module Pattern**: Use `return { ... }` for plugin specs, `r("module")` for imports
 - **Tables**: Prefer explicit table fields over positional arguments
 - **Error Handling**: Always use `pcall()` for operations that may fail (LSP, formatting, requires)
 
@@ -26,7 +26,7 @@ This is a Neovim configuration written in Lua, organized under `lua/bitrift/` wi
 - **Dependencies**: Explicitly declare in the `dependencies` field
 
 ## Key Patterns
-- Check module exists: `local ok, mod = pcall(require, "module")`
+- Check module exists: `local ok, mod = pcall(r, "module")`
 - Keymaps: Use `vim.keymap.set()` with descriptive `desc` field for which-key
 - Autocommands: Use `vim.api.nvim_create_autocmd()` with augroups
 - LSP setup: Register keymaps in `LspAttach` autocmd (see lspconfig.lua)

@@ -13,8 +13,17 @@ return {
     dependencies = {
       "moyiz/blink-emoji.nvim",
       "ray-x/cmp-sql",
-      "fang2hou/blink-copilot",
-      "supermaven-inc/supermaven-nvim",
+
+      {
+        "supermaven-inc/supermaven-nvim",
+        opts = {
+          keymaps = {
+            accept_suggestion = "<Tab>",
+            clear_suggestion = "<C-e>",
+            accept_word = "<C-w>",
+          },
+        },
+      },
       "echasnovski/mini.pairs",
     },
     version = "1.*",
@@ -26,7 +35,6 @@ return {
         preset = "default",
         ["<C-p>"] = { "select_prev" },
         ["<C-n>"] = { "select_next" },
-        ["<Tab>"] = { "select_next", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
         ["<C-f>"] = { "snippet_forward" },
         ["<C-b>"] = { "snippet_backward" },
@@ -73,13 +81,8 @@ return {
         },
       },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "emoji", "sql", "copilot" },
+        default = { "lsp", "path", "snippets", "buffer", "emoji", "sql" },
         providers = {
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            async = true,
-          },
           emoji = {
             module = "blink-emoji",
             name = "Emoji",
