@@ -52,7 +52,9 @@ return {
     local keymap = vim.keymap.set
 
     -- Hover documentation
-    keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", { desc = "Show hover documentation", silent = true })
+    keymap("n", "K", function()
+      require("pretty_hover").hover()
+    end, { desc = "Show hover documentation", silent = true })
 
     -- Finder for references/definitions/implementations
     keymap("n", "gr", "<cmd>Lspsaga finder<CR>", { desc = "LSP finder (refs/def/impl)", silent = true })

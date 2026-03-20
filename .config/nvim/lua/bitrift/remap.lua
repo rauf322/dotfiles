@@ -51,10 +51,6 @@ local mappings = {
   { mode = "n", key = "<leader>wJ", command = "<C-w>J", opts = { desc = "Move window down" } },
   { mode = "n", key = "<leader>wK", command = "<C-w>K", opts = { desc = "Move window up" } },
 
-  -- Blank lines without leaving normal mode
-  { mode = "n", key = "<leader>o", command = ":put =''<CR>", opts = { desc = "Blank line below" } },
-  { mode = "n", key = "<leader>O", command = ":put! =''<CR>", opts = { desc = "Blank line above" } },
-
   -- Window resizing
   { mode = "n", key = "<leader>wl", command = ":vertical resize -25<CR>", opts = { desc = "Resize narrower" } },
   { mode = "n", key = "<leader>wh", command = ":vertical resize +25<CR>", opts = { desc = "Resize wider" } },

@@ -22,12 +22,6 @@ return {
     end,
   },
 
-  {
-    "rmagatti/auto-session",
-    config = function()
-      require("auto-session").setup()
-    end,
-  },
   -- {
   -- 	"coder/claudecode.nvim",
   -- 	dependencies = { "folke/snacks.nvim" },
@@ -104,18 +98,7 @@ return {
     "tpope/vim-surround",
     event = { "BufReadPre", "BufNewFile" },
   },
-  {
-    "toppair/peek.nvim",
-    event = { "VeryLazy" },
-    build = "deno task --quiet build:fast",
-    config = function()
-      require("peek").setup({
-        filetype = { "markdown", "conf" },
-      })
-      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
-      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
-    end,
-  },
+
   {
     "epwalsh/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
@@ -134,7 +117,11 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      code = {
+        sign = false,
+      },
+    },
     ft = { "markdown", "codecompanion" },
     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.icons" },
   },
@@ -262,10 +249,7 @@ return {
       })
     end,
   },
-  {
-    "stevearc/dressing.nvim",
-    event = "VeryLazy",
-  },
+
   {
     "folke/flash.nvim",
     event = "VeryLazy",
@@ -409,6 +393,14 @@ return {
         end,
         desc = "Package: Toggle versions",
       },
+    },
+  },
+  {
+    "Fildo7525/pretty_hover",
+    event = "LspAttach",
+    opts = {
+      border = "rounded",
+      toggle = false,
     },
   },
 }

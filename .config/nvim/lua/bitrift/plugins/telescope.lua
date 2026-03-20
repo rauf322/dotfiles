@@ -4,7 +4,6 @@ return {
     branch = "master", -- Use latest version instead of old tag
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      "nvim-telescope/telescope-ui-select.nvim",
     },
     config = function()
       local telescope = require("telescope")
@@ -56,11 +55,8 @@ return {
             show_untracked = true,
           },
         },
-        extensions = {
-          ["ui-select"] = require("telescope.themes").get_dropdown({}),
-        },
+        extensions = {},
       })
-      telescope.load_extension("ui-select")
       telescope.load_extension("noice")
       local keymap = vim.keymap.set
       keymap("n", "<leader>gt", ":Telescope git_branches <CR>", { desc = "Telescope: Git branches" })
