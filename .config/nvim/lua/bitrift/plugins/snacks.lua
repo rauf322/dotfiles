@@ -2,16 +2,6 @@ return {
   "folke/snacks.nvim",
   priority = 1000, -- before other plugins that might rely on it
   lazy = false, -- load at startup (so terminal keys are ready)
-  init = function()
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "OilActionsPost",
-      callback = function(event)
-        if event.data.actions.type == "move" then
-          Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
-        end
-      end,
-    })
-  end,
   opts = {
     gh = {},
     picker = {
@@ -319,27 +309,6 @@ return {
 
     -- Terminal mode escape for snacks terminal
     vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit snacks terminal mode" })
-    Snacks.toggle.new({
-      id = "ufo",
-      name = "Enable/Disable ufo",
-      get = function()
-        return require("ufo").inspect()
-      end,
-      set = function(state)
-        if state == nil then
-          require("noice").enable()
-          require("ufo").enable()
-          vim.o.foldenable = true
-          vim.o.foldcolumn = "1"
-        else
-          require("noice").disable()
-          require("ufo").disable()
-          vim.o.foldenable = false
-          vim.o.foldcolumn = "0"
-        end
-      end,
-    })
-
     vim.o.ttimeoutlen = 0
   end,
 }

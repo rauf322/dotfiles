@@ -11,8 +11,8 @@
 .config/ghostty/.DS_Store
 .config/github-copilot
 .config/ngrok
-.config/opencode/opencode.jsonc
 .local/pipx
 .local/scripts
 .local/bin
 .local/.DS_Store
+.config/cursor/chats

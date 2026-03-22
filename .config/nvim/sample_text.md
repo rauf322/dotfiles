@@ -1,6 +1,6 @@
 # The Journey of Software Development
 
-Software development is a fascinating journey that combines creativity, logic, and problem-solving in unique ways. It's a field that constantly evolves, presenting new challenges and opportunities for those who practice it.
+software development is a fascinating journey that combines creativity, logic, and problem-solving in unique ways. it's a field that constantly evolves, presenting new challenges and opportunities for those who practice it.
 
 ## The Art of Code
 
