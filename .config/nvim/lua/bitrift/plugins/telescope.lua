@@ -7,8 +7,6 @@ return {
     },
     config = function()
       local telescope = require("telescope")
-      local action = require("telescope.actions")
-      local builtin = require("telescope.builtin")
 
       -- Configure file and directory exclusions
       telescope.load_extension("fzf")

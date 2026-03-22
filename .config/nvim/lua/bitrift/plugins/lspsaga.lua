@@ -39,6 +39,9 @@ return {
         quit = "q",
       },
     },
+    rename = {
+      in_select = false, -- Don't highlight/select the word on rename
+    },
     hover = {
       max_width = 0.8,
       max_height = 0.8,
