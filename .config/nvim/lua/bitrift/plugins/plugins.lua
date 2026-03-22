@@ -40,11 +40,6 @@ return {
     end,
   },
   {
-    "junegunn/fzf",
-    event = "VeryLazy",
-    build = ":call fzf#install()",
-  },
-  {
     "nvim-treesitter/nvim-treesitter-context",
     event = "BufEnter",
     config = function()
@@ -325,23 +320,7 @@ return {
       },
     },
   },
-  {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    keys = {
-      {
-        "<leader>rn",
-        function()
-          return ":IncRename " .. vim.fn.expand("<cword>")
-        end,
-        desc = "Incremental rename",
-        mode = "n",
-        noremap = true,
-        expr = true,
-      },
-    },
-    config = true,
-  },
+
   {
     "vuki656/package-info.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
