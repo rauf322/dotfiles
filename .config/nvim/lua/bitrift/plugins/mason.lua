@@ -1,60 +1,49 @@
-return {
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = {
-      ensure_installed = {
-        "html",
-        "cssls",
-        "tailwindcss",
-        "svelte",
-        "lua_ls",
-        "graphql",
-        "emmet_ls",
-        "prismals",
-        "ts_ls",
-        "pyright",
-        "jsonls",
-        "dockerls",
-        "sqls",
-        "yamlls",
-        "copilot",
-        "eslint",
-        "solidity_ls_nomicfoundation",
-        "gopls",
-        "rust_analyzer",
-      },
-    },
-    dependencies = {
-      {
-        "williamboman/mason.nvim",
-        opts = {
-          ui = {
-            icons = {
-              package_installed = "✓",
-              package_pending = "➜",
-              package_uninstalled = "✗",
-            },
-          },
-        },
-      },
-      "neovim/nvim-lspconfig",
+require("mason").setup({
+  ui = {
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗",
     },
   },
-  {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    opts = {
-      ensure_installed = {
-        "biome",
-        "prettierd",
-        "stylua",
-        "isort",
-        "black",
-        "js-debug-adapter",
-        "htmlhint",
-        "sql-formatter",
-        "gofumpt",
-        "goimports",
-      },
-    },
+})
+
+require("mason-lspconfig").setup({
+  ensure_installed = {
+    "html",
+    "cssls",
+    "tailwindcss",
+    "svelte",
+    "lua_ls",
+    "graphql",
+    "emmet_ls",
+    "prismals",
+    "ts_ls",
+    "pyright",
+    "jsonls",
+    "dockerls",
+    "sqls",
+    "yamlls",
+    "copilot",
+    "eslint",
+    "oxlint",
+    "solidity_ls_nomicfoundation",
+    "gopls",
+    "rust_analyzer",
   },
-}
+})
+
+require("mason-tool-installer").setup({
+  ensure_installed = {
+    "biome",
+    "prettierd",
+    "stylua",
+    "isort",
+    "black",
+    "js-debug-adapter",
+    "htmlhint",
+    "sql-formatter",
+    "gofumpt",
+    "goimports",
+  },
+})

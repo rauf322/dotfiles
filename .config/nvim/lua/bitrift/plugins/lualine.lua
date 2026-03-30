@@ -1,68 +1,60 @@
-return {
-  "nvim-lualine/lualine.nvim",
-  event = "VeryLazy",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  config = function()
-    local lualine = require("lualine")
-    lualine.setup({
-      options = {
-        icons_enabled = true,
-        theme = "auto",
-        section_separators = { left = "", right = "" },
-        component_separators = { left = "|", right = "|" },
-        disabled_filetypes = {},
+require("lualine").setup({
+  options = {
+    icons_enabled = true,
+    theme = "auto",
+    section_separators = { left = "", right = "" },
+    component_separators = { left = "|", right = "|" },
+    disabled_filetypes = {},
+  },
+  sections = {
+    lualine_a = { "mode" },
+    lualine_b = { "branch" },
+    lualine_c = {
+      {
+        "filename",
+        file_status = true,
+        path = 0,
       },
-      sections = {
-        lualine_a = { "mode" },
-        lualine_b = { "branch" },
-        lualine_c = {
-          {
-            "filename",
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
-          },
-        },
-        lualine_x = {
-          {
-            "diagnostics",
-            sources = { "nvim_diagnostic" },
-            symbols = { error = " ", warn = " ", info = " ", hint = " " },
-          },
-          {
-            "encoding",
-            fmt = function(str)
-              return str:upper()
-            end,
-          },
-          "filetype",
-        },
-        lualine_y = { "progress" },
-        lualine_z = {
-          function()
-            local ok, opencode = pcall(require, "opencode")
-            if ok then
-              return opencode.statusline()
-            end
-            return ""
-          end,
-        },
+    },
+    lualine_x = {
+      {
+        "diagnostics",
+        sources = { "nvim_diagnostic" },
+        symbols = { error = " ", warn = " ", info = " ", hint = " " },
       },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {
-          {
-            "filename",
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
-          },
-        },
-        lualine_x = { "location" },
-        lualine_y = {},
-        lualine_z = {},
+      {
+        "encoding",
+        fmt = function(str)
+          return str:upper()
+        end,
       },
-      tabline = {},
-      extensions = { "fugitive" },
-    })
-  end,
-}
+      "filetype",
+    },
+    lualine_y = { "progress" },
+    lualine_z = {
+      function()
+        local ok, opencode = pcall(require, "opencode")
+        if ok then
+          return opencode.statusline()
+        end
+        return ""
+      end,
+    },
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {
+      {
+        "filename",
+        file_status = true,
+        path = 1,
+      },
+    },
+    lualine_x = { "location" },
+    lualine_y = {},
+    lualine_z = {},
+  },
+  tabline = {},
+  extensions = { "fugitive" },
+})
