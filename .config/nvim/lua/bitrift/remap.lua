@@ -24,11 +24,10 @@ local mappings = {
     mode = "n",
     key = "<leader>r",
     command = function()
-      require("lazy").sync()
       vim.cmd("source $MYVIMRC")
-      vim.notify("Lazy.nvim and config reloaded!", vim.log.levels.INFO)
+      vim.notify("Config reloaded!", vim.log.levels.INFO)
     end,
-    opts = { desc = "Reload lazy.nvim and Neovim config" },
+    opts = { desc = "Reload Neovim config" },
   },
 
   -- Splits
