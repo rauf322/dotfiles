@@ -5,6 +5,10 @@
       "src": "https://github.com/L3MON4D3/LuaSnip",
       "version": "2.0.0 - 3.0.0"
     },
+    "aura-theme": {
+      "rev": "20924aa0a43975420edd0e0b2f919e07a3eff9c9",
+      "src": "https://github.com/daltonmenezes/aura-theme"
+    },
     "blink-emoji.nvim": {
       "rev": "066013e4c98a9318408ee3f1ca2dbcb6fa3e4c06",
       "src": "https://github.com/moyiz/blink-emoji.nvim"
@@ -26,9 +30,17 @@
       "rev": "54193ac99e3855c6ffaa36f83a7c50213df03157",
       "src": "https://github.com/ray-x/cmp-sql"
     },
+    "codewindow.nvim": {
+      "rev": "a8e175043ce3baaa89e0a6b5171bcd920aab3dad",
+      "src": "https://github.com/gorbit99/codewindow.nvim"
+    },
     "conform.nvim": {
       "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
       "src": "https://github.com/stevearc/conform.nvim"
+    },
+    "dashboard-nvim": {
+      "rev": "0775e567b6c0be96d01a61795f7b64c1758262f6",
+      "src": "https://github.com/nvimdev/dashboard-nvim"
     },
     "diffview.nvim": {
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
@@ -94,6 +106,10 @@
     "nui.nvim": {
       "rev": "de740991c12411b663994b2860f1a4fd0937c130",
       "src": "https://github.com/MunifTanjim/nui.nvim"
+    },
+    "nvim-bqf": {
+      "rev": "f65fba733268ffcf9c5b8ac381287eca7c223422",
+      "src": "https://github.com/kevinhwang91/nvim-bqf"
     },
     "nvim-colorizer.lua": {
       "rev": "c8c2c19436d33165ec34fa90c975bc0a739fe3fb",
@@ -196,6 +212,10 @@
     "tsc.nvim": {
       "rev": "e083bcf1e54bc3af7df92b33235efb334e8c782c",
       "src": "https://github.com/dmmulroy/tsc.nvim"
+    },
+    "vague.nvim": {
+      "rev": "8c4643f8a5106dbc492918f86ff6b5c81111ce9a",
+      "src": "https://github.com/vague-theme/vague.nvim"
     },
     "vim-be-good": {
       "rev": "0ae3de14eb8efc6effe7704b5e46495e91931cc5",

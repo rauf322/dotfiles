@@ -114,6 +114,5 @@ if to_ok then
 end
 
 require("treesitter-context").setup({ max_lines = 0 })
-vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#111111" })
 
 require("nvim-ts-autotag").setup({})

@@ -33,54 +33,7 @@ require("snacks").setup({
   indent = {
     enabled = true,
   },
-  dashboard = {
-    preset = {
-      pick = nil,
-      keys = {
-        { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-        { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-        {
-          icon = " ",
-          key = "g",
-          desc = "Find Text",
-          action = ":lua Snacks.dashboard.pick('live_grep')",
-        },
-        {
-          icon = " ",
-          key = "r",
-          desc = "Recent Files",
-          action = ":lua Snacks.dashboard.pick('oldfiles')",
-        },
-        {
-          icon = " ",
-          key = "c",
-          desc = "Config",
-          action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
-        },
-        { icon = " ", key = "s", desc = "Restore Session", section = "session" },
-        { icon = "📦 ", key = "u", desc = "Update Plugins", action = ":lua vim.pack.update()" },
-        { icon = " ", key = "q", desc = "Quit", action = ":qa" },
-      },
-      header = [[
-               ████ ██████           █████      ██                     
-              ███████████             █████                             
-              █████████ ███████████████████ ███   ███████████   
-             █████████  ███    █████████████ █████ ██████████████   
-            █████████ ██████████ █████████ █████ █████ ████ █████   
-          ███████████ ███    ███ █████████ █████ █████ ████ █████  
-         ██████  █████████████████████ ████ █████ █████ ████ ██████ 
-      ]],
-    },
-    sections = {
-      { section = "header" },
-      {
-        section = "keys",
-        indent = 1,
-        padding = 1,
-      },
-      { section = "recent_files", icon = " ", title = "Recent Files", indent = 3, padding = 2 },
-    },
-  },
+  dashboard = { enabled = false },
   terminal = {
     start_insert = true,
     auto_insert = true,
@@ -136,8 +89,24 @@ vim.keymap.set("n", "<leader>ps", function()
 end, { desc = "Search in files" })
 vim.keymap.set("n", "<leader>pws", function()
   local word = vim.fn.expand("<cword>")
-  Snacks.picker.grep({ search = word })
-end, { desc = "Search word under cursor" })
+  if word == "" then
+    return
+  end
+  vim.fn.setqflist({}, " ", {
+    title = "Search: " .. word,
+    lines = vim.fn.systemlist({
+      "rg",
+      "--vimgrep",
+      "--smart-case",
+      "--hidden",
+      "--glob=!.git/",
+      "--glob=!node_modules/",
+      word,
+    }),
+    efm = "%f:%l:%c:%m",
+  })
+  vim.cmd("copen")
+end, { desc = "Search word under cursor (quickfix)" })
 vim.keymap.set("n", "<leader>u", function()
   Snacks.picker.undo()
 end, { desc = "Undo History" })

@@ -28,6 +28,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
 vim.pack.add({
   -- Colorscheme (must be first for priority)
   { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
+  "https://github.com/vague-theme/vague.nvim",
 
   -- Core dependencies
   "https://github.com/nvim-lua/plenary.nvim",
@@ -69,6 +70,7 @@ vim.pack.add({
   { src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = "v3.x" },
 
   -- UI
+  "https://github.com/nvimdev/dashboard-nvim",
   "https://github.com/folke/snacks.nvim",
   "https://github.com/folke/noice.nvim",
   "https://github.com/rcarriga/nvim-notify",
@@ -114,6 +116,7 @@ vim.pack.add({
   "https://github.com/laytan/cloak.nvim",
   "https://github.com/vuki656/package-info.nvim",
   "https://github.com/stevearc/quicker.nvim",
+  "https://github.com/kevinhwang91/nvim-bqf",
   "https://github.com/NickvanDyke/opencode.nvim",
 })
 
@@ -125,6 +128,7 @@ require("bitrift.plugins.linting.formatingLinting")
 require("bitrift.plugins.telescope")
 require("bitrift.plugins.blink-cmp")
 require("bitrift.plugins.neotree")
+require("bitrift.plugins.dashboard")
 require("bitrift.plugins.snacks")
 require("bitrift.plugins.noice")
 require("bitrift.plugins.lualine")
@@ -135,3 +139,4 @@ require("bitrift.plugins.github")
 require("bitrift.plugins.diffview")
 require("bitrift.plugins.opencode")
 require("bitrift.plugins.plugins")
+require("bitrift.plugins.bqf")
