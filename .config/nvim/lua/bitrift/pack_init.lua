@@ -110,6 +110,9 @@ vim.pack.add({
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
   "https://github.com/iamcco/markdown-preview.nvim",
 
+  -- Session management
+  "https://github.com/rmagatti/auto-session",
+
   -- Misc
   "https://github.com/kawre/leetcode.nvim",
   "https://github.com/theprimeagen/vim-be-good",
@@ -140,3 +143,4 @@ require("bitrift.plugins.diffview")
 require("bitrift.plugins.opencode")
 require("bitrift.plugins.plugins")
 require("bitrift.plugins.bqf")
+require("bitrift.plugins.auto-session")
