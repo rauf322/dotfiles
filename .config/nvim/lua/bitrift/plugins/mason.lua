@@ -45,5 +45,6 @@ require("mason-tool-installer").setup({
     "sql-formatter",
     "gofumpt",
     "goimports",
+    "solhint",
   },
 })
