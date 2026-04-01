@@ -9,6 +9,10 @@
       "rev": "20924aa0a43975420edd0e0b2f919e07a3eff9c9",
       "src": "https://github.com/daltonmenezes/aura-theme"
     },
+    "auto-session": {
+      "rev": "62437532b38495551410b3f377bcf4aaac574ebe",
+      "src": "https://github.com/rmagatti/auto-session"
+    },
     "blink-emoji.nvim": {
       "rev": "066013e4c98a9318408ee3f1ca2dbcb6fa3e4c06",
       "src": "https://github.com/moyiz/blink-emoji.nvim"
