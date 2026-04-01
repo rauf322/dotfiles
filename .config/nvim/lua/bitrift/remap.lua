@@ -58,6 +58,26 @@ local mappings = {
 
   -- Search word under cursor in current file (no trailing space, no jump)
   { mode = "n", key = "<leader>sw", command = "/\\<<C-r><C-w>\\><CR>", opts = { desc = "Search word in file" } },
+
+  {
+    mode = "n",
+    key = "<leader>qq",
+    command = function()
+      local qf_open = false
+      for _, win in ipairs(vim.fn.getwininfo()) do
+        if win.quickfix == 1 then
+          qf_open = true
+          break
+        end
+      end
+      if qf_open then
+        vim.cmd("cclose")
+      else
+        vim.cmd("copen")
+      end
+    end,
+    opts = { desc = "Toggle quickfix list" },
+  },
 }
 for _, mapping in ipairs(mappings) do
   vim.keymap.set(mapping.mode, mapping.key, mapping.command, mapping.opts or {})

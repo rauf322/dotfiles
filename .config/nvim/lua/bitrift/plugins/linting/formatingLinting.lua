@@ -18,6 +18,7 @@ conform.setup({
     python = { "isort", "black" },
     go = { "goimports", "gofumpt" },
     rust = { "rustfmt" },
+    solidity = { "prettierd" },
   },
   formatters = {
     stylua = {

@@ -1,6 +1,6 @@
 font-size = 18
 font-family = JetBrainsMono Nerd Font Mono
-theme = Rose Pine Moon
+theme = Vague
 cursor-style = bar
 adjust-cell-height = 2
 background-opacity = 1
@@ -11,7 +11,7 @@ window-padding-x = 5
 window-padding-y = 0
 window-save-state = always
 window-colorspace = "display-p3"
-background = 181C27
+background = 141415
 window-decoration = "none"
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = hidden

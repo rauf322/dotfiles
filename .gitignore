@@ -12,7 +12,7 @@
 .config/github-copilot
 .config/ngrok
 .local/pipx
-.local/scripts
 .local/bin
 .local/.DS_Store
 .config/cursor/chats
+.local/scripts/.DS_Store
