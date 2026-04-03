@@ -9,6 +9,7 @@ require("mason").setup({
 })
 
 require("mason-lspconfig").setup({
+  automatic_enable = false,
   ensure_installed = {
     "html",
     "cssls",
@@ -24,7 +25,6 @@ require("mason-lspconfig").setup({
     "dockerls",
     "sqls",
     "yamlls",
-    "copilot",
     "eslint",
     "oxlint",
     "solidity_ls_nomicfoundation",
