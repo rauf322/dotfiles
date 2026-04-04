@@ -123,6 +123,12 @@ vim.pack.add({
   "https://github.com/NickvanDyke/opencode.nvim",
 })
 
+-- Built-in packages
+vim.cmd.packadd("nvim.undotree")
+vim.cmd.packadd("nvim.difftool")
+
+vim.keymap.set("n", "<leader>u", "<cmd>Undotree<CR>", { desc = "Toggle Undotree" })
+
 -- Configure plugins (order matters for dependencies)
 require("bitrift.plugins.colors")
 require("bitrift.plugins.treesitter")
