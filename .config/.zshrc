@@ -1,3 +1,8 @@
+# Auto-start tmux (must be before any other init)
+if [[ -z "$TMUX" ]] && command -v tmux &>/dev/null && [[ -n "$TERM" ]]; then
+    exec tmux new-session -A -s Terminal-session
+fi
+
 export ZSH="$HOME/.oh-my-zsh"
 ulimit -n 524288
 # ZSH_THEME="robbyrussell"
@@ -36,10 +41,6 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 # fnm (fast node manager) - replaces nvm
 eval "$(fnm env --use-on-cd --shell zsh)"
-
-if [[ -z "$TMUX" && -t 1 ]]; then
-    exec tmux new-session -A -s Terminal-session
-fi
 
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
