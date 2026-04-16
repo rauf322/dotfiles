@@ -34,8 +34,8 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 # alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf"
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# fnm (fast node manager) - replaces nvm
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 if [[ -z "$TMUX" && -t 1 ]]; then
     exec tmux new-session -A -s Terminal-session
@@ -117,7 +117,7 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 bindkey -v
 
 # Cursor shape for vi mode - steady block in normal, blinking thin line for insert
@@ -141,9 +141,7 @@ export FZF_DEFAULT_OPTS='--layout=reverse --border=rounded --info=inline --previ
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview 'bat {}' --preview-window=right:60%:border-rounded"
 
-# FZF shell integration
-source /opt/homebrew/Cellar/fzf/0.66.1/shell/key-bindings.zsh
-source /opt/homebrew/Cellar/fzf/0.66.1/shell/completion.zsh
+# FZF shell integration (already loaded via `source <(fzf --zsh)` above)
 
 # Custom widget to open file in nvim with Ctrl+T (must be after sourcing FZF)
 fzf-nvim-widget() {
@@ -162,14 +160,14 @@ alias ls="eza -la --icons --created --bytes --all"
 alias ll="eza -l "
 alias la="eza -la"
 alias b="bun"
-alias p='pgrep -f claude-max-proxy > /dev/null || (CLAUDE_PROXY_PASSTHROUGH=1 claude-max-proxy > /dev/null 2>&1 &); sleep 1; ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 opencode --port'
+alias p='pgrep -f claude-max-proxy > /dev/null || (CLAUDE_PROXY_PASSTHROUGH=1 claude-max-proxy > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 opencode --port'
 alias lg="ghostty --config-file=$HOME/.config/ghostty/config --config='font-size=12' -e lazygit"
 
 . "$HOME/.local/bin/env"
 
 
 # Load Angular CLI autocompletion.
-source <(ng completion script)
+# source <(ng completion script)
 
 # bun completions
 [ -s "/Users/rauffaizov/.bun/_bun" ] && source "/Users/rauffaizov/.bun/_bun"
@@ -183,3 +181,4 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # opencode-with-claude
 export PATH=/Users/rauffaizov/.opencode/bin:$PATH
+export PATH="$HOME/.ghcup/bin:$PATH"

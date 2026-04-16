@@ -19,6 +19,7 @@ vim.lsp.enable({
   "solidity_ls_nomicfoundation",
   "gopls",
   "rust_analyzer",
+  "hls",
 })
 
 local severity = vim.diagnostic.severity
