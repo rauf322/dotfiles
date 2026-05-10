@@ -106,7 +106,6 @@ vim.pack.add({
   "https://github.com/kristijanhusak/vim-dadbod-completion",
 
   -- Markdown
-  "https://github.com/epwalsh/obsidian.nvim",
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
   "https://github.com/iamcco/markdown-preview.nvim",
 
