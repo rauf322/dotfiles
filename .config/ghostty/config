@@ -1,7 +1,7 @@
 font-size = 18
 font-family = JetBrainsMono Nerd Font Mono
 theme = Vague
-cursor-style = bar
+cursor-style = block
 adjust-cell-height = 2
 background-opacity = 1
 mouse-hide-while-typing = true
@@ -19,4 +19,3 @@ window-vsync = true
 shell-integration-features = no-title,no-cursor,no-sudo
 confirm-close-surface = false
 title = " "
-

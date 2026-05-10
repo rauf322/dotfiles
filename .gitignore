@@ -18,3 +18,4 @@
 .local/scripts/.DS_Store
 .config/tmux/plugins/tmux-resurrect
 .config/nvm
+.config/meridian/node_modules
