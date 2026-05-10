@@ -79,15 +79,6 @@ require("cloak").setup({
   },
 })
 
-require("obsidian").setup({
-  workspaces = {
-    {
-      name = "Study",
-      path = "~/Documents/obsidian/My-study/",
-    },
-  },
-})
-
 require("render-markdown").setup({
   code = {
     sign = false,

@@ -92,6 +92,14 @@ function M.run_file()
     ts = function()
       return vim.fn.system("bun run " .. filename)
     end,
+    rs = function()
+      local output = vim.fn.system("rustc " .. filename .. " -o " .. vim.fn.expand("%:r"))
+      if vim.v.shell_error == 0 then
+        return vim.fn.system("./" .. vim.fn.expand("%:r"))
+      else
+        return output
+      end
+    end,
   }
 
   if runners[ext] then
@@ -136,6 +144,17 @@ function M.run_selection()
     end,
     ts = function()
       return vim.fn.system("bun run " .. tmpfile)
+    end,
+    rs = function()
+      local bin = "/tmp/vim_exec_tmp_rs"
+      local output = vim.fn.system("rustc " .. tmpfile .. " -o " .. bin)
+      if vim.v.shell_error == 0 then
+        local result = vim.fn.system(bin)
+        os.remove(bin)
+        return result
+      else
+        return output
+      end
     end,
   }
 

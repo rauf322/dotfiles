@@ -56,9 +56,6 @@ local mappings = {
   { mode = "n", key = "<leader>wj", command = ":resize +25<CR>", opts = { desc = "Resize taller" } },
   { mode = "n", key = "<leader>wk", command = ":resize -25<CR>", opts = { desc = "Resize shorter" } },
 
-  -- Search word under cursor in current file (no trailing space, no jump)
-  { mode = "n", key = "<leader>sw", command = "/\\<<C-r><C-w>\\><CR>", opts = { desc = "Search word in file" } },
-
   {
     mode = "n",
     key = "<leader>qq",

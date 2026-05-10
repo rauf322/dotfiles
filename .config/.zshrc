@@ -6,36 +6,10 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 ulimit -n 524288
 # ZSH_THEME="robbyrussell"
-export EDITOR=nvim
-export VISUAL=nvim
 eval "$(starship init zsh)"
 
 source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
-#Reset PATH to prevent duplication issues
-export PATH=""
-export XDG_CONFIG_HOME="$HOME/.config"
-
-#PATH TO NODE JS
-#System-wide binaries (Keeps default macOS paths intact)
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-
-#Homebrew paths (Ensures Homebrew binaries take precedence)
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
-
-# Apple-specific system paths (Keeps system integrity)
-export PATH="/System/Cryptexes/App/usr/bin:$PATH"
-export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:$PATH"
-export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:$PATH"
-export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:$PATH"
-export PATH="/Library/Apple/usr/bin:$PATH"
-export PATH="$HOME/.local/scripts:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-
-# Ghostty
-export GHOSTTY_BIN_DIR="/Applications/Ghostty.app/Contents/MacOS"
-export PATH="$GHOSTTY_BIN_DIR:$PATH"
-export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 # alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf"
 
@@ -46,7 +20,6 @@ bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 bindkey -r '^[[Z'
 
-alias reload-zsh="source ~/.zshrc"
 # Zsh Autosuggestions & Syntax Highlighting
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -81,6 +54,27 @@ alias ts="nvim"
 alias toml="nvim"
 alias nvo="nvopen-file"
 
+
+# Vim to Nvim alias
+alias v="nvim"
+
+# Eza command alias 
+alias ls="eza -la --icons --created --bytes --all"
+alias ll="eza -l "
+alias la="eza -la"
+
+#Bun alias
+alias b="bun"
+
+# Opencode alias
+alias p='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 opencode --continue --port 0'
+alias pweb='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0'
+
+# LazyGit alias
+alias lg="ghostty --config-file=$HOME/.config/ghostty/config --config='font-size=12' -e lazygit"
+
+. "$HOME/.local/bin/env"
+
 # Function to open files with nvim based on extension
 nvopen() {
     if [[ $# -eq 0 ]]; then
@@ -100,16 +94,12 @@ nvopen() {
     esac
 }
 
- # Vim to Nvim alias
-alias v="nvim"
 
 #yazi-cwd
-export EDITOR="nvim"
 fcur() {
     file=$(fd --type f --max-depth 1 --hidden --exclude .git | fzf) || return
     cursor --reuse-window "$file"
 }
-EDITOR="nvim"
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
@@ -121,20 +111,12 @@ function y() {
 
 bindkey -v
 
-# Cursor shape for vi mode - steady block in normal, blinking thin line for insert
-function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-    echo -ne '\e[2 q'  # steady block for normal mode
-  elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'  # blinking thin line for insert mode
-  fi
+# Cursor shape - keep a steady block at the shell prompt
+reset_cursor_block() {
+  echo -ne '\e[2 q'
 }
-zle -N zle-keymap-select
 
-function zle-line-init {
-  echo -ne '\e[5 q'  # blinking thin line for insert mode
-}
-zle -N zle-line-init
+precmd_functions+=(reset_cursor_block)
 
 # FZF configuration
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
@@ -157,29 +139,6 @@ fzf-nvim-widget() {
 zle -N fzf-nvim-widget
 bindkey '^T' fzf-nvim-widget
 
-alias ls="eza -la --icons --created --bytes --all"
-alias ll="eza -l "
-alias la="eza -la"
-alias b="bun"
-alias p='pgrep -f claude-max-proxy > /dev/null || (CLAUDE_PROXY_PASSTHROUGH=1 claude-max-proxy > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 opencode --port'
-alias lg="ghostty --config-file=$HOME/.config/ghostty/config --config='font-size=12' -e lazygit"
-
-. "$HOME/.local/bin/env"
-
-
-# Load Angular CLI autocompletion.
-# source <(ng completion script)
 
 # bun completions
 [ -s "/Users/rauffaizov/.bun/_bun" ] && source "/Users/rauffaizov/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# opencode-with-claude
-export PATH=/Users/rauffaizov/.opencode/bin:$PATH
-export PATH="$HOME/.ghcup/bin:$PATH"

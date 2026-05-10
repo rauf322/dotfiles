@@ -30,6 +30,7 @@ require("mason-lspconfig").setup({
     "solidity_ls_nomicfoundation",
     "gopls",
     "rust_analyzer",
+    "clangd",
   },
 })
 
