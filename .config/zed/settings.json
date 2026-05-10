@@ -1,4 +1,11 @@
 {
+  "cli_default_open_behavior": "existing_window",
+  "outline_panel": {
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "dock": "right"
+  },
   "helix_mode": false,
   "disable_ai": false,
   "agent_servers": {
@@ -16,6 +23,7 @@
     }
   },
   "agent": {
+    "dock": "left",
     "inline_assistant_model": {
       "provider": "copilot_chat",
       "model": "claude-sonnet-4.5"
@@ -26,6 +34,7 @@
     }
   },
   "git_panel": {
+    "dock": "right",
     "tree_view": true
   },
   "session": {

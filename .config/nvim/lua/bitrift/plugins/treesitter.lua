@@ -32,7 +32,7 @@ for _, parser in ipairs(parsers) do
   end)
 end
 
-local indent_disabled = { javascript = true, typescript = true }
+local indent_disabled = { typescriptreact = true }
 
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("TreesitterSetup", { clear = true }),
@@ -115,4 +115,13 @@ end
 
 require("treesitter-context").setup({ max_lines = 0 })
 
-require("nvim-ts-autotag").setup({})
+require("nvim-ts-autotag").setup({
+  opts = {
+    enable_close = true,
+    enable_rename = true,
+    enable_close_on_slash = false,
+  },
+  per_filetype = {
+    ["rust"] = { enable_close = false, enable_rename = false },
+  },
+})

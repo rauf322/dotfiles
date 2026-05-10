@@ -23,6 +23,7 @@ vim.opt.backup = false
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.termguicolors = true
+vim.opt.guicursor = "a:block"
 vim.opt.scrolloff = 15
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
