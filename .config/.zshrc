@@ -68,10 +68,19 @@ alias b="bun"
 
 # Opencode alias
 alias p='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 opencode --continue --port 0'
-alias pweb='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0'
+alias pweb2='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0'
+alias pweb='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 openchamber --host 100.72.229.46 --ui-password "$_OPENCHAMBER_PASSWORD"'
 
-# LazyGit alias
-alias lg="ghostty --config-file=$HOME/.config/ghostty/config --config='font-size=12' -e lazygit"
+# LazyGit: run in-place, cd to the worktree we ended in (if switched)
+lg() {
+  local tmp
+  tmp="$(mktemp -t lazygit-newdir.XXXXXX)"
+  LAZYGIT_NEW_DIR_FILE="$tmp" lazygit "$@"
+  if [[ -s "$tmp" ]]; then
+    builtin cd -- "$(<"$tmp")"
+  fi
+  rm -f -- "$tmp"
+}
 
 . "$HOME/.local/bin/env"
 
@@ -110,13 +119,6 @@ function y() {
 }
 
 bindkey -v
-
-# Cursor shape - keep a steady block at the shell prompt
-reset_cursor_block() {
-  echo -ne '\e[2 q'
-}
-
-precmd_functions+=(reset_cursor_block)
 
 # FZF configuration
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'

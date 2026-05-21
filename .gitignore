@@ -19,3 +19,6 @@
 .config/tmux/plugins/tmux-resurrect
 .config/nvm
 .config/meridian/node_modules
+.config/opencode/skills
+.config/opencode/docs/superpowers
+.config/openchamber
