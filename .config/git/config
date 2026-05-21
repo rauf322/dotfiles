@@ -1,0 +1,68 @@
+[user]
+	name = Rauf
+	email = 82578227+rauf322@users.noreply.github.com
+
+[init]
+  defaultBranch = main
+
+[pull]
+	rebase = true
+
+[core]
+  whitespace = error
+  preloadindex = true
+
+[pager]
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
+
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	features = vague
+  navigate = true       # use n/N to jump between hunks
+  side-by-side = true   # optional: side-by-side diffs
+  line-numbers = true
+  dark = true
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  context = 3
+  renames = copies
+  interHunkContext = 10
+
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[delta "vague"]
+	blame-palette = "#141415 #1c1c24 #252530 #333738 #606079"
+	commit-decoration-style = "#606079 bold box ul"
+	dark = true
+	file-decoration-style = "#606079"
+	file-style = "#cdcdcd"
+	hunk-header-decoration-style = "#606079 box ul"
+	hunk-header-file-style = bold
+	hunk-header-line-number-style = "bold #90a0b5"
+	hunk-header-style = file line-number syntax
+	line-numbers-left-style = "#606079"
+	line-numbers-minus-style = "bold #d8647e"
+	line-numbers-plus-style = "bold #7fa563"
+	line-numbers-right-style = "#606079"
+	line-numbers-zero-style = "#606079"
+	zero-style = "syntax #141415"
+	minus-emph-style = "bold syntax #4a2a35"
+	minus-style = "syntax #352028"
+	plus-emph-style = "bold syntax #3a4a3a"
+	plus-style = "syntax #2a3a2a"
+	map-styles = "bold purple => syntax #3a3050, bold blue => syntax #2a3a50, bold cyan => syntax #2a4040, bold yellow => syntax #4a4030"
+	syntax-theme = base16
+[push]
+	autoSetupRemote = true
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*

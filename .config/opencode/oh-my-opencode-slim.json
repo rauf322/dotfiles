@@ -1,0 +1,63 @@
+{
+  "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
+  "preset": "main",
+  "fallback": {
+    "enabled": true,
+    "timeoutMs": 15000,
+    "retryDelayMs": 500,
+    "chains": {
+      "orchestrator": ["anthropic/claude-sonnet-4-6"],
+      "oracle": ["anthropic/claude-sonnet-4-6"],
+      "explorer": ["anthropic/claude-sonnet-4-6"],
+      "librarian": ["anthropic/claude-sonnet-4-6"],
+      "designer": ["anthropic/claude-sonnet-4-6"],
+      "fixer": ["anthropic/claude-sonnet-4-6", "anthropic/claude-opus-4-7"],
+      "council": ["anthropic/claude-sonnet-4-6"]
+    }
+  },
+  "presets": {
+    "main": {
+      "orchestrator": {
+        "model": "anthropic/claude-opus-4-7",
+        "skills": ["*"],
+        "mcps": ["*", "!context7"]
+      },
+      "oracle": {
+        "model": "anthropic/claude-opus-4-7",
+        "variant": "high",
+        "skills": ["simplify"],
+        "mcps": []
+      },
+      "explorer": {
+        "model": "anthropic/claude-sonnet-4-6",
+        "variant": "low",
+        "skills": [],
+        "mcps": []
+      },
+      "librarian": {
+        "model": "anthropic/claude-sonnet-4-6",
+        "variant": "low",
+        "skills": [],
+        "mcps": ["websearch", "context7", "grep_app"]
+      },
+      "designer": {
+        "model": "anthropic/claude-sonnet-4-6",
+        "variant": "medium",
+        "skills": ["agent-browser"],
+        "mcps": []
+      },
+      "fixer": {
+        "model": "anthropic/claude-opus-4-7",
+        "variant": "low",
+        "skills": [],
+        "mcps": []
+      },
+      "council": {
+        "model": "anthropic/claude-opus-4-7",
+        "variant": "high",
+        "skills": [],
+        "mcps": []
+      }
+    }
+  }
+}

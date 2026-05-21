@@ -5,6 +5,7 @@ end
 
 require("auto-session").setup({
   suppressed_dirs = { "~/", "~/Downloads", "/" },
+  cwd_change_handling = true,
   session_lens = {
     load_on_setup = true,
   },
@@ -15,11 +16,19 @@ require("auto-session").setup({
   },
   post_restore_cmds = {
     function()
+      -- After a worktree switch, kill buffers that don't belong to the new
+      -- cwd. We also drop buffers whose file no longer exists. Skip modified
+      -- buffers so we don't lose unsaved work.
+      local cwd = vim.fn.getcwd():gsub("/+$", "") .. "/"
       for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-        if vim.api.nvim_buf_is_loaded(buf) then
+        if vim.api.nvim_buf_is_loaded(buf) and not vim.bo[buf].modified then
           local name = vim.api.nvim_buf_get_name(buf)
-          if name ~= "" and not vim.loop.fs_stat(name) then
-            vim.api.nvim_buf_delete(buf, { force = true })
+          if name ~= "" then
+            local outside_cwd = not vim.startswith(name, cwd)
+            local missing = not vim.loop.fs_stat(name)
+            if outside_cwd or missing then
+              pcall(vim.api.nvim_buf_delete, buf, { force = false })
+            end
           end
         end
       end
