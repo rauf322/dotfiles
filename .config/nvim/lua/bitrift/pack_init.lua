@@ -85,6 +85,7 @@ vim.pack.add({
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/sindrets/diffview.nvim",
+  "https://github.com/polarmutex/git-worktree.nvim",
 
   -- Editing
   "https://github.com/echasnovski/mini.pairs",
@@ -145,6 +146,7 @@ require("bitrift.plugins.which-key")
 require("bitrift.plugins.snippet")
 require("bitrift.plugins.github")
 require("bitrift.plugins.diffview")
+require("bitrift.plugins.worktree")
 require("bitrift.plugins.opencode")
 require("bitrift.plugins.plugins")
 require("bitrift.plugins.bqf")
