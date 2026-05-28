@@ -44,7 +44,6 @@ vim.keymap.set({ "n", "v" }, "<leader>s", function()
         vim.notify("JSX autofix failed: " .. tostring(fix_err), vim.log.levels.WARN)
       end
     end
-
     vim.wait(10)
 
     if type(conform) == "table" and type(conform.format) == "function" then
