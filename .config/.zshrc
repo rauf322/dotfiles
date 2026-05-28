@@ -67,8 +67,8 @@ alias la="eza -la"
 alias b="bun"
 
 # Opencode alias
-alias p='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 opencode --continue --port 0'
-alias pweb2='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0'
+alias p='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); OPENCODE_EXPERIMENTAL=1 ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 opencode --continue --port 0'
+alias pweb2='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); OPENCODE_EXPERIMENTAL=1 ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0'
 alias pweb='pgrep -f "meridian$" > /dev/null || (MERIDIAN_PASSTHROUGH=1 meridian > /dev/null 2>&1 &); ANTHROPIC_API_KEY=dummy ANTHROPIC_BASE_URL=http://127.0.0.1:3456 openchamber --host 100.72.229.46 --ui-password "$_OPENCHAMBER_PASSWORD"'
 
 # LazyGit: run in-place, cd to the worktree we ended in (if switched)
