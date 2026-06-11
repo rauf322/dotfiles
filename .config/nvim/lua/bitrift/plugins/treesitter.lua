@@ -32,14 +32,12 @@ for _, parser in ipairs(parsers) do
   end)
 end
 
-local indent_disabled = { typescriptreact = true }
-
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("TreesitterSetup", { clear = true }),
   callback = function(args)
     local ok = pcall(vim.treesitter.start, args.buf)
-    if ok and not indent_disabled[args.match] then
-      vim.bo[args.buf].indentexpr = "v:lua.vim.treesitter.indentexpr()"
+    if ok then
+      vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     end
   end,
 })

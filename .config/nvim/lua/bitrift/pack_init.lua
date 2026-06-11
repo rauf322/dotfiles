@@ -93,9 +93,6 @@ vim.pack.add({
   "https://github.com/folke/flash.nvim",
   "https://github.com/Aasim-A/scrollEOF.nvim",
 
-  -- Navigation
-  "https://github.com/christoomey/vim-tmux-navigator",
-
   -- Diagnostics
   "https://github.com/folke/trouble.nvim",
   "https://github.com/folke/todo-comments.nvim",
@@ -120,7 +117,7 @@ vim.pack.add({
   "https://github.com/vuki656/package-info.nvim",
   "https://github.com/stevearc/quicker.nvim",
   "https://github.com/kevinhwang91/nvim-bqf",
-  "https://github.com/NickvanDyke/opencode.nvim",
+  { src = "https://github.com/NickvanDyke/opencode.nvim", version = vim.version.range("*") },
 })
 
 -- Built-in packages
