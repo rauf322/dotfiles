@@ -126,27 +126,6 @@
                             "to": [{ "key_code": "left_command" }]
                         }
                     ]
-                },
-                {
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": true,
-                        "product_id": 16402,
-                        "vendor_id": 12625
-                    },
-                    "ignore": false,
-                    "ignore_vendor_events": true,
-                    "treat_as_built_in_keyboard": true,
-                    "simple_modifications": [
-                        {
-                            "from": { "key_code": "left_command" },
-                            "to": [{ "key_code": "left_control" }]
-                        },
-                        {
-                            "from": { "key_code": "left_control" },
-                            "to": [{ "key_code": "left_command" }]
-                        }
-                    ]
                 }
             ],
             "fn_function_keys": [
