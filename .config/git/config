@@ -64,5 +64,3 @@
 	syntax-theme = base16
 [push]
 	autoSetupRemote = true
-[remote "origin"]
-	fetch = +refs/heads/*:refs/remotes/origin/*
