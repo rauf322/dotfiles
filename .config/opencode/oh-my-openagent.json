@@ -1,24 +1,68 @@
 {
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
-  "google_auth": false,
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
   "agents": {
+    "build": {
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
+    },
+    "plan": {
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
+    },
+    "sisyphus": {
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
+    },
+    "hephaestus": {
+      "model": "openai/gpt-5.5"
+    },
+    "sisyphus-junior": {
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
+    },
+    "OpenCode-Builder": {
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
+    },
+    "prometheus": {
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
+    },
+    "metis": {
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
+    },
+    "momus": {
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
+    },
     "librarian": {
-      "model": "google/gemini-3-flash"
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
     },
     "explore": {
-      "model": "google/gemini-3-flash"
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
     },
     "oracle": {
-      "model": "anthropic/claude-opus-4-6"
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
     },
     "frontend-ui-ux-engineer": {
-      "model": "google/gemini-3-pro-high"
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
     },
     "document-writer": {
-      "model": "google/gemini-3-flash"
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
     },
     "multimodal-looker": {
-      "model": "google/gemini-3-flash"
+      "model": "zai-coding-plan/glm-5v-turbo",
+      "fallback_models": ["openai/gpt-5.5"]
+    },
+    "atlas": {
+      "model": "zai-coding-plan/glm-5.2",
+      "fallback_models": ["openai/gpt-5.5"]
     }
   }
 }

@@ -46,6 +46,7 @@ alias pull="git pull"
 alias status="git status"
 alias push="git push"
 alias python="python3"
+alias gitsync='git config --replace-all remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git config remote.origin.prune true && git fetch origin --prune --tags'
 
 
 # File type specific nvim aliases
@@ -69,7 +70,46 @@ alias b="bun"
 # Opencode alias
 alias p='OPENCODE_EXPERIMENTAL=1 opencode --port --continue'
 alias pweb2='OPENCODE_EXPERIMENTAL=1 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0'
-alias pweb='OPENCODE_EXPERIMENTAL=1 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0'
+pweb() {
+  local tailscale_ip password
+
+  tailscale_ip="$(tailscale ip -4 2>/dev/null | head -n 1)"
+  if [[ -z "$tailscale_ip" ]]; then
+    echo "Tailscale IP not found. Is Tailscale running?" >&2
+    return 1
+  fi
+
+  if ! lsof -nP -iTCP:4096 -sTCP:LISTEN >/dev/null 2>&1; then
+    OPENCODE_EXPERIMENTAL=1 opencode serve --hostname 127.0.0.1 --port 4096 >/tmp/opencode-web.log 2>&1 &
+  fi
+
+  password="${OPENCHAMBER_UI_PASSWORD:-}"
+  if [[ -z "$password" ]]; then
+    read -rs "password?OpenChamber UI password: "
+    echo
+  fi
+
+  openchamber stop -p 3000 >/dev/null 2>&1 || true
+  OPENCODE_HOST=http://127.0.0.1:4096 \
+    OPENCODE_SKIP_START=true \
+    OPENCHAMBER_UI_PASSWORD="$password" \
+    openchamber --host "$tailscale_ip" --port 3000
+
+  echo "OpenChamber: http://$tailscale_ip:3000/"
+}
+
+pwoff() {
+  local opencode_pid
+
+  openchamber stop -p 3000 >/dev/null 2>&1 || true
+
+  opencode_pid="$(lsof -tiTCP:4096 -sTCP:LISTEN -c opencode 2>/dev/null | head -n 1)"
+  if [[ -n "$opencode_pid" ]]; then
+    kill "$opencode_pid"
+  fi
+
+  echo "OpenChamber stopped. OpenCode web server stopped if it was running on 4096."
+}
 
 # LazyGit: run in-place, cd to the worktree we ended in (if switched)
 lg() {
@@ -144,3 +184,7 @@ bindkey '^T' fzf-nvim-widget
 
 # bun completions
 [ -s "/Users/rauffaizov/.bun/_bun" ] && source "/Users/rauffaizov/.bun/_bun"
+
+# >>> oh-my-opencode-slim background subagents >>>
+export OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true
+# <<< oh-my-opencode-slim background subagents <<<
