@@ -67,7 +67,7 @@ vim.pack.add({
   "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
 
   -- File explorer
-  { src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = "v3.x" },
+  { src = "https://github.com/nvim-tree/nvim-tree.lua", version = vim.version.range("1.x") },
 
   -- UI
   "https://github.com/nvimdev/dashboard-nvim",
@@ -133,7 +133,7 @@ require("bitrift.plugins.mason")
 require("bitrift.plugins.linting.formatingLinting")
 require("bitrift.plugins.telescope")
 require("bitrift.plugins.blink-cmp")
-require("bitrift.plugins.neotree")
+require("bitrift.plugins.nvimtree")
 require("bitrift.plugins.dashboard")
 require("bitrift.plugins.snacks")
 require("bitrift.plugins.noice")
