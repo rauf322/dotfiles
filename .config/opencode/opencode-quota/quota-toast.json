@@ -1,6 +1,6 @@
 {
   "enabledProviders": "auto",
-  "enableToast": true,
+  "enableToast": false,
   "formatStyle": "allWindows",
   "percentDisplayMode": "remaining",
   "showSessionTokens": true,
@@ -9,7 +9,7 @@
     "formatStyle": "allWindows"
   },
   "tuiCompactStatus": {
-    "enabled": true,
+    "enabled": false,
     "homeBottom": true,
     "sessionPrompt": true,
     "formatStyle": "singleWindow"

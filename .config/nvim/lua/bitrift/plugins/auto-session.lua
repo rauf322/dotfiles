@@ -11,7 +11,7 @@ require("auto-session").setup({
   },
   pre_save_cmds = {
     function()
-      pcall(vim.cmd, "Neotree close")
+      pcall(vim.cmd, "NvimTreeClose")
     end,
   },
   post_restore_cmds = {

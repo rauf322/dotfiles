@@ -3,7 +3,8 @@
         "vim",
         "map",
         "Snacks",
-        "dapui"
+        "dapui",
+        "opencode_terminal_module"
     ],
     "diagnostics.disable": [
         "undefined-doc-name",

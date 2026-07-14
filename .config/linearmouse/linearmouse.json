@@ -1,47 +1,57 @@
 {
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.11.2",
   "schemes" : [
     {
       "if" : {
         "device" : {
+          "category" : "mouse",
           "productID" : "0xc548",
           "productName" : "USB Receiver",
-          "category" : "mouse",
           "vendorID" : "0x46d"
         }
       },
       "pointer" : {
-        "speed" : 1,
+        "acceleration" : 1.3906,
         "disableAcceleration" : true,
-        "acceleration" : 1.3906
+        "speed" : 1
       },
       "scrolling" : {
-        "reverse" : true,
-        "speed" : 0,
         "acceleration" : {
-          "vertical" : 2.99,
-          "horizontal" : 1
+          "horizontal" : 1,
+          "vertical" : 2.99
         },
-        "distance" : "auto"
+        "distance" : "auto",
+        "reverse" : true,
+        "speed" : 0
       }
     },
     {
       "buttons" : {
-        "universalBackForward" : true,
-        "switchPrimaryButtonAndSecondaryButtons" : false,
         "clickDebouncing" : {
           "timeout" : 0
+        },
+        "switchPrimaryButtonAndSecondaryButtons" : false,
+        "universalBackForward" : true
+      },
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0xb034",
+          "productName" : "MX Master 3S",
+          "serialNumber" : "E5E6B90F",
+          "vendorID" : "0x46d"
         }
       },
       "pointer" : {
-        "disableAcceleration" : true,
-        "acceleration" : 1.7031
+        "acceleration" : 1.2,
+        "disableAcceleration" : true
       },
       "scrolling" : {
-        "distance" : {
-          "vertical" : "auto"
-        },
         "acceleration" : {
           "vertical" : 1.2
+        },
+        "distance" : {
+          "vertical" : "auto"
         },
         "reverse" : {
           "horizontal" : false,
@@ -50,34 +60,24 @@
         "speed" : {
           "vertical" : 0
         }
-      },
-      "if" : {
-        "device" : {
-          "productID" : "0xb034",
-          "vendorID" : "0x46d",
-          "productName" : "MX Master 3S",
-          "serialNumber" : "E5E6B90F",
-          "category" : "mouse"
-        }
       }
     },
     {
       "if" : {
         "device" : {
-          "productName" : "ZOWIE Gaming mouse",
-          "vendorID" : "0x1af3",
+          "category" : "mouse",
           "productID" : "0x1",
-          "category" : "mouse"
+          "productName" : "ZOWIE Gaming mouse",
+          "vendorID" : "0x1af3"
         }
+      },
+      "pointer" : {
+        "acceleration" : 1.2945,
+        "disableAcceleration" : true
       },
       "scrolling" : {
         "reverse" : true
-      },
-      "pointer" : {
-        "disableAcceleration" : true,
-        "acceleration" : 1.2945
       }
     }
-  ],
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+  ]
 }

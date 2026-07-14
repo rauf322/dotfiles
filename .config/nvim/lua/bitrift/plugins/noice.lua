@@ -28,10 +28,6 @@ require("noice").setup({
       opts = { skip = true },
     },
     {
-      filter = { event = "notify", find = "Neo%-tree.*Toggling hidden files" },
-      opts = { skip = true },
-    },
-    {
       filter = { event = "notify", find = "No code actions available" },
       opts = { skip = true },
     },
