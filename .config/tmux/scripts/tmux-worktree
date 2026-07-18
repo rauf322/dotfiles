@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-sessionizer/tmux-sessionizer.conf"
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+    printf '%s\n' \
+        "Usage: tmux-worktree" \
+        "" \
+        "Create or open a Git worktree in its own tmux session." \
+        "Run it inside a worktree, or choose a repository from the picker."
+    exit 0
+fi
+
+die() {
+    printf '%s\n' "$*" >&2
+    if [[ -n "${TMUX:-}" ]]; then
+        read -r -p "Press enter to close..." _
+    fi
+    exit 1
+}
+
+for command in git fzf tmux; do
+    command -v "$command" >/dev/null 2>&1 || die "Required command not found: $command"
+done
+
+declare -a TS_DIRS=()
+declare -a TS_SEARCH_PATHS=()
+[[ -f "$CONFIG_FILE" ]] && source "$CONFIG_FILE"
+
+find_repositories() {
+    local entry root
+    local -a roots=("${TS_DIRS[@]}" "${TS_SEARCH_PATHS[@]}")
+
+    if ((${#roots[@]} == 0)); then
+        roots=("$HOME/projects" "$HOME/work" "$HOME/personal")
+    fi
+
+    for entry in "${roots[@]}"; do
+        root="${entry%:[0-9]*}"
+        [[ -d "$root" ]] || continue
+        find "$root" -mindepth 1 -maxdepth 3 -type d -name .git -prune -print 2>/dev/null
+    done | while IFS= read -r git_dir; do
+        dirname "$git_dir"
+    done | LC_ALL=C sort -u
+}
+
+session_environment() {
+    local session="$1"
+    local variable="$2"
+    local value
+
+    value=$(tmux show-environment -t "=$session" "$variable" 2>/dev/null || true)
+    if [[ "$value" == "$variable="* ]]; then
+        printf '%s' "${value#*=}"
+    fi
+    return 0
+}
+
+worktree_session_name() {
+    local project_name="$1"
+    local branch="$2"
+    printf '%s__%s' "$project_name" "$branch" | LC_ALL=C tr -cs '[:alnum:]_@.-' '_'
+}
+
+worktree_session_matches() {
+    local session_name="$1"
+    local project_name="$2"
+    local branch="$3"
+    local worktree_path="$4"
+
+    tmux has-session -t "=$session_name" 2>/dev/null || return 1
+    [[ $(session_environment "$session_name" TMUX_WORKTREE) == "1" ]] || return 1
+    [[ $(session_environment "$session_name" TMUX_WORKTREE_PROJECT) == "$project_name" ]] || return 1
+    [[ $(session_environment "$session_name" TMUX_WORKTREE_BRANCH) == "$branch" ]] || return 1
+    [[ $(session_environment "$session_name" TMUX_WORKTREE_PATH) == "$worktree_path" ]]
+}
+
+pane_path="${PWD}"
+if [[ -n "${TMUX:-}" ]]; then
+    pane_path=$(tmux display-message -p '#{pane_current_path}')
+fi
+
+if common_git_dir=$(git -C "$pane_path" rev-parse --path-format=absolute --git-common-dir 2>/dev/null); then
+    selected_repo="$pane_path"
+else
+    selected_repo=$(find_repositories | fzf --no-preview --height=100% --prompt='Project> ') || exit 0
+    [[ -n "$selected_repo" ]] || exit 0
+    common_git_dir=$(git -C "$selected_repo" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || die "Not a Git repository: $selected_repo"
+fi
+
+if [[ $(basename "$common_git_dir") == ".git" ]] && [[ $(git --git-dir="$common_git_dir" rev-parse --is-bare-repository) == "true" ]]; then
+    repo_root=$(dirname "$common_git_dir")
+    worktree_root="$repo_root"
+else
+    repo_root=$(git -C "$selected_repo" rev-parse --show-toplevel 2>/dev/null) || die "Not a Git working tree: $selected_repo"
+    worktree_root="${repo_root}.worktrees"
+fi
+
+project_name=$(basename "$repo_root")
+
+branch_menu=$(git -C "$repo_root" for-each-ref --format='%(refname:short)' refs/heads)
+selection=$(printf '[new branch]\n%s\n' "$branch_menu" | awk 'NF && !seen[$0]++' | fzf --no-preview --height=100% --prompt='Branch> ') || exit 0
+[[ -n "$selection" ]] || exit 0
+
+if [[ "$selection" == "[new branch]" ]]; then
+    read -r -p "New branch name: " branch
+    [[ -n "$branch" ]] || exit 0
+    git check-ref-format --branch "$branch" >/dev/null 2>&1 || die "Invalid branch name: $branch"
+    if git -C "$repo_root" show-ref --verify --quiet "refs/heads/$branch"; then
+        die "Branch already exists: $branch"
+    fi
+    create_branch=true
+else
+    branch="$selection"
+    create_branch=false
+fi
+
+existing_path=$(git -C "$repo_root" worktree list --porcelain | awk -v wanted="refs/heads/$branch" '
+    /^worktree / { path = substr($0, 10) }
+    $0 == "branch " wanted { print path; exit }
+')
+
+if [[ -n "$existing_path" ]]; then
+    worktree_path="$existing_path"
+else
+    worktree_path="$worktree_root/$branch"
+    if [[ -e "$worktree_path" ]]; then
+        die "Path exists but is not the worktree for $branch: $worktree_path"
+    fi
+
+    mkdir -p "$(dirname "$worktree_path")"
+    if [[ "$create_branch" == true ]]; then
+        git -C "$repo_root" worktree add -b "$branch" "$worktree_path"
+    else
+        git -C "$repo_root" worktree add "$worktree_path" "$branch"
+    fi
+fi
+
+session_name=$(worktree_session_name "$project_name" "$branch")
+
+if tmux has-session -t "=$session_name" 2>/dev/null && ! worktree_session_matches "$session_name" "$project_name" "$branch" "$worktree_path"; then
+    die "Session name is already in use: $session_name"
+fi
+
+if ! tmux has-session -t "=$session_name" 2>/dev/null; then
+    tmux new-session -d -s "$session_name" -c "$worktree_path"
+    tmux set-environment -t "=$session_name" TMUX_WORKTREE 1
+    tmux set-environment -t "=$session_name" TMUX_WORKTREE_PROJECT "$project_name"
+    tmux set-environment -t "=$session_name" TMUX_WORKTREE_BRANCH "$branch"
+    tmux set-environment -t "=$session_name" TMUX_WORKTREE_PATH "$worktree_path"
+    tmux new-window -t "$session_name:" -c "$worktree_path"
+    if command -v nvim >/dev/null 2>&1; then
+        tmux send-keys -t "$session_name:2" nvim Enter
+        tmux select-window -t "$session_name:2"
+    fi
+fi
+
+if [[ -n "${TMUX:-}" ]]; then
+    tmux switch-client -t "=$session_name"
+else
+    tmux attach-session -t "=$session_name"
+fi
