@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for command in tmux fzf-tmux; do
+    command -v "$command" >/dev/null 2>&1 || {
+        printf 'Required command not found: %s\n' "$command" >&2
+        exit 1
+    }
+done
+
+tmux_option_or_fallback() {
+    local option_value
+    option_value=$(tmux show-option -gqv "$1")
+    printf '%s' "${option_value:-$2}"
+}
+
+worktree_switcher_popup() {
+    local border_label="$1"
+    local preview_command="$2"
+    shift 2
+
+    local width height layout preview_location preview_ratio prompt pointer additional_options
+    local -a theme_options=()
+
+    width=$(tmux_option_or_fallback '@worktree-switcher-window-width' '85%')
+    height=$(tmux_option_or_fallback '@worktree-switcher-window-height' '85%')
+    layout=$(tmux_option_or_fallback '@worktree-switcher-layout' 'reverse')
+    preview_location=$(tmux_option_or_fallback '@worktree-switcher-preview-location' 'right')
+    preview_ratio=$(tmux_option_or_fallback '@worktree-switcher-preview-ratio' '50%')
+    prompt=$(tmux_option_or_fallback '@worktree-switcher-prompt' ' ')
+    pointer=$(tmux_option_or_fallback '@worktree-switcher-pointer' '▶')
+    additional_options=$(tmux show-option -gqv '@worktree-switcher-additional-options')
+    [[ -n "$additional_options" ]] && eval "theme_options=($additional_options)"
+
+    fzf-tmux -p "$width,$height" \
+        --layout="$layout" \
+        --prompt="$prompt" \
+        --pointer="$pointer" \
+        --preview="$preview_command" \
+        --preview-window="$preview_location,$preview_ratio,," \
+        --border-label="$border_label" \
+        --bind='?:toggle-preview' \
+        --bind='ctrl-u:preview-half-page-up' \
+        --bind='ctrl-d:preview-half-page-down' \
+        --bind='focus:transform-preview-label:echo [ {1} ]' \
+        --scrollbar='▌▐' \
+        --exit-0 \
+        "${theme_options[@]}" \
+        "$@"
+}
+
+session_environment() {
+    local session="$1"
+    local variable="$2"
+    local value
+
+    value=$(tmux show-environment -t "=$session" "$variable" 2>/dev/null || true)
+    if [[ "$value" == "$variable="* ]]; then
+        printf '%s' "${value#*=}"
+    fi
+    return 0
+}
+
+worktree_session_records() {
+    local wanted_project="$1"
+    local session project branch
+
+    while IFS= read -r session; do
+        [[ $(session_environment "$session" TMUX_WORKTREE) == "1" ]] || continue
+        project=$(session_environment "$session" TMUX_WORKTREE_PROJECT)
+        branch=$(session_environment "$session" TMUX_WORKTREE_BRANCH)
+        [[ "$project" == "$wanted_project" && -n "$branch" ]] || continue
+        printf '%s\t%s\n' "$branch" "$session"
+    done < <(tmux list-sessions -F '#{session_name}')
+}
+
+prioritize_last_target() {
+    local preferred="$1"
+    awk -F $'\t' -v preferred="$preferred" '
+        !seen[$0]++ {
+            if (!found && $1 == preferred) {
+                first = $0
+                found = 1
+            } else {
+                records[++count] = $0
+            }
+        }
+        END {
+            if (found) print first
+            for (i = 1; i <= count; i++) print records[i]
+        }
+    '
+}
+
+declare -A seen_projects=()
+menu=""
+current_session=$(tmux display-message -p '#S')
+last_session=$(tmux display-message -p '#{client_last_session}')
+last_target="$last_session"
+
+if [[ $(session_environment "$last_session" TMUX_WORKTREE) == "1" ]]; then
+    last_target=$(session_environment "$last_session" TMUX_WORKTREE_PROJECT)
+fi
+
+while IFS= read -r session; do
+    [[ $(session_environment "$session" TMUX_POPUP) == "1" ]] && continue
+    marker=$(session_environment "$session" TMUX_WORKTREE)
+    if [[ "$marker" == "1" ]]; then
+        project=$(session_environment "$session" TMUX_WORKTREE_PROJECT)
+        [[ -n "$project" ]] || continue
+        if [[ -z "${seen_projects[$project]:-}" ]]; then
+            menu+="${project}"$'\t'"worktree-project"$'\t'"${project}"$'\n'
+            seen_projects[$project]=1
+        fi
+    elif [[ "$session" != "$current_session" ]]; then
+        menu+="${session}"$'\t'"session"$'\t'"${session}"$'\n'
+    fi
+done < <(tmux list-sessions -F '#{session_name}')
+
+[[ -n "$menu" ]] || exit 0
+preview_script="$HOME/.config/tmux/scripts/tmux-session-preview"
+selection=$(printf '%s' "$menu" | prioritize_last_target "$last_target" | worktree_switcher_popup "Current session: $current_session" "$preview_script {2} {3}" --delimiter=$'\t' --with-nth=1) || exit 0
+selection_type=$(printf '%s' "$selection" | cut -f2)
+
+if [[ "$selection_type" == "worktree-project" ]]; then
+    project=$(printf '%s' "$selection" | cut -f3)
+    last_branch=""
+    if [[ $(session_environment "$last_session" TMUX_WORKTREE_PROJECT) == "$project" ]]; then
+        last_branch=$(session_environment "$last_session" TMUX_WORKTREE_BRANCH)
+    fi
+    selection=$(worktree_session_records "$project" | awk -F $'\t' '!seen[$1]++' | prioritize_last_target "$last_branch" | worktree_switcher_popup "$project · open branches" "$preview_script session {2}" --delimiter=$'\t' --with-nth=1) || exit 0
+    target_session=$(printf '%s' "$selection" | cut -f2)
+else
+    target_session=$(printf '%s' "$selection" | cut -f3)
+fi
+
+[[ -n "$target_session" ]] && tmux switch-client -t "=$target_session"
