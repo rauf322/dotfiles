@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for command in tmux zsh shasum; do
+    command -v "$command" >/dev/null 2>&1 || {
+        printf 'Required command not found: %s\n' "$command" >&2
+        exit 1
+    }
+done
+
+if [[ "${1:-}" == "--attach" ]]; then
+    socket_path="$2"
+    session_name="$3"
+    exec env -u TMUX tmux -S "$socket_path" attach-session -t "$session_name"
+fi
+
+[[ -n "${TMUX:-}" ]] || {
+    printf '%s\n' "Not inside tmux." >&2
+    exit 1
+}
+
+current_session=$(tmux display-message -p '#{session_name}')
+if [[ "$current_session" == __opencode_* ]]; then
+    tmux detach-client
+    exit 0
+fi
+
+requested_path=$(tmux display-message -p '#{pane_current_path}')
+socket_path="${TMUX%%,*}"
+tmux_command=(tmux)
+
+current_path=$(cd "$requested_path" && pwd -P)
+project_name=$(printf '%s' "$(basename "$current_path")" | LC_ALL=C tr -cs '[:alnum:]_.-' '_')
+path_digest=$(printf '%s' "$current_path" | shasum -a 256 | cut -c1-10)
+session_name="__opencode_${project_name}_${path_digest}"
+
+if ! "${tmux_command[@]}" has-session -t "$session_name" 2>/dev/null; then
+    "${tmux_command[@]}" new-session -d -s "$session_name" -c "$current_path"
+    "${tmux_command[@]}" set-environment -t "$session_name" TMUX_POPUP 1
+    "${tmux_command[@]}" set-option -t "$session_name" status off
+    "${tmux_command[@]}" send-keys -t "$session_name:" p Enter
+fi
+
+printf -v attach_command '%q --attach %q %q' "$0" "$socket_path" "$session_name"
+tmux display-popup -B -d "$current_path" -w 100% -h 100% -E "$attach_command"

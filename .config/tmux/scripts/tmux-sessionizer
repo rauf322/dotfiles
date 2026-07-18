@@ -209,8 +209,12 @@ cleanup_dead_panes() {
 
 sanity_check
 
-# if TS_SEARCH_PATHS is not set use default
-[[ -n "$TS_SEARCH_PATHS" ]] || TS_SEARCH_PATHS=(~/ ~/personal ~/personal/dev/env/.config)
+# Use the configured directory list, then fall back to the sessionizer defaults.
+if [[ ${#TS_DIRS[@]} -gt 0 ]]; then
+    TS_SEARCH_PATHS=("${TS_DIRS[@]}")
+elif [[ -z "$TS_SEARCH_PATHS" ]]; then
+    TS_SEARCH_PATHS=(~/ ~/personal ~/personal/dev/env/.config)
+fi
 
 # Add any extra search paths to the TS_SEARCH_PATHS array
 # e.g : EXTRA_SEARCH_PATHS=("$HOME/extra1:4" "$HOME/extra2")
@@ -220,20 +224,76 @@ if [[ ${#TS_EXTRA_SEARCH_PATHS[@]} -gt 0 ]]; then
     TS_SEARCH_PATHS+=("${TS_EXTRA_SEARCH_PATHS[@]}")
 fi
 
-# utility function to find directories
+worktree_session_name() {
+    local project_name="$1"
+    local branch="$2"
+    printf '%s__%s' "$project_name" "$branch" | LC_ALL=C tr -cs '[:alnum:]_@.-' '_'
+}
+
+session_environment() {
+    local session="$1"
+    local variable="$2"
+    local value
+
+    value=$(tmux show-environment -t "=$session" "$variable" 2>/dev/null || true)
+    [[ "$value" == "$variable="* ]] && printf '%s' "${value#*=}"
+}
+
+worktree_session_matches() {
+    local session_name="$1"
+    local project_name="$2"
+    local branch="$3"
+    local worktree_path="$4"
+
+    tmux has-session -t "=$session_name" 2>/dev/null || return 1
+    [[ $(session_environment "$session_name" TMUX_WORKTREE) == "1" ]] || return 1
+    [[ $(session_environment "$session_name" TMUX_WORKTREE_PROJECT) == "$project_name" ]] || return 1
+    [[ $(session_environment "$session_name" TMUX_WORKTREE_BRANCH) == "$branch" ]] || return 1
+    [[ $(session_environment "$session_name" TMUX_WORKTREE_PATH) == "$worktree_path" ]]
+}
+
+emit_worktree_records() {
+    local repo_root="$1"
+    local project_name branch worktree_path session_name label
+
+    project_name=$(basename "$repo_root")
+    while IFS=$'\t' read -r worktree_path branch; do
+        [[ -n "$worktree_path" && -n "$branch" ]] || continue
+        [[ -d "$worktree_path" ]] || continue
+        session_name=$(worktree_session_name "$project_name" "$branch")
+
+        if worktree_session_matches "$session_name" "$project_name" "$branch" "$worktree_path"; then
+            label="${branch} [open]"
+        else
+            label="$branch"
+        fi
+
+        printf '%s\tworktree\t%s\t%s\t%s\t%s\n' "$label" "$session_name" "$worktree_path" "$project_name" "$branch"
+    done < <(git -C "$repo_root" worktree list --porcelain 2>/dev/null | awk '
+        /^worktree / { path = substr($0, 10) }
+        /^branch refs\/heads\// { print path "\t" substr($0, 19) }
+    ')
+}
+
+# utility function to build the session/project/worktree menu
 find_dirs() {
-    # list TMUX sessions
-    if [[ -n "${TMUX}" ]]; then
-        current_session=$(tmux display-message -p '#S')
-        tmux list-sessions -F "[TMUX] #{session_name}" 2>/dev/null | grep -vFx "[TMUX] $current_session"
-    else
-        tmux list-sessions -F "[TMUX] #{session_name}" 2>/dev/null
+    # Keep active sessions at the top. Worktree sessions stay nested under their project.
+    if tmux ls &>/dev/null; then
+        current_session=""
+        [[ -n "${TMUX}" ]] && current_session=$(tmux display-message -p '#S')
+        while IFS= read -r sess; do
+            [[ "$sess" == "$current_session" ]] && continue
+            tmux show-environment -t "=$sess" TMUX_POPUP 2>/dev/null | grep -q '=1$' && continue
+            tmux show-environment -t "=$sess" TMUX_WORKTREE 2>/dev/null | grep -q '=1$' && continue
+            printf '[TMUX] %s\tsession\t%s\t\n' "$sess" "$sess"
+        done < <(tmux list-sessions -F '#{session_name}' 2>/dev/null)
     fi
 
     # note: TS_SEARCH_PATHS is an array of paths to search for directories
     # if the path ends with :number, it will search for directories with a max depth of number ;)
     # if there is no number, it will search for directories with a max depth defined by TS_MAX_DEPTH or 1 if not set
     for entry in "${TS_SEARCH_PATHS[@]}"; do
+        depth=""
         # Check if entry as :number as suffix then adapt the maxdepth parameter
         if [[ "$entry" =~ ^([^:]+):([0-9]+)$ ]]; then
             path="${BASH_REMATCH[1]}"
@@ -242,8 +302,21 @@ find_dirs() {
             path="$entry"
         fi
 
-        [[ -d "$path" ]] && find "$path" -mindepth 1 -maxdepth "${depth:-${TS_MAX_DEPTH:-1}}" -path '*/.git' -prune -o -type d -print
+        if [[ -d "$path" ]]; then
+            while IFS= read -r dir; do
+                # Linked Git worktrees appear through their parent bare repository.
+                [[ -f "$dir/.git" ]] && continue
+
+                if [[ -d "$dir/.git" ]] && [[ $(git --git-dir="$dir/.git" rev-parse --is-bare-repository 2>/dev/null) == "true" ]]; then
+                    printf '%s\tworktree-container\t\t%s\n' "$dir" "$dir"
+                    continue
+                fi
+
+                printf '%s\tpath\t\t%s\n' "$dir" "$dir"
+            done < <(find "$path" -mindepth 1 -maxdepth "${depth:-${TS_MAX_DEPTH:-1}}" -path '*/.git' -prune -o -type d -print)
+        fi
     done
+
 }
 
 handle_session_cmd() {
@@ -318,7 +391,60 @@ if [[ ! -z $session_cmd ]]; then
 elif [[ ! -z $user_selected ]]; then
     selected="$user_selected"
 else
-    selected=$(find_dirs | fzf)
+    selection=$(find_dirs | awk -F $'\t' '!seen[$0]++' | fzf --no-preview --prompt='Project> ' --delimiter=$'\t' --with-nth=1)
+    selection_type=$(printf '%s' "$selection" | cut -f2)
+
+    if [[ "$selection_type" == "worktree-container" ]]; then
+        selected=$(printf '%s' "$selection" | cut -f4-)
+        worktree_records=$(emit_worktree_records "$selected")
+
+        if [[ -n "$worktree_records" ]]; then
+            selection=$(printf '%s\n' "$worktree_records" | awk -F $'\t' '!seen[$0]++' | fzf --no-preview --height=100% --prompt='Worktree> ' --delimiter=$'\t' --with-nth=1)
+            selection_type=$(printf '%s' "$selection" | cut -f2)
+        else
+            selection_type="path"
+        fi
+    fi
+
+    case "$selection_type" in
+    session)
+        switch_to "$(printf '%s' "$selection" | cut -f3)"
+        exit 0
+        ;;
+    worktree)
+        selected_name=$(printf '%s' "$selection" | cut -f3)
+        selected=$(printf '%s' "$selection" | cut -f4)
+        worktree_project=$(printf '%s' "$selection" | cut -f5)
+        worktree_branch=$(printf '%s' "$selection" | cut -f6)
+
+        if tmux has-session -t "=$selected_name" 2>/dev/null && ! worktree_session_matches "$selected_name" "$worktree_project" "$worktree_branch" "$selected"; then
+            printf 'Session name is already in use: %s\n' "$selected_name"
+            read -r -p "Press enter to close..." _
+            exit 1
+        fi
+
+        if ! tmux has-session -t "=$selected_name" 2>/dev/null; then
+            tmux new-session -ds "$selected_name" -c "$selected"
+            tmux set-environment -t "=$selected_name" TMUX_WORKTREE 1
+            tmux set-environment -t "=$selected_name" TMUX_WORKTREE_PROJECT "$worktree_project"
+            tmux set-environment -t "=$selected_name" TMUX_WORKTREE_BRANCH "$worktree_branch"
+            tmux set-environment -t "=$selected_name" TMUX_WORKTREE_PATH "$selected"
+            tmux new-window -t "$selected_name:" -c "$selected"
+            tmux send-keys -t "$selected_name:2" "nvim" Enter
+            tmux select-window -t "$selected_name:2"
+            hydrate "$selected_name" "$selected"
+        fi
+
+        switch_to "$selected_name"
+        exit 0
+        ;;
+    path)
+        selected=$(printf '%s' "$selection" | cut -f4-)
+        ;;
+    *)
+        selected=""
+        ;;
+    esac
 fi
 
 if [[ -z $selected ]]; then
