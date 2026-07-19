@@ -9,6 +9,24 @@ for command in tmux zsh shasum; do
     }
 done
 
+if [[ "${1:-}" == "--watch" ]]; then
+    socket_path="$2"
+    owner_session="$3"
+    owner_pane="$4"
+    owner_pid="$5"
+    hidden_session="$6"
+    tmux_command=(tmux -S "$socket_path")
+
+    while "${tmux_command[@]}" has-session -t "$hidden_session" 2>/dev/null; do
+        owner_state=$("${tmux_command[@]}" display-message -p -t "$owner_pane" '#{session_id} #{pane_dead} #{pane_pid}' 2>/dev/null) || break
+        [[ "$owner_state" == "$owner_session 0 $owner_pid" ]] || break
+        sleep 1
+    done
+
+    "${tmux_command[@]}" kill-session -t "$hidden_session" 2>/dev/null || true
+    exit 0
+fi
+
 if [[ "${1:-}" == "--attach" ]]; then
     socket_path="$2"
     session_name="$3"
@@ -27,19 +45,31 @@ if [[ "$current_session" == __opencode_* ]]; then
 fi
 
 requested_path=$(tmux display-message -p '#{pane_current_path}')
+owner_session=$(tmux display-message -p '#{session_id}')
+owner_pane=$(tmux display-message -p '#{pane_id}')
+owner_token=${owner_pane#%}
+owner_pid=$(tmux display-message -p '#{pane_pid}')
 socket_path="${TMUX%%,*}"
 tmux_command=(tmux)
 
 current_path=$(cd "$requested_path" && pwd -P)
 project_name=$(printf '%s' "$(basename "$current_path")" | LC_ALL=C tr -cs '[:alnum:]_.-' '_')
 path_digest=$(printf '%s' "$current_path" | shasum -a 256 | cut -c1-10)
-session_name="__opencode_${project_name}_${path_digest}"
+session_name="__opencode_${project_name}_${path_digest}_${owner_token}"
 
 if ! "${tmux_command[@]}" has-session -t "$session_name" 2>/dev/null; then
     "${tmux_command[@]}" new-session -d -s "$session_name" -c "$current_path"
     "${tmux_command[@]}" set-environment -t "$session_name" TMUX_POPUP 1
     "${tmux_command[@]}" set-option -t "$session_name" status off
     "${tmux_command[@]}" send-keys -t "$session_name:" p Enter
+fi
+
+watcher_started=$("${tmux_command[@]}" show-option -qv -t "$session_name" @opencode_owner_watcher 2>/dev/null || true)
+if [[ "$watcher_started" != 1 ]]; then
+    "${tmux_command[@]}" set-option -t "$session_name" @opencode_owner_watcher 1
+    hidden_session=$("${tmux_command[@]}" display-message -p -t "$session_name" '#{session_id}')
+    printf -v watcher_command '%q --watch %q %q %q %q %q' "$0" "$socket_path" "$owner_session" "$owner_pane" "$owner_pid" "$hidden_session"
+    "${tmux_command[@]}" run-shell -b "$watcher_command"
 fi
 
 printf -v attach_command '%q --attach %q %q' "$0" "$socket_path" "$session_name"

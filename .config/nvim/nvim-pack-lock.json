@@ -58,10 +58,6 @@
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
-    "git-worktree.nvim": {
-      "rev": "3ad8c17a3d178ac19be925284389c14114638ebb",
-      "src": "https://github.com/polarmutex/git-worktree.nvim"
-    },
     "gitsigns.nvim": {
       "rev": "50c205548d8b037b7ff6378fca6d21146f0b6161",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
