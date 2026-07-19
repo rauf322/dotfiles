@@ -67,7 +67,3 @@ end, { desc = "opencode: Ask about selection" })
 vim.keymap.set("n", "<leader>oS", function()
   require(opencode_module).select_server()
 end, { desc = "opencode: Select server" })
-
-vim.keymap.set({ "n", "t" }, "<C-p>", function()
-  require("snacks.terminal").toggle(opencode_cmd, opencode_terminal_opts)
-end, { desc = "Toggle opencode" })
