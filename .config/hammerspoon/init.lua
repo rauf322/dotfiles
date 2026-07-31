@@ -28,7 +28,7 @@ end)
 _G.displayWatcher:start()
 
 audioSwitcher.start({
-	preferredSpeaker = "Scarlett Solo USB",
+	preferredSpeaker = "LC32G7xT",
 	builtinSpeaker = "Динамики MacBook Pro",
 	airPodsName = "Rauf’s AirPods #4",
 
