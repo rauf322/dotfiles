@@ -1,27 +1,44 @@
+# Config version for compatibility and deprecations
+# See: https://nikitabobko.github.io/AeroSpace/guide#config-version
+# Fallback value (if you omit the key): config-version = 1
+config-version = 2
+
 after-login-command = []
 
-after-startup-command = []
+after-startup-command = [
+  'exec-and-forget borders active_color=0xffffffff inactive_color=0xffffffff width=4.0',
+  'exec-and-forget sketchybar'
+]
 
 start-at-login = true
+
+# Automatically reload the config when the config file is saved
+# After settinj this to true, reload once manually to start the auto-reloading
+auto-reload-config = true
+
+# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+default-root-container-layout = 'tiles'
+
+accordion-padding = 30
+
+default-root-container-orientation = 'auto'
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+on-focus-changed = ['move-mouse window-lazy-center']
 
 exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE'
 ]
 
-on-focus-changed = ['move-mouse window-lazy-center']
+automatically-unhide-macos-hidden-apps = true
 
-enable-normalization-flatten-containers = true
-enable-normalization-opposite-orientation-for-nested-containers = true
+persistent-workspaces = ["1", "2", "3", "4","6", "7", "8", "9"]
 
-accordion-padding = 30
-
-default-root-container-layout = 'tiles'
-default-root-container-orientation = 'auto'
-
-key-mapping.preset = 'qwerty'
-
-
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+focus-follows-mouse.enabled = false
 
 [gaps]
 inner.horizontal = [{ monitor.'LC32G7xT' = 5 }, { monitor.main = 5 }, 5]
