@@ -19,7 +19,7 @@ require("mason-lspconfig").setup({
     "graphql",
     "emmet_ls",
     "prismals",
-    "ts_ls",
+    "tsgo",
     "pyright",
     "jsonls",
     "dockerls",

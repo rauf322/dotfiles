@@ -1,14 +1,16 @@
-require("snacks").setup({
+local Snacks = require("snacks")
+
+Snacks.setup({
   gh = {},
   picker = {
     sources = {
       files = {
         ignored = true,
-        exclude = { "node_modules", ".git", "dist", "build" },
+        exclude = { "node_modules", ".git", "dist", "build", ".dart_tool" },
       },
       grep = {
         ignored = true,
-        exclude = { "node_modules", ".git", "dist", "build" },
+        exclude = { "node_modules", ".git", "dist", "build", ".dart_tool" },
       },
       gh_issue = {},
       gh_pr = {},
@@ -101,6 +103,7 @@ vim.keymap.set("n", "<leader>pws", function()
       "--hidden",
       "--glob=!.git/",
       "--glob=!node_modules/",
+      "--glob=!.dart_tool/",
       word,
     }),
     efm = "%f:%l:%c:%m",

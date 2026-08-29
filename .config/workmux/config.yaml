@@ -1,0 +1,13 @@
+nerdfont: true
+mode: session
+worktree_dir: .
+window_prefix: "{project}__"
+windows:
+  - name: opencode
+    panes:
+      - command: p
+        focus: true
+  - name: nvim
+    panes:
+      - command: nvim
+        focus: true

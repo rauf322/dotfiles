@@ -44,6 +44,8 @@ vim.pack.add({
   "https://github.com/nvimdev/lspsaga.nvim",
   "https://github.com/Fildo7525/pretty_hover",
   "https://github.com/antosha417/nvim-lsp-file-operations",
+  "https://github.com/nvim-flutter/flutter-tools.nvim",
+  "https://github.com/mfussenegger/nvim-dap",
 
   -- Treesitter
   { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
@@ -129,6 +131,7 @@ vim.keymap.set("n", "<leader>u", "<cmd>Undotree<CR>", { desc = "Toggle Undotree"
 require("bitrift.plugins.colors")
 require("bitrift.plugins.treesitter")
 require("bitrift.plugins.mason")
+require("bitrift.plugins.flutter")
 require("bitrift.plugins.linting.formatingLinting")
 require("bitrift.plugins.telescope")
 require("bitrift.plugins.blink-cmp")
