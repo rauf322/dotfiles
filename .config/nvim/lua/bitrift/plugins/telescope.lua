@@ -10,6 +10,7 @@ telescope.setup({
       "node_modules\\",
       "dist/",
       "build/",
+      "%.dart_tool/",
       "%.o",
       "%.a",
       "%.out",
@@ -33,6 +34,7 @@ telescope.setup({
       "--hidden",
       "--glob=!.git/",
       "--glob=!node_modules/",
+      "--glob=!.dart_tool/",
     },
   },
   pickers = {
