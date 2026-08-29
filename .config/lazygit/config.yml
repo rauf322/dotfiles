@@ -4,3 +4,10 @@ git:
       colorArg: always
 os:
   editPreset: nvim-remote
+
+customCommands:
+  - key: "o"
+    context: "files"
+    command: "nvim -- {{ .SelectedFile.Name | quote }}"
+    description: "Open in nvim"
+    output: terminal

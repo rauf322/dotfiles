@@ -22,6 +22,7 @@ local parsers = {
   "query",
   "vimdoc",
   "c",
+  "dart",
   "markdown",
   "markdown_inline",
 }
