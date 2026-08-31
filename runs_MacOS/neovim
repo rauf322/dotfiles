@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-brew install neovim
-brew install cmake
-brew install gettext
-brew install lua 

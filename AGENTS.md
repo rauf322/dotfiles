@@ -2,16 +2,17 @@
 
 ## Build/Test/Lint Commands
 
-- **Run all setup scripts**: `./run` (executes scripts in runs_MacOS/)
-- **Run specific component**: `./run <filter>` (e.g., `./run nvim`, `./run tmux`)
+- **Bootstrap a machine**: `./run` (installs Homebrew if needed, then `brew bundle --file=Brewfile`, then bun + opencode)
 - **Test mode (preview)**: `./run --dry` (shows what would execute without running)
+- **Sync configs**: `./dev-env --copy:root:config` (pull live ~/.config into repo) / `--copy:dir:config` (deploy repo to ~/.config); same for `:local`
 - **Build C components**: `make` (in .config/sketchybar/helpers/ - builds event providers/menus)
 
 ## Repository Structure
 
-- `runs_MacOS/`: Individual setup scripts for each tool (aerospace, cursor, neovim, etc.)
-- `.config/`: Application configurations (nvim, sketchybar, tmux, fish, etc.)
+- `Brewfile`: All Homebrew taps, formulae, casks, fonts, and VS Code extensions
+- `.config/`: Application configurations (nvim, sketchybar, tmux, ghostty, etc.)
 - `.local/scripts/`: Custom utility scripts (tmux helpers, session management)
+- `dev-env`: Sync script with exclusion lists (agent artifacts, secrets, and app state never sync)
 
 ## Applications & Tools
 
