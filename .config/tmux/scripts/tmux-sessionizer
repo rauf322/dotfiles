@@ -270,6 +270,13 @@ selected_name=$(basename "$selected" | tr . _)
 
 if ! is_tmux_running || ! has_session "$selected_name"; then
     cd "$selected" || exit 1
+
+    # Bare-repo worktree containers (e.g. ~/bst-system with worktrees inside)
+    # have no worktree toplevel of their own — route straight to the dashboard.
+    if [[ $(git --git-dir="$selected/.git" rev-parse --is-bare-repository 2>/dev/null) == "true" ]]; then
+        exec workmux dashboard -t worktrees
+    fi
+
     git_root=$(git rev-parse --show-toplevel 2>/dev/null || true)
     if [[ "$selected" == "$git_root" ]] && uses_worktrees "$selected"; then
         exec workmux dashboard -t worktrees
