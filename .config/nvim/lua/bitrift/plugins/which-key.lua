@@ -18,7 +18,6 @@ wk.setup({
 wk.add({
   { "<leader>b", group = "Buffer" },
   { "<leader>c", group = "Code" },
-  { "<leader>d", group = "Diagnostics" },
   { "<leader>e", group = "Explorer" },
   { "<leader>f", group = "Find/Files" },
   { "<leader>g", group = "Git" },

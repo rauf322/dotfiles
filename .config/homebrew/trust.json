@@ -1,0 +1,8 @@
+{
+  "trustedcasks": [
+    "nikitabobko/tap/aerospace"
+  ],
+  "trustedformulae": [
+    "raine/workmux/workmux"
+  ]
+}

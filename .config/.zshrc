@@ -3,12 +3,22 @@ if [[ -z "$TMUX" ]] && command -v tmux &>/dev/null && [[ -n "$TERM" ]]; then
     exec tmux new-session -A -s Terminal-session
 fi
 
-export ZSH="$HOME/.oh-my-zsh"
+
 ulimit -n 524288
-# ZSH_THEME="robbyrussell"
 eval "$(starship init zsh)"
 
-source $ZSH/oh-my-zsh.sh
+# Completions (previously provided by oh-my-zsh)
+autoload -Uz compinit && compinit
+
+# History (previously provided by oh-my-zsh)
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt share_history hist_ignore_dups hist_ignore_space hist_verify
+
+# Vi mode — must come before custom bindkeys or they get wiped
+bindkey -v
+
 source <(fzf --zsh)
 
 # alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf"
@@ -34,7 +44,7 @@ alias ..="cd .."
 alias x="exit"
 
 #Cursor
-alias c="open $1 -a \"Cursor\""
+alias c='open -a "Cursor"'
 
 # Git Aliases
 alias add="git add"
@@ -53,7 +63,7 @@ alias gitsync='git config --replace-all remote.origin.fetch "+refs/heads/*:refs/
 alias js="nvim"
 alias ts="nvim"
 alias toml="nvim"
-alias nvo="nvopen-file"
+alias nvo="nvopen"
 
 
 # Vim to Nvim alias
@@ -68,7 +78,7 @@ alias la="eza -la"
 alias b="bun"
 
 # Opencode alias
-alias p='OPENCODE_EXPERIMENTAL=1 opencode --port --continue'
+alias p='ANTHROPIC_API_KEY=x ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_EXPERIMENTAL=1 opencode --port --continue'
 alias pweb2='OPENCODE_EXPERIMENTAL=1 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0'
 pweb() {
   local tailscale_ip password
@@ -124,23 +134,12 @@ lg() {
 
 . "$HOME/.local/bin/env"
 
-# Function to open files with nvim based on extension
 nvopen() {
     if [[ $# -eq 0 ]]; then
         echo "Usage: nvopen <file>"
         return 1
     fi
-
-    local file="$1"
-    case "${file##*.}" in
-        js|ts|tsx|jsx|json|toml|yaml|yml|md|txt|py|sh|zsh|bash|conf|config)
-            nvim "$file"
-            ;;
-        *)
-            echo "Opening with nvim anyway..."
-            nvim "$file"
-            ;;
-    esac
+    nvim "$1"
 }
 
 
@@ -158,15 +157,9 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-bindkey -v
-
-# FZF configuration
+# FZF configuration (^T is rebound to fzf-nvim-widget below, so no CTRL_T vars needed)
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS='--layout=reverse --border=rounded --info=inline --preview "bat {}" --preview-window=right:60%:border-rounded'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_OPTS="--preview 'bat {}' --preview-window=right:60%:border-rounded"
-
-# FZF shell integration (already loaded via `source <(fzf --zsh)` above)
 
 # Custom widget to open file in nvim with Ctrl+T (must be after sourcing FZF)
 fzf-nvim-widget() {

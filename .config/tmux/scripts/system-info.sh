@@ -3,8 +3,8 @@
 # macOS-compatible system info script for tmux status bar
 
 get_cpu_usage() {
-    # Get CPU usage on macOS
-    top -l 1 | grep -E "^CPU" | awk '{print $3}' | sed 's/%//'
+    # Two samples: the first reports average-since-boot, only the second is current.
+    top -l 2 -n 0 -s 1 | awk '/^CPU usage/ {u=$3; s=$5} END {gsub("%","",u); gsub("%","",s); printf "%.0f", u+s}'
 }
 
 get_memory_usage() {
@@ -24,7 +24,7 @@ get_memory_usage() {
 
 get_battery() {
     # Get battery percentage on macOS
-    pmset -g batt | grep -Eo "\d+%" | cut -d% -f1
+    pmset -g batt | grep -Eo "[0-9]+%" | cut -d% -f1
 }
 
 get_date() {

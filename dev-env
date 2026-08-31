@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 dry="0"
 choice=""
 
-# Correcting the while loop and condition checks
-while [[ $# > 0 ]]; do
+while [[ $# -gt 0 ]]; do
     if [[ "$1" == "--dry" ]]; then
         dry="1"
     elif [[ "$1" == "--copy:root:config" ]]; then
@@ -26,7 +27,7 @@ done
 log() {
     if [[ $dry == "1" ]]; then
         echo "[DRY_RUN]: $@"
-    else 
+    else
         echo "$@"
     fi
 }
@@ -41,59 +42,86 @@ execute() {
 
 log "--------------- dev-env ---------------"
 
-copy_dir(){
-    from=$1 # .config
-    to=$2   # XDG_CONFIG_HOME
+# Top-level entries that are app state, caches, binaries, or secrets — never synced
+skip_dirs=(
+    ".git" ".omo" ".codegraph" ".android" ".foundry"
+    "swiftpm" "nvm" "fish" "yabai" "skhd"
+    "openchamber" "configstore" "github-copilot"
+    "ngrok" "expressvpn" "com.strapi" "btop"
+    "raycast" "raycast-x"
+    "bin" "pipx"
+)
 
-    # Iterate over directories in 'from'
-    for dir in $(find "$from" -mindepth 1 -maxdepth 1 -type d -not -path "*/share" -not -path "*/state" -not -path "*/cache"); do
-        execute rm -rf "$to/$(basename $dir)"
-        execute cp -r "$dir" "$to/$(basename $dir)"
+# Agent artifacts, caches, and secrets excluded at any depth
+excludes=(
+    --exclude=".git"
+    --exclude=".omo"
+    --exclude=".codegraph"
+    --exclude=".DS_Store"
+    --exclude="node_modules"
+    --exclude="*.key"
+    --exclude="*.lock"
+    --exclude="automatic_backups"
+    --exclude="chats"
+    --exclude="antigravity-accounts.json"
+    --exclude="prompts-library-db.0.mdb"
+)
+
+should_skip() {
+    local name=$1
+    for s in "${skip_dirs[@]}"; do
+        if [[ "$name" == "$s" ]]; then
+            return 0
+        fi
     done
+    return 1
 }
 
-copy_root(){
-    from=$1 # XDG_CONFIG_HOME
-    to=$2   # .config
-
-    # Iterate over directories in 'from'
-    for dir in $(find "$from" -mindepth 1 -maxdepth 1 -type d -not -path "*/share" -not -path "*/state" -not -path "*/cache"); do
-        execute rm -rf "$to/$(basename $dir)"
-        execute cp -r "$from/$(basename $dir)" "$to/$(basename $dir)"
-    done
-}
-
-copy_file(){
+sync_dirs() {
     from=$1
     to=$2
-    name=$(basename $from)
+
+    for dir in $(find "$from" -mindepth 1 -maxdepth 1 -type d -not -path "*/share" -not -path "*/state" -not -path "*/cache"); do
+        name=$(basename "$dir")
+        if should_skip "$name"; then
+            log "skip $name"
+            continue
+        fi
+        execute mkdir -p "$to/$name"
+        execute rsync -a --delete "${excludes[@]}" "$dir/" "$to/$name/"
+    done
+}
+
+copy_file() {
+    from=$1
+    to=$2
+    name=$(basename "$from")
     echo "$to/$name"
 
-    execute rm "$to/$name"
+    execute rm -f "$to/$name"
     execute cp "$from" "$to/$name"
 }
 
-copy_file $HOME/.zshrc .config
+copy_file "$HOME/.zshrc" "$script_dir/.config"
 
 if [[ $choice == "copy:root:config" ]]; then
-    log "Running copy-root"
-    copy_root "$XDG_CONFIG_HOME" ".config"
+    log "Syncing $XDG_CONFIG_HOME -> $script_dir/.config"
+    sync_dirs "$XDG_CONFIG_HOME" "$script_dir/.config"
 elif [[ $choice == "copy:dir:config" ]]; then
-    log "Running copy-dir"
-    copy_dir ".config" "$XDG_CONFIG_HOME"
-elif [[ $choice == "copy:dir:local" ]]; then 
-    log "Running copy-local"
-    copy_dir .local $HOME/.local
-elif [[ $choice == "copy:root:local" ]]; then 
-    log "Running copy-local"
-    copy_dir $HOME/.local .local 
-elif [[ $choice == "info" ]]; then 
+    log "Syncing $script_dir/.config -> $XDG_CONFIG_HOME"
+    sync_dirs "$script_dir/.config" "$XDG_CONFIG_HOME"
+elif [[ $choice == "copy:dir:local" ]]; then
+    log "Syncing $script_dir/.local -> $HOME/.local"
+    sync_dirs "$script_dir/.local" "$HOME/.local"
+elif [[ $choice == "copy:root:local" ]]; then
+    log "Syncing $HOME/.local -> $script_dir/.local"
+    sync_dirs "$HOME/.local" "$script_dir/.local"
+elif [[ $choice == "info" ]]; then
     log "You have multiple options:"
     log "--dry run"
     log "--copy:root:config copy from XDG_CONFIG_HOME to dev-env"
     log "--copy:dir:config copy from dev-env to XDG_CONFIG_HOME"
-    log "--copy:root:local copy from $HOME/.local to dev-env"
-    log "--copy:dir:local copy from dev-env to $HOME/.local"
+    log "--copy:root:local copy from \$HOME/.local to dev-env"
+    log "--copy:dir:local copy from dev-env to \$HOME/.local"
     log "--info show this message"
 fi
-

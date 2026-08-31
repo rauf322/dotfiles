@@ -4,7 +4,8 @@
   "plugin": [
     "opencode-openai-codex-auth@4.4.0",
     "oh-my-openagent",
-    "@slkiser/opencode-quota@3.11.2"
+    "@slkiser/opencode-quota@3.11.2",
+    "/Users/rauffaizov/.bun/install/global/node_modules/@rynfar/meridian/plugin/meridian.ts"
   ],
   "mcp": {
     "context7": {
@@ -17,7 +18,7 @@
       "enabled": true
     }
   },
-  "model": "zai-coding-plan/glm-5.2",
+  "model": "anthropic/claude-fable-5",
   "agent": {
     "build": {
       "prompt": "You are a helpful AI assistant. Provide detailed explanations of your reasoning and actions. Explain what you're doing and why. Include context about the changes you make. Be conversational and thorough in your responses rather than overly concise."
