@@ -8,3 +8,19 @@ target="${2:-}"
 if [[ "$mode" == "session" ]]; then
     exec tmux capture-pane -ep -t "=$target:"
 fi
+
+# For a workmux project row, show each worktree session: branch, path,
+# last commit, and short git status.
+if [[ "$mode" == "worktree-project" ]]; then
+    project="$target"
+    while IFS= read -r sess; do
+        [[ "$sess" == "${project}__"* ]] || continue
+        branch="${sess#*__}"
+        path=$(tmux display-message -t "=$sess:" -p '#{pane_current_path}' 2>/dev/null) || continue
+
+        printf '\033[1;36m %s\033[0m \033[2m%s\033[0m\n' "$branch" "$path"
+        git -C "$path" log -1 --color=always --format='  %C(dim)%h%Creset %s %C(dim)(%cr)%Creset' 2>/dev/null || true
+        git -c color.status=always -C "$path" status -sb 2>/dev/null | sed 's/^/  /' | head -8 || true
+        echo
+    done < <(tmux list-sessions -F '#{session_name}')
+fi

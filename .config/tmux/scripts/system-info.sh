@@ -3,8 +3,9 @@
 # macOS-compatible system info script for tmux status bar
 
 get_cpu_usage() {
-    # Two samples: the first reports average-since-boot, only the second is current.
-    top -l 2 -n 0 -s 1 | awk '/^CPU usage/ {u=$3; s=$5} END {gsub("%","",u); gsub("%","",s); printf "%.0f", u+s}'
+    # Sum per-process recent CPU and normalize by core count — instant,
+    # unlike `top -l 2` which blocks a full second per sample.
+    ps -A -o %cpu | awk -v cores="$(sysctl -n hw.ncpu)" '{s+=$1} END {printf "%.0f", s/cores}'
 }
 
 get_memory_usage() {
