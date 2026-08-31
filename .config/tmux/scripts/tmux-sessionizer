@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-sessionizer"
 CONFIG_FILE="$CONFIG_DIR/tmux-sessionizer.conf"
-PANE_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/tmux-sessionizer"
-PANE_CACHE_FILE="$PANE_CACHE_DIR/panes.cache"
 
 # config file example
 # ------------------------
@@ -52,7 +50,6 @@ log() {
 session_idx=""
 session_cmd=""
 user_selected=""
-split_type=""
 VERSION="0.1.0"
 
 while [[ "$#" -gt 0 ]]; do
@@ -62,8 +59,6 @@ while [[ "$#" -gt 0 ]]; do
         echo "Options:"
         echo "  -h, --help             Display this help message"
         echo "  -s, --session <name>   session command index."
-        echo "  --vsplit               Create vertical split (horizontal layout) for session command"
-        echo "  --hsplit               Create horizontal split (vertical layout) for session command"
         exit 0
         ;;
     -s | --session)
@@ -87,12 +82,6 @@ while [[ "$#" -gt 0 ]]; do
 
         shift
         ;;
-    --vsplit)
-        split_type="vsplit"
-        ;;
-    --hsplit)
-        split_type="hsplit"
-        ;;
     -v | --version)
         echo "tmux-sessionizer version $VERSION"
         exit 0
@@ -104,13 +93,7 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-log "tmux-sessionizer($VERSION): idx=$session_idx cmd=$session_cmd user_selected=$user_selected split_type=$split_type log=$TS_LOG log_file=$TS_LOG_FILE"
-
-# Validate split options are only used with session commands
-if [[ -n "$split_type" && -z "$session_idx" ]]; then
-    echo "Error: --vsplit and --hsplit can only be used with -s/--session option"
-    exit 1
-fi
+log "tmux-sessionizer($VERSION): idx=$session_idx cmd=$session_cmd user_selected=$user_selected log=$TS_LOG log_file=$TS_LOG_FILE"
 
 sanity_check() {
     if ! command -v tmux &>/dev/null; then
@@ -156,43 +139,12 @@ is_tmux_running() {
     pgrep tmux &>/dev/null
 }
 
-init_pane_cache() {
-    mkdir -p "$PANE_CACHE_DIR"
-    touch "$PANE_CACHE_FILE"
-}
-
-get_pane_id() {
-    local session_idx="$1"
-    local split_type="$2"
-    init_pane_cache
-    grep "^${session_idx}:${split_type}:" "$PANE_CACHE_FILE" | cut -d: -f3
-}
-
-set_pane_id() {
-    local session_idx="$1"
-    local split_type="$2"
-    local pane_id="$3"
-    init_pane_cache
-
-    # Remove existing entry if it exists
-    grep -v "^${session_idx}:${split_type}:" "$PANE_CACHE_FILE" > "${PANE_CACHE_FILE}.tmp" 2>/dev/null || true
-    mv "${PANE_CACHE_FILE}.tmp" "$PANE_CACHE_FILE"
-
-    # Add new entry
-    echo "${session_idx}:${split_type}:${pane_id}" >> "$PANE_CACHE_FILE"
-}
-
-cleanup_dead_panes() {
-    init_pane_cache
-    local temp_file="${PANE_CACHE_FILE}.tmp"
-
-    while IFS=: read -r idx split pane_id; do
-        if tmux list-panes -a -F "#{pane_id}" 2>/dev/null | grep -q "^${pane_id}$"; then
-            echo "${idx}:${split}:${pane_id}" >> "$temp_file"
-        fi
-    done < "$PANE_CACHE_FILE"
-
-    mv "$temp_file" "$PANE_CACHE_FILE" 2>/dev/null || touch "$PANE_CACHE_FILE"
+# A repo gets the workmux dashboard only when it actually uses worktrees;
+# plain repos get a normal session.
+uses_worktrees() {
+    local repo="$1"
+    [[ -f "$repo/.workmux.yaml" ]] && return 0
+    [[ $(git -C "$repo" worktree list 2>/dev/null | wc -l) -gt 1 ]]
 }
 
 sanity_check
@@ -242,14 +194,14 @@ find_dirs() {
             while IFS= read -r dir; do
                 [[ -f "$dir/.git" ]] && continue
 
-                if [[ -d "$dir/.git" ]] && [[ $(git --git-dir="$dir/.git" rev-parse --is-bare-repository 2>/dev/null) == "true" ]]; then
-                    printf '%s\tworktree-container\t\t%s\n' "$dir" "$dir"
-                    continue
-                fi
-
                 printf '%s\tpath\t\t%s\n' "$dir" "$dir"
             done < <(find "$path" -mindepth 1 -maxdepth "${depth:-${TS_MAX_DEPTH:-1}}" \
-                -path '*/.git' -prune -o -type d -print)
+                \( -name '.*' ! -name '.config' \
+                    -o -name Library -o -name Applications -o -name Movies \
+                    -o -name Music -o -name Pictures -o -name Public \
+                    -o -name 'Calibre Library' \
+                    -o -name node_modules \) -prune \
+                -o -type d -print)
         fi
     done
 
@@ -263,12 +215,7 @@ handle_session_cmd() {
     fi
 
     current_session=$(tmux display-message -p '#S')
-
-    if [[ -n "$split_type" ]]; then
-        handle_split_session_cmd "$current_session"
-    else
-        handle_window_session_cmd "$current_session"
-    fi
+    handle_window_session_cmd "$current_session"
     exit 0
 }
 
@@ -288,40 +235,6 @@ handle_window_session_cmd() {
     fi
 }
 
-handle_split_session_cmd() {
-    local current_session="$1"
-    cleanup_dead_panes
-
-    # Check if pane already exists
-    local existing_pane_id=$(get_pane_id "$session_idx" "$split_type")
-
-    if [[ -n "$existing_pane_id" ]] && tmux list-panes -a -F "#{pane_id}" 2>/dev/null | grep -q "^${existing_pane_id}$"; then
-        log "switching to existing pane $existing_pane_id"
-        tmux select-pane -t "$existing_pane_id"
-        if [[ -z $TMUX ]]; then
-            tmux attach-session -t "$current_session"
-        else
-            tmux switch-client -t "$current_session"
-        fi
-    else
-        # Create new split
-        local split_flag=""
-        if [[ "$split_type" == "vsplit" ]]; then
-            split_flag="-h"  # horizontal layout (vertical split)
-        else
-            split_flag="-v"  # vertical layout (horizontal split)
-        fi
-
-        log "creating new split: tmux split-window $split_flag -c $(pwd) $session_cmd"
-        local new_pane_id=$(tmux split-window $split_flag -c "$(pwd)" -P -F "#{pane_id}" "$session_cmd")
-
-        if [[ -n "$new_pane_id" ]]; then
-            set_pane_id "$session_idx" "$split_type" "$new_pane_id"
-            log "created pane $new_pane_id for session_idx=$session_idx split_type=$split_type"
-        fi
-    fi
-}
-
 if [[ ! -z $session_cmd ]]; then
     handle_session_cmd
 elif [[ ! -z $user_selected ]]; then
@@ -329,12 +242,6 @@ elif [[ ! -z $user_selected ]]; then
 else
     selection=$(find_dirs | awk -F $'\t' '!seen[$0]++' | fzf --no-preview --prompt='Project> ' --delimiter=$'\t' --with-nth=1)
     selection_type=$(printf '%s' "$selection" | cut -f2)
-
-    if [[ "$selection_type" == "worktree-container" ]]; then
-        selected=$(printf '%s' "$selection" | cut -f4-)
-        cd "$selected" || exit 1
-        exec workmux dashboard -t worktrees
-    fi
 
     case "$selection_type" in
     session)
@@ -364,7 +271,7 @@ selected_name=$(basename "$selected" | tr . _)
 if ! is_tmux_running || ! has_session "$selected_name"; then
     cd "$selected" || exit 1
     git_root=$(git rev-parse --show-toplevel 2>/dev/null || true)
-    if [[ "$selected" == "$git_root" ]]; then
+    if [[ "$selected" == "$git_root" ]] && uses_worktrees "$selected"; then
         exec workmux dashboard -t worktrees
     fi
 

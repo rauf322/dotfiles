@@ -141,6 +141,11 @@ if [[ "$selection_type" == "worktree-project" ]]; then
 
     if [[ -n "$repo_root" && -d "$repo_root/.git" ]]; then
         tmux display-popup -B -w 100% -h 100% -E "cd '$repo_root' && workmux dashboard -t worktrees"
+    else
+        # Repo root not resolvable (panes cd'd elsewhere) — fall back to the
+        # project's first worktree session instead of silently doing nothing.
+        fallback_session=$(worktree_session_records "$project" | head -n1 | cut -f2)
+        [[ -n "$fallback_session" ]] && tmux switch-client -t "=$fallback_session"
     fi
     exit 0
 else
