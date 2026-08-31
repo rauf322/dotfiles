@@ -9,24 +9,25 @@ This is a Neovim configuration written in Lua, organized under `lua/bitrift/` wi
 - **Line Length**: 140 characters max (stylua --column-width=140, prettier --print-width=140)
 - **Naming**: snake_case for variables/functions/files, PascalCase for classes
 - **Quotes**: Single quotes for JS/TS (prettier --single-quote --jsx-single-quote)
-- **Module Pattern**: Use `return { ... }` for plugin specs, `r("module")` for imports
 - **Tables**: Prefer explicit table fields over positional arguments
 - **Error Handling**: Always use `pcall()` for operations that may fail (LSP, formatting, requires)
 
+## Plugin Management
+- **Framework**: native `vim.pack` (Neovim built-in), NOT lazy.nvim
+- **Install**: All plugins are declared in a single `vim.pack.add({ ... })` call in `lua/bitrift/pack_init.lua`
+- **Configure**: Each file under `plugins/` runs its plugin's `setup()` directly at require time (no spec tables, no `return { ... }`)
+- **Load order**: `pack_init.lua` requires the config modules in explicit order at the bottom of the file — order matters for dependencies
+- **Build hooks**: Post-install/update steps live in the `PackChanged` autocmd at the top of `pack_init.lua`
+- **Lockfile**: `nvim-pack-lock.json` pins plugin revisions
+- Do NOT use lazy.nvim spec fields (`event =`, `dependencies =`, `keys =`, `opts =` as spec keys) — `vim.pack` ignores them
+
 ## Testing & Validation
-- **Lint**: `<leader>tl` triggers linting (eslint_d for JS/TS, pylint for Python)
-- **Format**: `<leader>s` formats and saves (prettier, stylua, black)
-- **Reload Config**: `<leader>r` reloads lazy.nvim and sources $MYVIMRC
+- **Format**: stylua (see .stylua.toml)
+- **Reload Config**: `<leader>r` sources $MYVIMRC
 - **Health Check**: `:checkhealth` to validate Neovim setup
 
-## Plugin Management
-- **Framework**: lazy.nvim (imports from `bitrift.plugins` and `bitrift.plugins.linting`)
-- **Structure**: Each plugin in separate file under `plugins/` returning a lazy.nvim spec
-- **Lazy Loading**: Use `event = "BufReadPre"` or `event = "VeryLazy"` for performance
-- **Dependencies**: Explicitly declare in the `dependencies` field
-
 ## Key Patterns
-- Check module exists: `local ok, mod = pcall(r, "module")`
+- Check module exists: `local ok, mod = pcall(require, "module")`
 - Keymaps: Use `vim.keymap.set()` with descriptive `desc` field for which-key
 - Autocommands: Use `vim.api.nvim_create_autocmd()` with augroups
-- LSP setup: Register keymaps in `LspAttach` autocmd (see lspconfig.lua)
+- LSP: servers are enabled via `vim.lsp.enable()` in lspconfig.lua; per-server overrides live in `lsp/*.lua` (native auto-discovery)

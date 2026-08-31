@@ -1,10 +1,7 @@
 {
     "diagnostics.globals": [
         "vim",
-        "map",
-        "Snacks",
-        "dapui",
-        "opencode_terminal_module"
+        "Snacks"
     ],
     "diagnostics.disable": [
         "undefined-doc-name",
