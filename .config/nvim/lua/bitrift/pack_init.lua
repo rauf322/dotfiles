@@ -11,9 +11,6 @@ vim.api.nvim_create_autocmd("PackChanged", {
 
     if name == "nvim-treesitter" then
       vim.cmd("TSUpdate")
-    elseif name == "telescope-fzf-native.nvim" then
-      local dir = vim.fn.stdpath("data") .. "/site/pack/core/opt/telescope-fzf-native.nvim"
-      vim.fn.system({ "make", "-C", dir })
     elseif name == "LuaSnip" then
       local dir = vim.fn.stdpath("data") .. "/site/pack/core/opt/LuaSnip"
       vim.fn.system({ "make", "install_jsregexp", "-C", dir })
@@ -63,10 +60,6 @@ vim.pack.add({
   -- Snippets
   { src = "https://github.com/L3MON4D3/LuaSnip", version = vim.version.range("2.x") },
   "https://github.com/rafamadriz/friendly-snippets",
-
-  -- Telescope
-  "https://github.com/nvim-telescope/telescope.nvim",
-  "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
 
   -- File explorer
   { src = "https://github.com/nvim-tree/nvim-tree.lua", version = vim.version.range("1.x") },
@@ -133,7 +126,6 @@ require("bitrift.plugins.treesitter")
 require("bitrift.plugins.mason")
 require("bitrift.plugins.flutter")
 require("bitrift.plugins.linting.formatingLinting")
-require("bitrift.plugins.telescope")
 require("bitrift.plugins.blink-cmp")
 require("bitrift.plugins.nvimtree")
 require("bitrift.plugins.dashboard")

@@ -28,6 +28,7 @@ require("mason-lspconfig").setup({
     "eslint",
     "oxlint",
     "solidity_ls_nomicfoundation",
+    "hls",
     "gopls",
     "rust_analyzer",
     "clangd",

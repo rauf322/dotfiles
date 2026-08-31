@@ -1,7 +1,7 @@
 require("auto-session").setup({
   suppressed_dirs = { "~/", "~/Downloads", "/" },
   session_lens = {
-    load_on_setup = true,
+    picker = "snacks",
   },
   pre_save_cmds = {
     function()

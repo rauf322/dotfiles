@@ -4,6 +4,7 @@ local opencode_utils = require("bitrift.utils.opencode")
 
 local opencode_module = "opencode"
 local opencode_process_module = "opencode.server.process"
+local opencode_terminal_module = "opencode.terminal"
 local opencode_cmd = "OPENCODE_EXPERIMENTAL=1 opencode --port --continue"
 local opencode_terminal_opts = {
   win = {
