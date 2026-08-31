@@ -95,7 +95,7 @@ brew "pyenv"
 # Pyenv plugin to manage virtualenv
 brew "pyenv-virtualenv"
 # Interpreted, interactive, object-oriented programming language
-brew "python@3.13"
+brew "python@3.11"
 # Persistent key-value database, with built-in net interface
 brew "redis", restart_service: :changed
 # High-performance, schema-free, document-oriented database
@@ -144,6 +144,8 @@ cask "nikitabobko/tap/aerospace", trusted: true
 cask "android-commandlinetools"
 # Tools for building Android applications
 cask "android-studio"
+# Display management tool
+cask "betterdisplay"
 # Anthropic's official Claude AI desktop app
 cask "claude"
 # OpenAI's coding agent that runs in your terminal
@@ -195,6 +197,8 @@ cask "keepingyouawake"
 cask "keycastr"
 # Voice-to-text transcription and paste tool
 cask "kitlangton-hex"
+# Customise mouse behavior
+cask "linearmouse"
 # Software for Logitech devices
 cask "logi-options+"
 # Full TeX Live distribution with GUI applications
@@ -211,6 +215,8 @@ cask "stats"
 cask "t3-code"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
+# Messaging app with a focus on speed and security
+cask "telegram"
 # Open-source code editor
 cask "visual-studio-code"
 # Multiplayer code editor
