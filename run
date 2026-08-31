@@ -1,25 +1,17 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-script_dir="${script_dir//\/\//\/}"
-script_dir="${script_dir%/}"
 
-filter=""
 dry="0"
-
-while [[ $# -gt 0 ]]; do
-    if [[ "$1" == "--dry" ]]; then
-        dry="1"
-    else 
-        filter="$1"
-    fi
-    shift
-done
+if [[ "${1:-}" == "--dry" ]]; then
+    dry="1"
+fi
 
 log() {
     if [[ $dry == "1" ]]; then
         echo "[DRY_RUN]: $*"
-    else 
+    else
         echo "$*"
     fi
 }
@@ -32,17 +24,23 @@ execute() {
     "$@"
 }
 
-echo "$script_dir -- $filter"
+log "--------------- bootstrap ---------------"
 
-cd "$script_dir" || exit
+# Homebrew itself
+if ! command -v brew >/dev/null 2>&1; then
+    execute /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
-scripts=$(find ./runs_MacOS -maxdepth 1 -mindepth 1 -type f -perm -111 | sed 's|^\./\./|./|;s|//|/|g')
+# Everything brew-managed: taps, formulae, casks, fonts, vscode extensions
+execute brew bundle --file="$script_dir/Brewfile"
 
-for script in $scripts; do
-    if echo "$script" | grep -qv "$filter"; then
-        log "filtering $script"
-        continue
-    fi
+# bun (not brew-managed) + opencode
+if ! command -v bun >/dev/null 2>&1 && [[ ! -x "$HOME/.bun/bin/bun" ]]; then
+    execute /bin/bash -c "$(curl -fsSL https://bun.sh/install)"
+fi
+if [[ ! -x "$HOME/.bun/bin/opencode" ]]; then
+    execute "$HOME/.bun/bin/bun" install -g opencode-ai
+fi
 
-    execute "./$script"
-done
+log "Done. Deploy configs with: ./dev-env --copy:dir:config && ./dev-env --copy:dir:local"
