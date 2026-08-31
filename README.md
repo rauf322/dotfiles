@@ -3,6 +3,16 @@
 This repository contains my personal dotfiles. They aim to make my development environment portable across **macOS 🍎** and **Linux 🐧** while keeping a consistent look and feel.  
 Below is a detailed tour of the most important configuration files inside the `.config` directory and what they do.
 
+## 🚀 Setup
+
+```sh
+./run                        # install Homebrew (if needed) + everything in Brewfile + bun/opencode
+./dev-env --copy:dir:config  # deploy .config to ~/.config
+./dev-env --copy:dir:local   # deploy .local scripts to ~/.local
+```
+
+All installed software lives in the `Brewfile` (taps, CLI tools, casks, fonts, VS Code extensions). To capture newly installed tools: `brew bundle dump --force --file=Brewfile`.
+
 ---
 
 ## 🖥️ Terminal & Shell
