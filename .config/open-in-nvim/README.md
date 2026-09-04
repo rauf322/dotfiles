@@ -34,7 +34,7 @@ macOS LaunchServices  (looks up duti registration for .lua)
 ```
 
 The running nvim binds the socket at startup via this line in
-`~/.config/nvim/lua/bitrift/set.lua`:
+`~/.config/nvim/lua/bitrift/server.lua`:
 
 ```lua
 pcall(vim.fn.serverstart, "/tmp/nvim-server.pipe")
@@ -71,7 +71,7 @@ chmod +x ~/.local/bin/open-in-nvim.sh ~/.local/bin/register-nvim-associations.sh
 
 ### 2. Make nvim listen on the stable socket
 
-Verify this line exists near the top of `~/.config/nvim/lua/bitrift/set.lua`:
+Verify this line exists in `~/.config/nvim/lua/bitrift/server.lua`:
 
 ```lua
 pcall(vim.fn.serverstart, "/tmp/nvim-server.pipe")
