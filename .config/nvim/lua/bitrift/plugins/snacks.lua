@@ -24,6 +24,7 @@ Snacks.setup({
       frecency = true,
     },
     layout = {
+      preset = "telescope",
       cycle = false,
     },
   },
