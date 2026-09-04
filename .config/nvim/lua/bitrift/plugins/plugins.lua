@@ -4,8 +4,6 @@ require("mini.pairs").setup({})
 
 require("tsc").setup({})
 
-require("lsp-file-operations").setup()
-
 require("trouble").setup({
   icons = false,
 })

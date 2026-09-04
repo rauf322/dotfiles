@@ -5,7 +5,9 @@ require("auto-session").setup({
   },
   pre_save_cmds = {
     function()
-      pcall(vim.cmd, "NvimTreeClose")
+      pcall(function()
+        require("oil").close()
+      end)
     end,
   },
 })
