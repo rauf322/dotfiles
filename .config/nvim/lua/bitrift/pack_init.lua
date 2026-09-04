@@ -40,7 +40,6 @@ vim.pack.add({
   "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
   "https://github.com/nvimdev/lspsaga.nvim",
   "https://github.com/Fildo7525/pretty_hover",
-  "https://github.com/antosha417/nvim-lsp-file-operations",
   "https://github.com/nvim-flutter/flutter-tools.nvim",
   "https://github.com/mfussenegger/nvim-dap",
 
@@ -62,7 +61,7 @@ vim.pack.add({
   "https://github.com/rafamadriz/friendly-snippets",
 
   -- File explorer
-  { src = "https://github.com/nvim-tree/nvim-tree.lua", version = vim.version.range("1.x") },
+  "https://github.com/stevearc/oil.nvim",
 
   -- UI
   "https://github.com/nvimdev/dashboard-nvim",
@@ -127,7 +126,7 @@ require("bitrift.plugins.mason")
 require("bitrift.plugins.flutter")
 require("bitrift.plugins.linting.formatingLinting")
 require("bitrift.plugins.blink-cmp")
-require("bitrift.plugins.nvimtree")
+require("bitrift.plugins.oil")
 require("bitrift.plugins.dashboard")
 require("bitrift.plugins.snacks")
 require("bitrift.plugins.noice")
