@@ -19,7 +19,7 @@ require("blink.cmp").setup({
     ["<C-b>"] = { "snippet_backward" },
   },
   appearance = {
-    nerd_font_variant = "normal",
+    nerd_font_variant = "mono",
   },
   completion = {
     accept = {
@@ -41,7 +41,23 @@ require("blink.cmp").setup({
     },
     menu = {
       border = "rounded",
+      max_height = 10,
       winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
+      draw = {
+        columns = {
+          { "kind_icon" },
+          { "label", "label_description", gap = 1 },
+          { "source_name" },
+        },
+        components = {
+          source_name = {
+            text = function(ctx)
+              return "[" .. ctx.source_name .. "]"
+            end,
+            highlight = "CmpItemMenu",
+          },
+        },
+      },
     },
     ghost_text = { enabled = true },
   },
