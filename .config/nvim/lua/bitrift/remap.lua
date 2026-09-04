@@ -10,6 +10,8 @@ local mappings = {
   { mode = "n", key = "N", command = "Nzzzv" },
   { mode = { "n", "v" }, key = "<leader>y", command = [["+y]] },
   { mode = { "n", "v" }, key = "<leader>d", command = '"_d' },
+  { mode = "n", key = "U", command = "<C-r>", opts = { desc = "Redo last change" } },
+  { mode = "n", key = "<leader>no", command = "<cmd>noh<cr>", opts = { desc = "Toggle search highlighting" } },
 
   -- Insert mode escape combos
   { mode = "i", key = "jj", command = "<Esc>" },
