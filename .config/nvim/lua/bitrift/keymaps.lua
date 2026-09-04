@@ -1,6 +1,3 @@
--- Leader
-vim.g.mapleader = " "
-
 local mappings = {
   -- Move lines / quality-of-life
   { mode = "v", key = "J", command = ":m '>+1<CR>gv=gv", opts = { silent = true, desc = "Move selection down" } },
@@ -30,6 +27,27 @@ local mappings = {
       vim.notify("Config reloaded!", vim.log.levels.INFO)
     end,
     opts = { desc = "Reload Neovim config" },
+  },
+
+  -- Undotree (built-in nvim.undotree package, loaded in pack.lua)
+  { mode = "n", key = "<leader>u", command = "<cmd>Undotree<CR>", opts = { desc = "Toggle Undotree" } },
+
+  -- Run the current file / visual selection and show the output in a popup
+  {
+    mode = "n",
+    key = "<leader><leader>x",
+    command = function()
+      require("bitrift.utils.runner").run_file()
+    end,
+    opts = { noremap = true, silent = false },
+  },
+  {
+    mode = "v",
+    key = "<leader>x",
+    command = function()
+      require("bitrift.utils.runner").run_selection()
+    end,
+    opts = { noremap = true, silent = false },
   },
 
   -- Splits

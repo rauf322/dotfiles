@@ -32,6 +32,10 @@ if ! command -v brew >/dev/null 2>&1; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# Refresh cask/formula definitions first; stale defs cause checksum mismatches
+# on auto-updating casks whose vendor replaces the download in place.
+execute brew update
+
 # Everything brew-managed: taps, formulae, casks, fonts, vscode extensions
 execute brew bundle --file="$script_dir/Brewfile"
 

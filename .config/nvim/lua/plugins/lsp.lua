@@ -1,5 +1,4 @@
--- Enable LSP servers (configs auto-discovered from ~/.config/nvim/lsp/*.lua)
-vim.lsp.enable({
+local servers = {
   "html",
   "cssls",
   "tailwindcss",
@@ -8,7 +7,7 @@ vim.lsp.enable({
   "graphql",
   "emmet_ls",
   "prismals",
-  "tsgo",
+  "tsc",
   "pyright",
   "jsonls",
   "dockerls",
@@ -17,11 +16,45 @@ vim.lsp.enable({
   "eslint",
   "oxlint",
   "solidity_ls_nomicfoundation",
+  "hls",
   "gopls",
   "rust_analyzer",
   "clangd",
-  "hls",
+}
+
+require("mason").setup({
+  ui = {
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗",
+    },
+  },
 })
+
+require("mason-lspconfig").setup({
+  automatic_enable = false,
+  ensure_installed = servers,
+})
+
+require("mason-tool-installer").setup({
+  ensure_installed = {
+    "biome",
+    "prettierd",
+    "stylua",
+    "isort",
+    "black",
+    "js-debug-adapter",
+    "htmlhint",
+    "sql-formatter",
+    "gofumpt",
+    "goimports",
+    "solhint",
+  },
+})
+
+-- LSP server configs auto-discovered from ~/.config/nvim/lsp/*.lua
+vim.lsp.enable(servers)
 
 local severity = vim.diagnostic.severity
 
