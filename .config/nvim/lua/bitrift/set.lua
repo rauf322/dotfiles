@@ -4,18 +4,21 @@
 -- First nvim wins; later instances silently no-op.
 pcall(vim.fn.serverstart, "/tmp/nvim-server.pipe")
 
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamed,unnamedplus"
 vim.opt.number = true
 vim.opt.relativenumber = true
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- Enable ignorecase + smartcase for better searching
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
 -- Decrease update time
 -- Decrease mapped sequence wait time
 vim.opt.timeoutlen = 500
+
 -- Save undo history
 vim.opt.undofile = true
 vim.opt.tabstop = 2
@@ -23,7 +26,10 @@ vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.smartindent = false
-vim.opt.wrap = true
+
+-- Disable text wrap by default, but enable it for Markdown buffers
+vim.opt.wrap = false
+
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.hlsearch = true
@@ -34,10 +40,13 @@ vim.opt.scrolloff = 15
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.iskeyword:append("-")
-vim.opt.updatetime = 50
-vim.opt.colorcolumn = "130"
+vim.opt.updatetime = 250
+vim.opt.colorcolumn = "80"
 vim.opt.laststatus = 3
+
 -- vim.opt.winborder = "rounded"
+
+vim.g.no_plugin_maps = true
 
 -- Disable unnecessary providers to eliminate checkhealth warnings
 vim.g.loaded_node_provider = 0
@@ -55,6 +64,12 @@ vim.opt.fillchars = {
   vertright = " ",
   verthoriz = " ",
 }
+
+-- Enable smart indenting (see https://stackoverflow.com/questions/1204149/smart-wrap-in-vim)
+vim.opt.breakindent = true
+
+-- Enable cursor line highlight
+vim.opt.cursorline = true
 
 vim.opt.showtabline = 0
 vim.keymap.set("n", "<leader><leader>x", function()
