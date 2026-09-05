@@ -1,4 +1,3 @@
-vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#1a1a1a" })
 require("notify").setup({
   timeout = 200,
   background_colour = "#0000",
