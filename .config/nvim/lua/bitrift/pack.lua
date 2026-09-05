@@ -26,6 +26,7 @@ vim.pack.add({
   -- Colorscheme (must be first for priority)
   { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
   "https://github.com/vague-theme/vague.nvim",
+  { src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
 
   -- Core dependencies
   "https://github.com/nvim-lua/plenary.nvim",
@@ -84,12 +85,14 @@ vim.pack.add({
   "https://github.com/echasnovski/mini.pairs",
   "https://github.com/tpope/vim-surround",
   "https://github.com/folke/flash.nvim",
+  "https://github.com/kevinhwang91/nvim-hlslens",
   "https://github.com/Aasim-A/scrollEOF.nvim",
 
   -- Diagnostics
   "https://github.com/folke/trouble.nvim",
   "https://github.com/folke/todo-comments.nvim",
   "https://github.com/dmmulroy/tsc.nvim",
+  "https://github.com/chrisgrieser/nvim-chainsaw",
 
   -- Database
   "https://github.com/tpope/vim-dadbod",
@@ -143,7 +146,9 @@ require("plugins.mini-pairs")
 require("plugins.tsc")
 require("plugins.trouble")
 require("plugins.todo-comments")
+require("plugins.chainsaw")
 require("plugins.flash")
+require("plugins.hlslens")
 require("plugins.scrolleof")
 require("plugins.dadbod")
 require("plugins.colorizer")

@@ -1,0 +1,19 @@
+set -g @minimal_theme_bg_color "default"
+set -g @minimal_theme_active_color "#6e94b2"
+set -g @minimal_theme_inactive_color "#606079"
+set -g @minimal_theme_text_color "#cdcdcd"
+set -g @minimal_theme_accent_color "#b4d4cf"
+set -g @minimal_theme_border_color "#252530"
+
+set -g @worktree-switcher-additional-options "\
+--color=bg+:#1c1c1c,bg:#141415 \
+--color=border:#6c7086,header:#a6adc8 \
+--color=gutter:#141415,hl:#9399b2 \
+--color=hl+:#cdd6f4,info:#7f849c \
+--color=marker:#9399b2,pointer:#bac2de \
+--color=prompt:#a6adc8,spinner:#9399b2 \
+--color=fg:#a6adc8,fg+:#cdd6f4 \
+--border=sharp \
+--info=inline \
+--no-scrollbar \
+--cycle"

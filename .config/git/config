@@ -20,8 +20,10 @@
 
 [interactive]
 	diffFilter = delta --color-only
+[include]
+	# `theme` is a symlink into variants/ selecting delta.features; flipped by ~/.local/scripts/theme
+	path = theme
 [delta]
-	features = vague
   navigate = true       # use n/N to jump between hunks
   side-by-side = true   # optional: side-by-side diffs
   line-numbers = true
@@ -62,5 +64,26 @@
 	plus-style = "syntax #2a3a2a"
 	map-styles = "bold purple => syntax #3a3050, bold blue => syntax #2a3a50, bold cyan => syntax #2a4040, bold yellow => syntax #4a4030"
 	syntax-theme = base16
+[delta "catppuccin-macchiato"]
+	blame-palette = "#24273a #1e2030 #181926 #363a4f #494d64"
+	commit-decoration-style = "#6e738d" bold box ul
+	dark = true
+	file-decoration-style = "#6e738d"
+	file-style = "#cad3f5"
+	hunk-header-decoration-style = "#6e738d" box ul
+	hunk-header-file-style = bold
+	hunk-header-line-number-style = bold "#a5adcb"
+	hunk-header-style = file line-number syntax
+	line-numbers-left-style = "#6e738d"
+	line-numbers-minus-style = bold "#ed8796"
+	line-numbers-plus-style = bold "#a6da95"
+	line-numbers-right-style = "#6e738d"
+	line-numbers-zero-style = "#6e738d"
+	minus-emph-style = bold syntax "#6a485a"
+	minus-style = syntax "#4c3a4c"
+	plus-emph-style = bold syntax "#51655a"
+	plus-style = syntax "#3e4b4c"
+	map-styles = bold purple => syntax "#5c517c", bold blue => syntax "#47557b", bold cyan => syntax "#4a6475", bold yellow => syntax "#6a635d"
+	syntax-theme = Catppuccin Macchiato
 [push]
 	autoSetupRemote = true
