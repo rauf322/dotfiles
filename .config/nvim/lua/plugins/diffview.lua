@@ -1,9 +1,22 @@
 require("diffview").setup({
   enhanced_diff_hl = true,
   view = {
+    default = {
+      disable_diagnostics = true,
+    },
     merge_tool = {
       layout = "diff3_mixed",
     },
+  },
+  hooks = {
+    -- Diff buffers have bogus paths (diffview://...), so root_dir detection for
+    -- servers like tsc/graphql can resolve to "/" and spam init errors; make sure
+    -- nothing stays attached even if it slipped in before this buffer was ready.
+    diff_buf_read = function(bufnr)
+      for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+        vim.lsp.buf_detach_client(bufnr, client.id)
+      end
+    end,
   },
 })
 
