@@ -1,0 +1,39 @@
+#!/bin/sh
+# Usage: theme [name]   (no name = toggle between vague and catppuccin)
+# Flips the ghostty/tmux/git `theme` symlinks -> variants/<name> in lockstep;
+# nvim reads the ghostty one. This is the single entry point for all of them.
+set -eu
+
+dir="$HOME/.config/ghostty"
+
+current=""
+if [ -L "$dir/theme" ]; then
+  current=$(basename "$(readlink "$dir/theme")")
+fi
+
+target="${1:-}"
+if [ -z "$target" ]; then
+  if [ "$current" = "vague" ]; then target=catppuccin; else target=vague; fi
+fi
+
+if [ ! -f "$dir/variants/$target" ]; then
+  echo "unknown theme '$target' (available: $(ls "$dir/variants" | tr '\n' ' '))" >&2
+  exit 1
+fi
+
+for app_dir in "$HOME/.config/ghostty" "$HOME/.config/tmux" "$HOME/.config/git"; do
+  if [ -f "$app_dir/variants/$target" ]; then
+    ln -sfn "variants/$target" "$app_dir/theme"
+  fi
+done
+
+if tmux info >/dev/null 2>&1; then
+  tmux source-file "$HOME/.config/tmux/tmux.conf" >/dev/null 2>&1 || true
+fi
+
+# Ghostty on macOS doesn't watch its config; press its "Reload Configuration" menu item.
+if osascript -e 'tell application "System Events" to tell process "Ghostty" to click menu item "Reload Configuration" of menu 1 of menu bar item "Ghostty" of menu bar 1' >/dev/null 2>&1; then
+  echo "theme: $target"
+else
+  echo "theme: $target  (ghostty not reloaded - press cmd+shift+,)"
+fi

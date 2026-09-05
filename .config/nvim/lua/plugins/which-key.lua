@@ -21,6 +21,7 @@ wk.add({
   { "<leader>e", group = "Explorer" },
   { "<leader>f", group = "Find/Files" },
   { "<leader>g", group = "Git" },
+  { "<leader>L", group = "Log (chainsaw)" },
   { "<leader>p", group = "Project" },
   { "<leader>w", group = "Window" },
 })
