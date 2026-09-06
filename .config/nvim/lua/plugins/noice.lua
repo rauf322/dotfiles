@@ -106,3 +106,15 @@ require("noice").setup({
     },
   },
 })
+
+-- Noice registers :NoiceTelescope / :NoiceFzf unconditionally; neither picker is
+-- installed here, so `:Noice<Tab>` can land on a command that hard-errors.
+-- Route both to `pick`, which resolves to the snacks picker.
+local noice_commands = require("noice.commands")
+local noice_cmd = noice_commands.cmd
+noice_commands.cmd = function(name)
+  if name == "telescope" or name == "fzf" then
+    name = "pick"
+  end
+  return noice_cmd(name)
+end

@@ -34,6 +34,10 @@
       "rev": "54193ac99e3855c6ffaa36f83a7c50213df03157",
       "src": "https://github.com/ray-x/cmp-sql"
     },
+    "codediff.nvim": {
+      "rev": "1c8cc7b6785ec2508dd88ae12302de25afa57656",
+      "src": "https://github.com/esmuellert/codediff.nvim"
+    },
     "conform.nvim": {
       "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
       "src": "https://github.com/stevearc/conform.nvim"
@@ -41,10 +45,6 @@
     "dashboard-nvim": {
       "rev": "0775e567b6c0be96d01a61795f7b64c1758262f6",
       "src": "https://github.com/nvimdev/dashboard-nvim"
-    },
-    "diffview.nvim": {
-      "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
-      "src": "https://github.com/sindrets/diffview.nvim"
     },
     "flash.nvim": {
       "rev": "fcea7ff883235d9024dc41e638f164a450c14ca2",
