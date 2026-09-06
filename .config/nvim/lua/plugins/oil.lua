@@ -38,7 +38,13 @@ oil.setup({
   },
   keymaps = {
     ["gy"] = { callback = copy_entry_to_macos_clipboard, desc = "Copy file to macOS clipboard" },
-    ["gp"] = { "actions.yank_entry", opts = { modify = ":p" }, desc = "Yank absolute path" },
+    ["gp"] = {
+      callback = function()
+        require("oil.actions").yank_entry.callback({ modify = ":p" })
+        vim.notify("Yanked: " .. vim.fn.getreg(vim.v.register))
+      end,
+      desc = "Yank absolute path",
+    },
     ["gP"] = { "actions.yank_entry", opts = { modify = ":." }, desc = "Yank path relative to cwd" },
     ["<leader>er"] = "actions.refresh",
     ["<leader>ec"] = "actions.close",

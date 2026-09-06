@@ -55,7 +55,7 @@ local mappings = {
   { mode = "n", key = "<leader>-", command = ":split<CR>", opts = { desc = "Horizontal Split" } },
 
   -- Maximize / equalize
-  { mode = "n", key = "<Leader>f", command = "<C-w>_<C-w>|", opts = { desc = "full si[z]e" } },
+  { mode = "n", key = "<Leader>F", command = "<C-w>_<C-w>|", opts = { desc = "full si[z]e" } },
   { mode = "n", key = "<Leader>w=", command = "<C-w>=", opts = { desc = "even si[Z]e" } },
 
   -- Window navigation

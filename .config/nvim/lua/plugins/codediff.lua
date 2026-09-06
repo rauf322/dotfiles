@@ -1,4 +1,9 @@
-require("codediff").setup({})
+require("codediff").setup({
+  explorer = {
+    view_mode = "tree",
+    line_stats = { enabled = true },
+  },
+})
 
 local git = require("bitrift.utils.git")
 
@@ -36,3 +41,20 @@ vim.keymap.set("n", "<leader>gc", function()
     vim.notify("CodeDiff: no session in this tab", vim.log.levels.INFO)
   end
 end, { desc = "CodeDiff: Close" })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "codediff-explorer",
+  callback = function(ev)
+    vim.keymap.set("n", "gp", function()
+      local ok, lifecycle = pcall(require, "codediff.ui.lifecycle")
+      local panel = ok and lifecycle.get_panel_view(vim.api.nvim_get_current_tabpage())
+      local node = panel and panel.tree and panel.tree:get_node()
+      if not node or not node.data or not node.data.path then
+        return
+      end
+
+      vim.fn.setreg(vim.v.register, node.data.path)
+      vim.notify("Yanked: " .. node.data.path)
+    end, { buffer = ev.buf, desc = "Yank path" })
+  end,
+})
