@@ -16,6 +16,7 @@ wk.setup({
 })
 
 wk.add({
+  { "<leader>a", group = "Harpoon" },
   { "<leader>b", group = "Buffer" },
   { "<leader>c", group = "Code" },
   { "<leader>e", group = "Explorer" },
