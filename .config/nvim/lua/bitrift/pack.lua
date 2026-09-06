@@ -89,6 +89,7 @@ vim.pack.add({
   "https://github.com/folke/flash.nvim",
   "https://github.com/kevinhwang91/nvim-hlslens",
   "https://github.com/Aasim-A/scrollEOF.nvim",
+  { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
 
   -- Diagnostics
   "https://github.com/folke/trouble.nvim",
@@ -150,6 +151,7 @@ require("plugins.trouble")
 require("plugins.todo-comments")
 require("plugins.chainsaw")
 require("plugins.flash")
+require("plugins.harpoon")
 require("plugins.hlslens")
 require("plugins.scrolleof")
 require("plugins.dadbod")
