@@ -60,9 +60,12 @@ keymap.set("n", "<leader>ef", function()
   oil.toggle_float(vim.fn.getcwd())
 end, { desc = "Toggle file explorer (project root)" })
 keymap.set("n", "<leader>ff", function()
-  local ok_diffview, lib = pcall(require, "diffview.lib")
-  if ok_diffview and lib.get_current_view() then
-    vim.cmd("DiffviewToggleFiles")
+  local ok_codediff, lifecycle = pcall(require, "codediff.ui.lifecycle")
+  local tabpage = vim.api.nvim_get_current_tabpage()
+  local panel = ok_codediff and lifecycle.get_panel_view(tabpage)
+  if panel then
+    local panel_name = lifecycle.get_panel_name and lifecycle.get_panel_name(tabpage) or "explorer"
+    require("codediff.ui." .. panel_name).toggle_visibility(panel)
     return
   end
 

@@ -18,6 +18,8 @@ vim.api.nvim_create_autocmd("PackChanged", {
       vim.fn["mkdp#util#install"]()
     elseif name == "leetcode.nvim" then
       vim.cmd("TSUpdate html")
+    elseif name == "codediff.nvim" then
+      vim.cmd("CodeDiff install")
     end
   end,
 })
@@ -79,7 +81,7 @@ vim.pack.add({
   -- Git
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/lewis6991/gitsigns.nvim",
-  "https://github.com/sindrets/diffview.nvim",
+  "https://github.com/esmuellert/codediff.nvim",
 
   -- Editing
   "https://github.com/echasnovski/mini.pairs",
@@ -139,7 +141,7 @@ require("plugins.which-key")
 require("plugins.luasnip")
 require("plugins.fugitive")
 require("plugins.gitsigns")
-require("plugins.diffview")
+require("plugins.codediff")
 require("plugins.opencode")
 require("plugins.quicker")
 require("plugins.mini-pairs")

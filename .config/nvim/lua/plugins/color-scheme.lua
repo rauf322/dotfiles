@@ -21,7 +21,6 @@ require("catppuccin").setup({
     blink_cmp = true,
     dadbod_ui = true,
     dashboard = true,
-    diffview = true,
     flash = true,
     gitsigns = true,
     lsp_saga = true,

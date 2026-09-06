@@ -1,6 +1,20 @@
 require("package-info").setup({
-  autostart = true,
+  autostart = false,
   hide_up_to_date = true,
+})
+
+-- The plugin's own autostart matches *any* buffer named package.json, including
+-- diff viewers' virtual revision buffers; `npm outdated` then gets a cwd that
+-- doesn't exist and jobstart raises E475 mid-render. Only autostart on real files.
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = vim.api.nvim_create_augroup("bitrift_package_info_autostart", { clear = true }),
+  pattern = "package.json",
+  callback = function(ev)
+    if vim.bo[ev.buf].buftype ~= "" or not vim.uv.fs_stat(vim.api.nvim_buf_get_name(ev.buf)) then
+      return
+    end
+    require("package-info").show()
+  end,
 })
 
 vim.keymap.set("n", "<leader>ns", function()
