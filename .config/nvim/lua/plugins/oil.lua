@@ -36,6 +36,9 @@ oil.setup({
   float = {
     border = "rounded",
   },
+  win_options = {
+    signcolumn = "yes:2",
+  },
   keymaps = {
     ["gy"] = { callback = copy_entry_to_macos_clipboard, desc = "Copy file to macOS clipboard" },
     ["gp"] = {
@@ -53,6 +56,13 @@ oil.setup({
     show_hidden = true,
   },
 })
+
+local ok_git_status, oil_git_status = pcall(require, "oil-git-status")
+if ok_git_status then
+  oil_git_status.setup({
+    show_ignored = false,
+  })
+end
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "oil",

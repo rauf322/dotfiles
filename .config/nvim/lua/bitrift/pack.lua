@@ -34,7 +34,6 @@ vim.pack.add({
   "https://github.com/nvim-lua/plenary.nvim",
   "https://github.com/MunifTanjim/nui.nvim",
   "https://github.com/nvim-tree/nvim-web-devicons",
-  "https://github.com/echasnovski/mini.icons",
 
   -- LSP
   "https://github.com/neovim/nvim-lspconfig",
@@ -56,6 +55,7 @@ vim.pack.add({
   { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },
   "https://github.com/saghen/blink.compat",
   "https://github.com/moyiz/blink-emoji.nvim",
+  "https://github.com/mikavilpas/blink-ripgrep.nvim",
   "https://github.com/ray-x/cmp-sql",
   "https://github.com/supermaven-inc/supermaven-nvim",
 
@@ -65,6 +65,7 @@ vim.pack.add({
 
   -- File explorer
   "https://github.com/stevearc/oil.nvim",
+  "https://github.com/refractalize/oil-git-status.nvim",
 
   -- UI
   "https://github.com/nvimdev/dashboard-nvim",
@@ -84,8 +85,7 @@ vim.pack.add({
   "https://github.com/esmuellert/codediff.nvim",
 
   -- Editing
-  "https://github.com/echasnovski/mini.pairs",
-  "https://github.com/tpope/vim-surround",
+  "https://github.com/nvim-mini/mini.nvim",
   "https://github.com/folke/flash.nvim",
   "https://github.com/kevinhwang91/nvim-hlslens",
   "https://github.com/Aasim-A/scrollEOF.nvim",
@@ -96,6 +96,8 @@ vim.pack.add({
   "https://github.com/folke/todo-comments.nvim",
   "https://github.com/dmmulroy/tsc.nvim",
   "https://github.com/chrisgrieser/nvim-chainsaw",
+  "https://github.com/rachartier/tiny-inline-diagnostic.nvim",
+  "https://github.com/artemave/workspace-diagnostics.nvim",
 
   -- Database
   "https://github.com/tpope/vim-dadbod",
@@ -125,6 +127,7 @@ vim.cmd.packadd("nvim.difftool")
 
 -- Configure plugins: one file per plugin under lua/plugins/ (order matters for dependencies)
 require("plugins.color-scheme")
+require("plugins.mini")
 require("plugins.treesitter")
 require("plugins.lsp")
 require("plugins.flutter")
@@ -145,9 +148,10 @@ require("plugins.gitsigns")
 require("plugins.codediff")
 require("plugins.opencode")
 require("plugins.quicker")
-require("plugins.mini-pairs")
 require("plugins.tsc")
 require("plugins.trouble")
+require("plugins.tiny-inline-diagnostic")
+require("plugins.workspace-diagnostics")
 require("plugins.todo-comments")
 require("plugins.chainsaw")
 require("plugins.flash")

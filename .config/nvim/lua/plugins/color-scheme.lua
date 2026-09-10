@@ -9,6 +9,17 @@ require("vague").setup({
   transparent = true,
   bold = true,
   italic = false,
+  on_highlights = function(highlights, colors)
+    highlights.MiniIconsAzure = { fg = colors.hint }
+    highlights.MiniIconsBlue = { fg = colors.keyword }
+    highlights.MiniIconsCyan = { fg = colors.builtin }
+    highlights.MiniIconsGreen = { fg = colors.plus }
+    highlights.MiniIconsGrey = { fg = colors.fg }
+    highlights.MiniIconsOrange = { fg = colors.number }
+    highlights.MiniIconsPurple = { fg = colors.parameter }
+    highlights.MiniIconsRed = { fg = colors.error }
+    highlights.MiniIconsYellow = { fg = colors.warning }
+  end,
 })
 
 -- Trial of dmmulroy's catppuccin setup (github.com/dmmulroy/.dotfiles), integrations

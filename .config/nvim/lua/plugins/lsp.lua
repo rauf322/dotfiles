@@ -59,11 +59,7 @@ vim.lsp.enable(servers)
 local severity = vim.diagnostic.severity
 
 vim.diagnostic.config({
-  virtual_text = {
-    prefix = "●",
-    spacing = 4,
-    severity = { min = severity.ERROR, max = severity.ERROR }, -- Only show ERROR level
-  },
+  virtual_text = false,
   signs = {
     text = {
       [severity.ERROR] = " ",
