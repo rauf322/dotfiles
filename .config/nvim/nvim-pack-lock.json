@@ -214,10 +214,6 @@
       "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",
       "src": "https://github.com/folke/snacks.nvim"
     },
-    "supermaven-nvim": {
-      "rev": "07d20fce48a5629686aefb0a7cd4b25e33947d50",
-      "src": "https://github.com/supermaven-inc/supermaven-nvim"
-    },
     "tiny-inline-diagnostic.nvim": {
       "rev": "6264451f14119d63a52580e5198d6baf8518b0b2",
       "src": "https://github.com/rachartier/tiny-inline-diagnostic.nvim"

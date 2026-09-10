@@ -57,7 +57,6 @@ vim.pack.add({
   "https://github.com/moyiz/blink-emoji.nvim",
   "https://github.com/mikavilpas/blink-ripgrep.nvim",
   "https://github.com/ray-x/cmp-sql",
-  "https://github.com/supermaven-inc/supermaven-nvim",
 
   -- Snippets
   { src = "https://github.com/L3MON4D3/LuaSnip", version = vim.version.range("2.x") },
@@ -131,7 +130,6 @@ require("plugins.treesitter")
 require("plugins.lsp")
 require("plugins.flutter")
 require("plugins.conform")
-require("plugins.supermaven")
 require("plugins.blink-cmp")
 require("plugins.oil")
 require("plugins.dashboard")
