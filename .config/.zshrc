@@ -78,10 +78,35 @@ alias la="eza -la"
 alias b="bun"
 
 # Opencode alias
-alias p='ANTHROPIC_API_KEY=x ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_EXPERIMENTAL=1 opencode --port --continue'
-alias pweb2='OPENCODE_EXPERIMENTAL=1 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0'
+_meridian_ensure() {
+  if ! lsof -tiTCP:3456 -sTCP:LISTEN >/dev/null 2>&1; then
+    nohup meridian >~/Library/Logs/meridian.log 2>~/Library/Logs/meridian.err.log </dev/null &!
+    local tries=0
+    while ! lsof -tiTCP:3456 -sTCP:LISTEN >/dev/null 2>&1; do
+      sleep 0.2
+      tries=$((tries + 1))
+      if (( tries > 25 )); then
+        echo "meridian failed to start on :3456" >&2
+        return 1
+      fi
+    done
+  fi
+}
+
+p() {
+  _meridian_ensure || return 1
+  ANTHROPIC_API_KEY=x ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_EXPERIMENTAL=1 opencode --port --continue
+}
+
+pweb2() {
+  _meridian_ensure || return 1
+  ANTHROPIC_API_KEY=x ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_EXPERIMENTAL=1 OPENCODE_SERVER_PASSWORD="$_OPENCODE_PASSWORD" opencode web --mdns --port 0
+}
+
 pweb() {
   local tailscale_ip password
+
+  _meridian_ensure || return 1
 
   tailscale_ip="$(tailscale ip -4 2>/dev/null | head -n 1)"
   if [[ -z "$tailscale_ip" ]]; then
@@ -90,7 +115,7 @@ pweb() {
   fi
 
   if ! lsof -nP -iTCP:4096 -sTCP:LISTEN >/dev/null 2>&1; then
-    OPENCODE_EXPERIMENTAL=1 opencode serve --hostname 127.0.0.1 --port 4096 >/tmp/opencode-web.log 2>&1 &
+    ANTHROPIC_API_KEY=x ANTHROPIC_BASE_URL=http://127.0.0.1:3456 OPENCODE_EXPERIMENTAL=1 opencode serve --hostname 127.0.0.1 --port 4096 >/tmp/opencode-web.log 2>&1 &
   fi
 
   password="${OPENCHAMBER_UI_PASSWORD:-}"

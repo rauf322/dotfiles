@@ -97,7 +97,6 @@ vim.pack.add({
   "https://github.com/dmmulroy/tsc.nvim",
   "https://github.com/chrisgrieser/nvim-chainsaw",
   "https://github.com/rachartier/tiny-inline-diagnostic.nvim",
-  "https://github.com/artemave/workspace-diagnostics.nvim",
 
   -- Database
   "https://github.com/tpope/vim-dadbod",
@@ -151,7 +150,6 @@ require("plugins.quicker")
 require("plugins.tsc")
 require("plugins.trouble")
 require("plugins.tiny-inline-diagnostic")
-require("plugins.workspace-diagnostics")
 require("plugins.todo-comments")
 require("plugins.chainsaw")
 require("plugins.flash")
