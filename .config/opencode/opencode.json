@@ -16,6 +16,15 @@
         "Authorization": "Bearer {file:~/.local/share/opencode/secrets/context7-api-key}"
       },
       "enabled": true
+    },
+    "clockify": {
+      "type": "remote",
+      "url": "https://api.clockify.me/mcp-server/mcp",
+      "oauth": false,
+      "headers": {
+        "x-api-key": "{file:~/.local/share/opencode/secrets/clockify-api-key}"
+      },
+      "enabled": true
     }
   },
   "model": "anthropic/claude-fable-5",

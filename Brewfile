@@ -78,6 +78,8 @@ brew "lua-language-server"
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# AI coding agent, built for the terminal
+brew "opencode"
 # Development kit for the Java programming language
 brew "openjdk@17"
 # Swiss-army knife of markup format conversion

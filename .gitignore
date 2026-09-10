@@ -1,4 +1,5 @@
 .DS_Store
 .config/opencode/skills
 .config/opencode/docs/superpowers
+.config/opencode/service.json
 .config/meridian
