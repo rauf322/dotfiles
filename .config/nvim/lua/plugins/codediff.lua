@@ -2,6 +2,7 @@ require("codediff").setup({
   explorer = {
     view_mode = "tree",
     line_stats = { enabled = true },
+    auto_refresh = false,
   },
 })
 

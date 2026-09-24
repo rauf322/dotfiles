@@ -1,34 +1,58 @@
+// Mirrors ~/.config/nvim keymaps (leader = space). Bindings without a Zed equivalent are omitted.
 [
   {
     "context": "!Terminal && Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
       "shift-k": "editor::Hover",
-      "space P": [
-        "agent::ToggleFocus",
-        {
-          "agent": {
-            "custom": {
-              "name": "OpenCode"
-            }
-          }
-        }
-      ],
-      "ctrl-n": "assistant::InlineAssist",
-      "space c a": "editor::ToggleCodeActions",
-      "space s": "editor::Format",
-      "space r n": "editor::Rename",
-      "space shift-d": "diagnostics::Deploy",
-      "space b": "tab_switcher::Toggle",
-      "space f f": "project_panel::ToggleFocus",
-      "space g c": "editor::ToggleComments",
-      "space g g": ["task::Spawn", { "task_name": "lazygit" }],
+      "shift-u": "vim::Redo",
+      "shift-h": "tab_switcher::ToggleAll",
+      "-": "pane::RevealInProjectPanel",
+      "g r": "editor::FindAllReferences",
+      "g shift-d": "editor::GoToDefinition",
+      "ctrl-space": "editor::SelectLargerSyntaxNode",
+      "ctrl-n": ["agent::ToggleFocus", { "agent": { "custom": { "name": "OpenCode" } } }],
+      "space shift-p": ["agent::ToggleFocus", { "agent": { "custom": { "name": "OpenCode" } } }],
       "space space": "command_palette::Toggle",
+      "space y": ["workspace::SendKeystrokes", "\" + y"],
+      "space n o": "editor::Cancel",
+      "space s": "editor::Format",
+      "space c a": "editor::ToggleCodeActions",
+      "space r n": "editor::Rename",
+      "space d": "editor::Hover",
+      "space shift-d": "diagnostics::Deploy",
+      "space t t": "diagnostics::Deploy",
       "space t d": "editor::GoToTypeDefinition",
-      "space g d": "editor::GoToDefinition",
-      "space g r": "editor::FindAllReferences",
-      "space e": "workspace::ToggleLeftDock",
+      "space o": "outline::Toggle",
+      "space ?": "zed::OpenKeymap",
+      "space `": "terminal_panel::Toggle",
+      "space tab": "file_finder::Toggle",
+      "space p s": "pane::DeploySearch",
+      "space e f": "project_panel::ToggleFocus",
+      "space f f": "pane::RevealInProjectPanel",
+      "space b d": "pane::CloseActiveItem",
+      "space b a": "pane::CloseAllItems",
+      "space b o": "pane::CloseOtherItems",
+      "space a a": "pane::TogglePinTab",
+      "space a m": "tab_switcher::Toggle",
+      "space a n": "pane::ActivateNextItem",
+      "space a p": "pane::ActivatePreviousItem",
+      "space 1": ["pane::ActivateItem", 0],
+      "space 2": ["pane::ActivateItem", 1],
+      "space 3": ["pane::ActivateItem", 2],
+      "space 4": ["pane::ActivateItem", 3],
+      "space g g": "git::Diff",
+      "space g s": "git_panel::ToggleFocus",
+      "space g shift-h": "git_panel::ActivateHistoryTab",
+      "space g t": "branches::OpenRecent",
+      "space g p": "editor::ToggleSelectedDiffHunks",
+      "space g l": ["task::Spawn", { "task_name": "lazygit" }],
+      "space s h": "git::StageAndNext",
+      "space u h": "git::UnstageAndNext",
+      "space c m": "git::Commit",
       "space |": "pane::SplitVertical",
       "space -": "pane::SplitHorizontal",
+      "space shift-f": "workspace::ToggleZoom",
+      "space w =": "vim::ResetPaneSizes",
       "space h": "workspace::ActivatePaneLeft",
       "space j": "workspace::ActivatePaneDown",
       "space k": "workspace::ActivatePaneUp",
@@ -41,32 +65,41 @@
       "space w l": "vim::ResizePaneLeft",
       "space w j": "vim::ResizePaneUp",
       "space w k": "vim::ResizePaneDown",
-      "space w =": "vim::ResetPaneSizes",
-      "space s h": "git::StageAndNext",
-      "space u h": "git::UnstageAndNext",
-      "shift-h": "tab_switcher::ToggleAll"
-    }
-  },
-  {
-    "context": "!Terminal && Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
-    "bindings": {
       "shift-down": ["workspace::SendKeystrokes", "5 ctrl-e"],
       "shift-up": ["workspace::SendKeystrokes", "5 ctrl-y"]
     }
   },
   {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
+    "bindings": {
+      "shift-j": "editor::MoveLineDown",
+      "shift-k": "editor::MoveLineUp",
+      "space d": ["workspace::SendKeystrokes", "\" _ d"],
+      "space o a": "agent::AddSelectionToThread",
+      "ctrl-backspace": "editor::SelectSmallerSyntaxNode"
+    }
+  },
+  {
     "context": "Editor && vim_mode == insert && !VimWaiting && !menu",
     "bindings": {
-      "j k": "vim::NormalBefore",
+      "j j": "vim::NormalBefore",
       "k k": "vim::NormalBefore",
       "h h": "vim::NormalBefore"
     }
   },
   {
-    "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
+    "context": "!Terminal && !Editor && vim_mode != insert",
     "bindings": {
-      "shift-k": "editor::MoveLineUp",
-      "shift-j": "editor::MoveLineDown"
+      "space space": "command_palette::Toggle",
+      "space tab": "file_finder::Toggle",
+      "space p s": "pane::DeploySearch",
+      "space `": "terminal_panel::Toggle",
+      "space g s": "git_panel::ToggleFocus",
+      "space e f": "workspace::ToggleRightDock",
+      "space h": "workspace::ActivatePaneLeft",
+      "space j": "workspace::ActivatePaneDown",
+      "space k": "workspace::ActivatePaneUp",
+      "space l": "workspace::ActivatePaneRight"
     }
   },
   {
@@ -75,14 +108,14 @@
       "a": "project_panel::NewFile",
       "r": "project_panel::Rename",
       "shift-d": "project_panel::Delete",
-      "space h": "workspace::ActivatePaneLeft",
+      "-": "project_panel::SelectParent",
       "space f f": "workspace::ToggleRightDock"
     }
   },
   {
     "context": "GitPanel",
     "bindings": {
-      "space g g": "git_panel::Close",
+      "space g s": "workspace::ToggleRightDock",
       "x": "git::ToggleStaged",
       "shift-x": "git::StageAll",
       "shift-u": "git::UnstageAll",
@@ -91,20 +124,6 @@
       "k": "git_panel::PreviousEntry",
       "space l": "workspace::ActivatePaneRight",
       "enter": ["action::Sequence", ["project_panel::Open", "workspace::ToggleLeftDock"]]
-    }
-  },
-  {
-    "context": "!Terminal && Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
-    "bindings": {
-      "space tab": ["task::Spawn", { "task_name": "FZF File Finder", "reveal_target": "center" }],
-      "space p s": ["task::Spawn", { "task_name": "FZF Text Search", "reveal_target": "center" }]
-    }
-  },
-  {
-    "context": "!Terminal && !Editor && vim_mode != insert",
-    "bindings": {
-      "space tab": ["task::Spawn", { "task_name": "FZF File Finder", "reveal_target": "center" }],
-      "space p s": ["task::Spawn", { "task_name": "FZF Text Search", "reveal_target": "center" }]
     }
   },
   {

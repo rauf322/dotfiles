@@ -5,10 +5,6 @@
   "custom-ui-style.electron": {
     "frame": false,
     "roundedCorners": false
-  }
-  "custom-ui-style.electron": {
-    "frame": false,
-    "roundedCorners": false
   },
   "workbench.colorCustomizations": {
     "editorCursor.background": "#000000",

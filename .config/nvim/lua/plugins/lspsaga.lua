@@ -35,11 +35,6 @@ require("lspsaga").setup({
   rename = {
     in_select = false,
   },
-  hover = {
-    max_width = 0.8,
-    max_height = 0.8,
-    open_link = "gl",
-  },
 })
 
 local keymap = vim.keymap.set
