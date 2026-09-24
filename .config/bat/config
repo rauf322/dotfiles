@@ -1,5 +1,5 @@
 # Bat configuration
-# Theme: Use Catppuccin Mocha to match Rose Pine Moon aesthetic (both are dark, warm themes)
+# Theme: Catppuccin Mocha (custom theme file lives in ./themes)
 --theme="Catppuccin Mocha"
 
 # Style: Show line numbers and git changes

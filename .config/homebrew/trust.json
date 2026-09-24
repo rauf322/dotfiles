@@ -1,8 +1,13 @@
 {
   "trustedcasks": [
+    "epk/epk/font-sf-mono-nerd-font",
     "nikitabobko/tap/aerospace"
   ],
   "trustedformulae": [
+    "felixkratz/formulae/borders",
+    "felixkratz/formulae/sketchybar",
+    "mongodb/brew/mongodb-community",
+    "mongodb/brew/mongodb-database-tools",
     "raine/workmux/workmux"
   ]
 }

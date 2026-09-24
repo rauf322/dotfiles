@@ -3,7 +3,7 @@ require("hlslens").setup({
   nearest_only = true,
 })
 
--- `n`/`N` keep the `zzzv` centering from keymaps.lua; the lens is started after the motion.
+-- `zzzv` recenters and reopens folds after the jump; the lens is started after the motion.
 local function motion_then_lens(keys)
   return "<Cmd>execute('normal! ' . v:count1 . '" .. keys .. "')<CR><Cmd>lua require('hlslens').start()<CR>"
 end

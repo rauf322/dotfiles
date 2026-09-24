@@ -1,10 +1,9 @@
 git:
-  pagers:
-    - pager: delta --dark --paging=never --line-numbers
+  diffRenderers:
+    - command: delta --dark --paging=never --line-numbers
       colorArg: always
 os:
   editPreset: nvim-remote
-
 customCommands:
   - key: "o"
     context: "files"

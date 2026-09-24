@@ -241,10 +241,6 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 		front_app:set({ label = { string = env.INFO } })
 	end)
 
-	front_app:subscribe("mouse.clicked", function()
-		sbar.trigger("swap_menus_and_spaces")
-	end)
-
 	space_window_observer:subscribe("aerospace_focus_change", function()
 		updateWindows()
 	end)
@@ -268,21 +264,3 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 		onWorkspaceChanged(workspace, true)
 	end)
 end)
-
--- space_window_observer:subscribe("space_windows_change", function(env)
--- 	local icon_line = ""
--- 	local no_app = true
--- 	for app, _ in pairs(env.INFO.apps) do
--- 		no_app = false
--- 		local lookup = app_icons[app]
--- 		local icon = ((lookup == nil) and app_icons["Default"] or lookup)
--- 		icon_line = icon_line .. icon
--- 	end
---
--- 	if no_app then
--- 		icon_line = " —"
--- 	end
--- 	-- sbar.animate("tanh", 10, function()
--- 	-- 	workspaces[env.INFO.space]:set({ label = icon_line })
--- 	-- end)
--- end)

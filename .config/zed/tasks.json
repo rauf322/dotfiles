@@ -12,7 +12,7 @@
   },
   {
     "label": "opencode",
-    "command": "/Users/rauffaizov/.bun/bin/opencode",
+    "command": "/opt/homebrew/bin/opencode",
     "args": [],
     "reveal_target": "center",
     "allow_concurrent_runs": false,

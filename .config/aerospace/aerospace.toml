@@ -51,11 +51,6 @@ outer.top = [ {monitor.'MX279' = 40},{ monitor.'LC32G7xT' = 40 }, { monitor.'Bui
 
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'Arc'
-run = 'move-node-to-workspace 1'
-
-
-[[on-window-detected]]
 if.app-name-regex-substring = 'Google Chrome'
 run = 'move-node-to-workspace 2'
 
@@ -94,10 +89,6 @@ run = 'move-node-to-workspace 4'
 [[on-window-detected]]
 if.app-name-regex-substring = 'iina'
 run = ['layout floating','move-node-to-workspace 4']
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'bartender'
-run = 'layout floating'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'finder'

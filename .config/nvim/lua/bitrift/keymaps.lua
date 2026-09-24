@@ -3,10 +3,8 @@ local mappings = {
   { mode = "v", key = "J", command = ":m '>+1<CR>gv=gv", opts = { silent = true, desc = "Move selection down" } },
   { mode = "v", key = "K", command = ":m '<-2<CR>gv=gv", opts = { silent = true, desc = "Move selection up" } },
   { mode = "n", key = "J", command = "mzJ`z" },
-  { mode = "n", key = "n", command = "nzzzv" },
-  { mode = "n", key = "N", command = "Nzzzv" },
   { mode = { "n", "v" }, key = "<leader>y", command = [["+y]] },
-  { mode = { "n", "v" }, key = "<leader>d", command = '"_d' },
+  { mode = "v", key = "<leader>d", command = '"_d', opts = { desc = "Delete without yanking" } },
   { mode = "n", key = "U", command = "<C-r>", opts = { desc = "Redo last change" } },
   { mode = "n", key = "<leader>no", command = "<cmd>noh<cr>", opts = { desc = "Toggle search highlighting" } },
 

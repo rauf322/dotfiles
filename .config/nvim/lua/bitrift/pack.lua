@@ -16,8 +16,6 @@ vim.api.nvim_create_autocmd("PackChanged", {
       vim.fn.system({ "make", "install_jsregexp", "-C", dir })
     elseif name == "markdown-preview.nvim" then
       vim.fn["mkdp#util#install"]()
-    elseif name == "leetcode.nvim" then
-      vim.cmd("TSUpdate html")
     elseif name == "codediff.nvim" then
       vim.cmd("CodeDiff install")
     end
@@ -33,7 +31,6 @@ vim.pack.add({
   -- Core dependencies
   "https://github.com/nvim-lua/plenary.nvim",
   "https://github.com/MunifTanjim/nui.nvim",
-  "https://github.com/nvim-tree/nvim-web-devicons",
 
   -- LSP
   "https://github.com/neovim/nvim-lspconfig",
@@ -111,8 +108,6 @@ vim.pack.add({
   "https://github.com/rmagatti/auto-session",
 
   -- Misc
-  "https://github.com/kawre/leetcode.nvim",
-  "https://github.com/theprimeagen/vim-be-good",
   "https://github.com/laytan/cloak.nvim",
   "https://github.com/vuki656/package-info.nvim",
   "https://github.com/stevearc/quicker.nvim",
