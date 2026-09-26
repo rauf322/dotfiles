@@ -65,6 +65,7 @@ excludes=(
     --exclude="chats"
     --exclude="antigravity-accounts.json"
     --exclude="prompts-library-db.0.mdb"
+    --exclude="clockify-time-logging"
 )
 
 should_skip() {
