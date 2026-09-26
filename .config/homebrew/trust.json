@@ -4,6 +4,7 @@
     "nikitabobko/tap/aerospace"
   ],
   "trustedformulae": [
+    "anomalyco/tap/opencode-v2",
     "felixkratz/formulae/borders",
     "felixkratz/formulae/sketchybar",
     "mongodb/brew/mongodb-community",

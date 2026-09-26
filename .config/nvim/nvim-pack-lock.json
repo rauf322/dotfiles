@@ -5,6 +5,10 @@
       "src": "https://github.com/L3MON4D3/LuaSnip",
       "version": "2.0.0 - 3.0.0"
     },
+    "atlas.nvim": {
+      "rev": "b50c0fd69db8fa5c8d41e93995e8b3db010f5e29",
+      "src": "https://github.com/emrearmagan/atlas.nvim"
+    },
     "auto-session": {
       "rev": "62437532b38495551410b3f377bcf4aaac574ebe",
       "src": "https://github.com/rmagatti/auto-session"
