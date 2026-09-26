@@ -5,7 +5,7 @@
     "opencode-openai-codex-auth@4.4.0",
     "oh-my-openagent",
     "@slkiser/opencode-quota@3.11.2",
-    "/Users/rauffaizov/.bun/install/global/node_modules/@rynfar/meridian/plugin/meridian.ts"
+    "/Users/rauffaizov/.bun/install/global/node_modules/@rynfar/meridian/dist/meridian"
   ],
   "mcp": {
     "context7": {

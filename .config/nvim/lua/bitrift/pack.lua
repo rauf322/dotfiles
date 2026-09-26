@@ -80,6 +80,7 @@ vim.pack.add({
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/esmuellert/codediff.nvim",
+  "https://github.com/emrearmagan/atlas.nvim",
 
   -- Editing
   "https://github.com/nvim-mini/mini.nvim",
@@ -140,6 +141,7 @@ require("plugins.luasnip")
 require("plugins.fugitive")
 require("plugins.gitsigns")
 require("plugins.codediff")
+require("plugins.atlas")
 require("plugins.opencode")
 require("plugins.quicker")
 require("plugins.tsc")
