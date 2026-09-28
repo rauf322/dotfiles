@@ -103,7 +103,7 @@ brew "redis", restart_service: :changed
 # High-performance, schema-free, document-oriented database
 brew "mongodb/brew/mongodb-community", trusted: true
 # Custom macOS statusbar with shell plugin, interaction and graph support
-brew "sketchybar"
+brew "felixkratz/formulae/sketchybar", trusted: true
 # Window border system for macOS
 brew "felixkratz/formulae/borders", trusted: true
 # Search tool like grep and The Silver Searcher
