@@ -4,8 +4,7 @@ require("lualine").setup({
     theme = "auto",
     section_separators = { left = "", right = "" },
     component_separators = { left = "|", right = "|" },
-    -- Atlas ships its own statusline; let it own atlas buffers
-    disabled_filetypes = { statusline = { "atlas" } },
+    disabled_filetypes = {},
   },
   sections = {
     lualine_a = { "mode" },

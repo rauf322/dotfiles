@@ -52,7 +52,6 @@ vim.pack.add({
   { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },
   "https://github.com/saghen/blink.compat",
   "https://github.com/moyiz/blink-emoji.nvim",
-  "https://github.com/mikavilpas/blink-ripgrep.nvim",
   "https://github.com/ray-x/cmp-sql",
   "https://github.com/supermaven-inc/supermaven-nvim",
 
@@ -80,7 +79,6 @@ vim.pack.add({
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/esmuellert/codediff.nvim",
-  "https://github.com/emrearmagan/atlas.nvim",
 
   -- Editing
   "https://github.com/nvim-mini/mini.nvim",
@@ -141,7 +139,6 @@ require("plugins.luasnip")
 require("plugins.fugitive")
 require("plugins.gitsigns")
 require("plugins.codediff")
-require("plugins.atlas")
 require("plugins.opencode")
 require("plugins.quicker")
 require("plugins.tsc")
